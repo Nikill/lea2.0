@@ -1,0 +1,9 @@
+composer update => met à jour l'application
+php bin/console doctrine:schema:update --dump-sql => affiche les changement de la table
+php bin/console doctrine:schema:update --force => execute les changement dans la base de données
+php bin/console fos:user:create --super-admin => crée un user super admin (remove --super-admin pour créer un utilisateur normal)
+php bin/console cache:clear => supprime le cache
+php bin/console doctrine:generate:entity => crée une nouvelle entité
+	shortcut name => AppBundle:"nom de l'entité"
+	annotations
+	=> création des champs
