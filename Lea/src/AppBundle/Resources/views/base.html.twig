@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if IE 9]>         <html class="no-js lt-ie10"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <title>{% block title %}Volvo{% endblock %}</title>
+
+    <meta name="author" content="Jérémie BARTOLI">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/plugins.css') }}">
+        <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/main.css') }}">
+        <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/themes.css') }}">
+    {% endblock %}
+
+    <script src="{{ asset('assets/js/vendor/modernizr-respond.min.js') }}"></script>
+</head>
+<body>
+
+<div id="page-wrapper" class="page-loading">
+    <div class="preloader themed-background">
+        <h1 class="push-top-bottom text-light text-center"><strong>FO</strong> API</h1>
+        <div class="inner">
+            <h3 class="text-light visible-lt-ie9 visible-lt-ie10"><strong>Loading..</strong></h3>
+            <div class="preloader-spinner hidden-lt-ie9 hidden-lt-ie10"></div>
+        </div>
+    </div>
+    <div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
+
+        {% include '@App/UI/sidebar.html.twig' %}
+
+        <div id="main-container">
+
+            <header class="navbar navbar-default">
+                {% include '@App/UI/topmenu.html.twig' %}
+            </header>
+
+            <div id="page-content" style="min-height: 1200px;">
+                {% block body %}{% endblock %}
+            </div>
+
+            {% include '@App/UI/footer.html.twig' %}
+        </div>
+    </div>
+</div>
+
+<a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
+
+{% block javascript %}
+    <!--[if IE 8]><script src="{{ asset('assets/js/helpers/excanvas.min.js') }}"></script><![endif]-->
+    <script src="{{ asset('assets/js/vendor/jquery-1.12.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/modernizr-respond.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/tablesDatatables.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+{% endblock %}
+</body>
+</html>
