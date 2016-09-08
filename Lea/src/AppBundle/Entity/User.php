@@ -2,16 +2,15 @@
 
 namespace AppBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User extends BaseUser
+class User
 {
     /**
      * @var int
@@ -20,17 +19,7 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
-
-
-
-    /**
-     * User constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    private $id;
 
 
     /**
@@ -42,5 +31,5 @@ class User extends BaseUser
     {
         return $this->id;
     }
-
 }
+
