@@ -1,34 +1,14 @@
-
-<div id="sidebar">
-    <!-- Wrapper for scrolling functionality -->
-    <div id="sidebar-scroll">
-        <!-- Sidebar Content -->
-        <div class="sidebar-content">
-            <!-- Brand -->
-            <a href="{{ path('homepage') }}" class="sidebar-brand">
-                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>LEA</strong></span>
-            </a>
-
-            <ul class="sidebar-nav">
-                <li>
-                    <a href="{{ path('homepage') }}">
-                        <i class="gi gi-stopwatch sidebar-nav-icon"></i>
-                        <span class="sidebar-nav-mini-hide">Accueil</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('homepage') }}">
-                        <i class="gi gi-stopwatch sidebar-nav-icon"></i>
-                        <span class="sidebar-nav-mini-hide">Utilisateurs</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('homepage') }}">
-                        <i class="gi gi-stopwatch sidebar-nav-icon"></i>
-                        <span class="sidebar-nav-mini-hide">Utilisateurs</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<ul id="main-menu" class="main-menu">
+    <li class="root-level">
+        <a href="{{ path('homepage') }}">
+            <i class="entypo-database"></i>
+            <span class="title">Accueil</span>
+        </a>
+    </li>
+    <li class="root-level">
+        <a href="{{ path('users_index') }}">
+            <i class="entypo-users"></i>
+            <span class="title">Users</span>
+        </a>
+    </li>
+</ul>

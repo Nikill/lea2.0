@@ -26,7 +26,6 @@ class User extends BaseUser
     {
         parent::__construct();
 
-        // generate login / pass
         // details and/on creation date
     }
 }
