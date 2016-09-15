@@ -1,0 +1,11 @@
+services:
+  app.users.manager:
+      class: AppBundle\Manager\UserManager
+      arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router', '@security.token_storage', '@fos_user.user_manager' ]
+
+  app.form.profile:
+        class: AppBundle\Form\ProfileFormType
+        tags: - { name: form.type, alias: app_user_profile }
+
+  fos_user.doctrine_registry:
+      alias: doctrine
