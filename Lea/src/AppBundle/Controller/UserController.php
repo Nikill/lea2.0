@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/admin/users")
+ * @Route("/admin/user")
  */
 class UserController extends Controller
 {
@@ -68,7 +68,7 @@ class UserController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        return $this->get('app.user.manager')->edit($request, $id);
+        return $this->get('app.users.manager')->edit($request, $id);
     }
 
     /**
