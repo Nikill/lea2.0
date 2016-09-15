@@ -1,5 +1,5 @@
 services:
-    app.users.manager:
+    app.user.manager:
         class: AppBundle\Manager\UserManager
         arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router', '@security.token_storage', '@fos_user.user_manager' ]
 

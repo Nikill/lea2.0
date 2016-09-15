@@ -56,7 +56,7 @@ class UserController extends Controller
      */
     public function newAction(Request $request)
     {
-        return $this->get('app.users.manager')->create($request);
+        return $this->get('app.user.manager')->create($request);
     }
 
     /**
@@ -68,7 +68,7 @@ class UserController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        return $this->get('app.users.manager')->edit($request, $id);
+        return $this->get('app.user.manager')->edit($request, $id);
     }
 
     /**
@@ -80,6 +80,6 @@ class UserController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        return $this->get('app.users.manager')->delete($request, $id);
+        return $this->get('app.user.manager')->delete($request, $id);
     }
 }
