@@ -10,10 +10,16 @@
             {{ form_start(form, { 'attr': { 'class': 'form-horizontal form-bordered'} }) }}
                 <div class="form-group">
                     <div class="col-md-3 control-label">
-                        {{ form_label(form.name) }}
+                        {{ form_label(form.username) }}
+                        {{ form_widget(form.username) }}
                     </div>
                     <div class="col-md-9">
-                        {{ form_widget(form.name, { 'attr': { 'class': 'form-control'} }) }}
+                        {{ form_label(form.password) }}
+                        {{ form_widget(form.password) }}
+                    </div>
+                    <div class="col-md-9">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
                     </div>
                 </div>
                 <div class="form-group form-actions">

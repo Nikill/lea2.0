@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Epulapp
- * Date: 13/09/2016
- * Time: 15:02
- */
-
-
 namespace AppBundle\Manager;
 
 
@@ -30,6 +22,8 @@ class UserManager extends BaseManager
      * @param $em
      * @param $formFactory
      * @param Router $router
+     * @param $token
+     * @param $fosUserManager
      */
     public function __construct($em, $formFactory, Router $router, $token, $fosUserManager)
     {

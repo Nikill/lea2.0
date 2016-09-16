@@ -9,7 +9,7 @@
                 <h2>User</h2>
             </div>
             <div class="table-responsive">
-                <a href="{{ path('user_create') }}">
+                <a href="{{ path('users_create') }}">
                     <button class="btn btn-lg btn-primary"><i class="fa fa-plus"></i> Créer un nouvel utilisateur</button>
                 </a>
                 <table id="user-datatable" class="table table-vcenter table-condensed table-striped table-bordered">
@@ -24,11 +24,11 @@
                     {% for user in users %}
                         <tr>
                             <td class="text-center">{{ user.id }}</td>
-                            <td class="text-center">{{ user.mail }}</td>
+                            <td class="text-center">{{ user.email }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="{{ path('user_edit', {'id': user.id}) }}" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-                                    <a href="{{ path('user_delete', {'id': user.id}) }}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                    <a href="{{ path('users_edit', {'id': user.id}) }}" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ path('users_delete', {'id': user.id}) }}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
                                 </div>
                             </td>
                         </tr>
