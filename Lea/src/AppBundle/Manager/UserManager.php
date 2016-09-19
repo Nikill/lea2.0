@@ -43,7 +43,8 @@ class UserManager extends BaseManager
      */
     public function create(Request $request)
     {
-        $user = new User();
+        //$user = new User();
+        $user = $this->userManager->createUser();
         return $this->handleForm($request, $user);
     }
 
@@ -95,23 +96,32 @@ class UserManager extends BaseManager
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $successRegister = $this->registerUser($entity->getEmail(), $entity->getUsername(), $entity->getPassword());
-
-            if($successRegister)
+            if($entity instanceof User)
             {
-                // success
-                //$this->persistAndFlush($entity);
-                return new RedirectResponse($this->router->generate($path));
-            }else{
-                // fail register
-                return new RedirectResponse($this->router->generate($path));
+                // edition and user already exist
+
+                // update existing user throught FOSUser manager method
+                $this->userManager->updateUser($entity);
+
+            }else {
+                //create a fresh user from form datas
+                $this->registerUser($entity->getEmail(), $entity->getUsername(), $entity->getPassword());
             }
+
+            // any case, redirect to users list
+            return new RedirectResponse($this->router->generate($path));
 
         }
         return array('form' => $form->createView());
     }
 
-    private function registerUser($email,$username)
+
+    /**
+     * @param $email
+     * @param $username
+     * @return bool
+     */
+    private function registerUser($email, $username)
     {
         $emailExist = $this->userManager->findUserByEmail($email);
 
@@ -127,7 +137,10 @@ class UserManager extends BaseManager
         $user->setLocked(0);
         $user->setEnabled(1);
         $user->setPlainPassword("123");
-        $this->userManager->updateUser($user);
+
+        $this->userManager->updateUser($user, false);
+        $this->persistAndFlush($user);
+
         return true;
     }
 }

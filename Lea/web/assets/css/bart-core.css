@@ -5427,7 +5427,7 @@ body {
 }
 @media screen and (min-width: 768px) {
   .page-container .sidebar-menu.fixed .sidebar-menu-inner {
-    position: fixed;
+    /*position: fixed;*/
     height: auto;
     bottom: 0;
     width: 280px;

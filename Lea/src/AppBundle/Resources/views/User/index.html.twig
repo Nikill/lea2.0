@@ -2,42 +2,41 @@
 
 {% block body %}
 
-    <div class="content content-boxed">
+    <h3>Users</h3>
 
-        <div class="block full block-rounded">
-            <div class="block-title">
-                <h2>User</h2>
-            </div>
-            <div class="table-responsive">
-                <a href="{{ path('users_create') }}">
-                    <button class="btn btn-lg btn-primary"><i class="fa fa-plus"></i> Créer un nouvel utilisateur</button>
-                </a>
-                <table id="user-datatable" class="table table-vcenter table-condensed table-striped table-bordered">
-                    <thead>
-                    <tr>
-                        <th class="text-center">ID</th>
-                        <th class="text-center">mail</th>
-                        <th class="text-center"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for user in users %}
-                        <tr>
-                            <td class="text-center">{{ user.id }}</td>
-                            <td class="text-center">{{ user.email }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a href="{{ path('users_edit', {'id': user.id}) }}" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-                                    <a href="{{ path('users_delete', {'id': user.id}) }}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+
+    <table class="table table-bordered table-striped datatable" id="table-user">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>User Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td class="text-center">{{ user.username }}</td>
+                    <td class="text-center">{{ user.email }}</td>
+                    <td>
+                        <a href="{{ path('users_edit', {'id': user.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
+                            <i class="entypo-pencil"></i>
+                            Edit
+                        </a>
+
+                        <a href="{{ path('users_delete', {'id': user.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left">
+                            <i class="entypo-cancel"></i> Delete
+                        </a>
+
+                        <a href="#" class="btn btn-info btn-sm btn-icon icon-left">
+                            <i class="entypo-info"></i> Profile
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
 
@@ -45,8 +44,15 @@
     {{ parent() }}
 
     <script>
-        $(function () {
-            TablesDatatables.init();
-        });
+        jQuery( document ).ready( function( $ ) {
+            var $table1 = jQuery( '#table-user' );
+
+            // Initialize DataTable
+            $table1.DataTable( {
+                "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "bStateSave": true
+            });
+
+        } );
     </script>
 {% endblock %}
