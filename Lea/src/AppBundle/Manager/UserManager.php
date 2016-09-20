@@ -101,11 +101,13 @@ class UserManager extends BaseManager
                 // edition and user already exist
 
                 // update existing user throught FOSUser manager method
+                $entity->setPlainPassword($entity->getPassword());
                 $this->userManager->updateUser($entity);
 
             }else {
                 //create a fresh user from form datas
-                $this->registerUser($entity->getEmail(), $entity->getUsername(), $entity->getPassword());
+                $this->registerUser($entity->getEmail(), $entity->getUsername(), $entity->getNom(), $entity->getPrenom(), $entity->getAdresse(), $entity->getVille(), $entity->getTelephoneFix(),
+                    $entity->getTelephonePortable(), $entity->getFax(), $entity->getDateNaissance(), $entity->getEstHandicape());
             }
 
             // any case, redirect to users list
@@ -121,7 +123,7 @@ class UserManager extends BaseManager
      * @param $username
      * @return bool
      */
-    private function registerUser($email, $username)
+    private function registerUser($email, $username, $nom, $prenom, $adresse, $ville, $telephoneFix, $telephonePortable, $fax, $dateNaissance, $estHandicape)
     {
         $emailExist = $this->userManager->findUserByEmail($email);
 
@@ -137,6 +139,15 @@ class UserManager extends BaseManager
         $user->setLocked(0);
         $user->setEnabled(1);
         $user->setPlainPassword("123");
+        $user->setNom($nom);
+        $user->setPrenom($prenom);
+        $user->setAdresse($adresse);
+        $user->setVille($ville);
+        $user->setTelephoneFix($telephoneFix);
+        $user->setTelephonePortable($telephonePortable);
+        $user->setFax($fax);
+        $user->setDateNaissance(date_format($dateNaissance, 'Y-m-d'));
+        $user->setEstHandicape($estHandicape);
 
         $this->userManager->updateUser($user, false);
         $this->persistAndFlush($user);
