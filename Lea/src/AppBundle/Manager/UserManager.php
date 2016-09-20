@@ -146,7 +146,7 @@ class UserManager extends BaseManager
         $user->setTelephoneFix($telephoneFix);
         $user->setTelephonePortable($telephonePortable);
         $user->setFax($fax);
-        $user->setDateNaissance(date_format($dateNaissance, 'Y-m-d'));
+        $user->setDateNaissance($dateNaissance);
         $user->setEstHandicape($estHandicape);
 
         $this->userManager->updateUser($user, false);
