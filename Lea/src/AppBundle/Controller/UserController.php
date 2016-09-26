@@ -23,7 +23,6 @@ class UserController extends Controller
         return array('users' => $users);
     }
 
-
     /**
      * @Route("/unapproved", name="user_unapproved")
      * @return array

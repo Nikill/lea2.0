@@ -2,14 +2,12 @@
 
 namespace AppBundle\Manager;
 
-
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-
 
 class UserManager extends BaseManager
 {
@@ -116,7 +114,6 @@ class UserManager extends BaseManager
         }
         return array('form' => $form->createView());
     }
-
 
     /**
      * @param $email

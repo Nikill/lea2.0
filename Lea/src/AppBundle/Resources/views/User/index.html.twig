@@ -1,10 +1,7 @@
 {% extends "AppBundle::base.html.twig" %}
 
 {% block body %}
-
     <h3>Users</h3>
-
-
     <table class="table table-bordered table-striped datatable" id="table-user">
         <thead>
             <tr>
@@ -37,12 +34,10 @@
             {% endfor %}
         </tbody>
     </table>
-
 {% endblock %}
 
 {% block javascript %}
     {{ parent() }}
-
     <script>
         jQuery( document ).ready( function( $ ) {
             var $table1 = jQuery( '#table-user' );
@@ -52,7 +47,6 @@
                 "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 "bStateSave": true
             });
-
         } );
     </script>
 {% endblock %}
