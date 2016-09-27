@@ -1,0 +1,33 @@
+{% extends "AppBundle::base.html.twig" %}
+
+{% block body %}
+    <div class="col-md-offset-3 col-md-6">
+        <div class="block">
+            <div class="block-title">
+                <h2>Éditer une question</h2>
+            </div>
+            {{ form_start(form, { 'attr': { 'class': 'form-horizontal form-bordered'} }) }}
+                <div class="form-group">
+                    <div class="col-md-3 control-label">
+                        {{ form_label(form.description) }}
+                        {{ form_widget(form.description) }}
+                    </div>
+                    <div class="col-md-9">
+                        {{ form_label(form.type) }}
+                        {{ form_widget(form.type) }}
+                    </div>
+                    <div class="col-md-9">
+                        {{ form_label(form.cible) }}
+                        {{ form_widget(form.cible) }}
+                    </div>
+                </div>
+                <div class="form-group form-actions">
+                    <div class="col-md-9 col-md-offset-3">
+                        {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
+                    </div>
+                </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

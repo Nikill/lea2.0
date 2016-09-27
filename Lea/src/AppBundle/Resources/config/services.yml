@@ -3,5 +3,9 @@ services:
         class: AppBundle\Manager\UserManager
         arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router', '@security.token_storage', '@fos_user.user_manager' ]
 
+    app.question.manager:
+        class: AppBundle\Manager\QuestionManager
+        arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
+
     fos_user.doctrine_registry:
         alias: doctrine
