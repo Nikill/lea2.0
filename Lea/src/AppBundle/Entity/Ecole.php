@@ -63,10 +63,14 @@ class Ecole
     private $fax;
 
     /**
-     * @ORM\OneToMany(targetEntity="Formation", mappedBy="ecole", cascade={"remove", "persist"})
+     * @var ArrayCollection $formations
+     * @ORM\OneToMany(targetEntity="Formation", mappedBy="ecole", cascade={"persist", "remove", "merge"})
      */
     private $formations;
 
+    public function __construct() {
+        $this->formations = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -247,13 +251,19 @@ class Ecole
     }
 
     /**
-     * Add formations
+     * Add formation
      *
-     * @param Formation $formations
+     * @param Formation $formation
+     *
+     * @return Ecole
      */
-    public function addFormation(Formation $formations)
+    public function addFormation(Formation $formation)
     {
-        $this->formations[] = $formations;
+        $formation->setEcole($this);
+
+        if (!$this->formations->contains($formation)) {
+            $this->formations->add($formation);
+        }
 
         return $this;
     }
@@ -261,11 +271,11 @@ class Ecole
     /**
      * Set formations
      *
-     * @param Collection $formations
+     * @param ArrayCollection $formations
      *
      * @return Ecole
      */
-    public function setFormations(Collection $formations)
+    public function setFormations(ArrayCollection $formations)
     {
         $this->formations = $formations;
 
@@ -275,7 +285,7 @@ class Ecole
     /**
      * Get formations
      *
-     * @return Collection
+     * @return ArrayCollection $formations
      */
     public function getFormations()
     {

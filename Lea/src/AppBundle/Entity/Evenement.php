@@ -39,8 +39,9 @@ class Evenement
     private $periode;
 
     /**
-    * @ORM\OneToMany(targetEntity="Planning", mappedBy="evenement", cascade={"remove", "persist"})
-    */
+     * @var ArrayCollection $plannings
+     * @ORM\OneToMany(targetEntity="Planning", mappedBy="evenement", cascade={"persist", "remove", "merge"})
+     */
     private $plannings;
 
 
@@ -127,15 +128,19 @@ class Evenement
     }
 
     /**
-     * Add plannings
+     * Add planning
      *
      * @param Planning $plannings
      *
      * @return Evenement
      */
-    public function addPlanning(Planning $plannings)
+    public function addPlanning(Planning $planning)
     {
-        $this->plannings[] = $plannings;
+        $planning->setEvenement($this);
+
+        if (!$this->plannings->contains($planning)) {
+            $this->plannings->add($planning);
+        }
 
         return $this;
     }
@@ -143,11 +148,11 @@ class Evenement
     /**
      * Set plannings
      *
-     * @param Collection $plannings
+     * @param ArrayCollection $plannings
      *
      * @return Evenement
      */
-    public function setPlannings(Collection $plannings)
+    public function setPlannings(ArrayCollection $plannings)
     {
         $this->plannings = $plannings;
 
@@ -157,7 +162,7 @@ class Evenement
     /**
      * Get plannings
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getPlannings()
     {

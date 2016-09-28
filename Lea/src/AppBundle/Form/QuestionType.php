@@ -17,18 +17,18 @@ class QuestionType extends AbstractType
             ->add('description', TextType::class)
             ->add('type', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                 'choices' => array(
+                    'Évaluation en entreprise' => 2,
+                    'Missions en entreprise' => 4,
                     'Rapport d\'activité au centre de formation' => 0,
                     'Rapport d\'activité en entreprise' => 1,
-                    'Évaluation en entreprise' => 2,
                     'Visite en entreprise' => 3,
-                    'Missions en entreprise' => 4,
                 ),
             ))
             ->add('cible', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                 'choices' => array(
                     'Étudiant' => 0,
-                    'Tuteur pédagogique' => 1,
                     'Maître d\'apprentissage' => 2,
+                    'Tuteur pédagogique' => 1,
                 ),
             ))
             ->add('save', SubmitType::class, array('label' => 'Créer une question'))

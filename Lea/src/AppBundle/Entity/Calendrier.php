@@ -21,7 +21,8 @@ class Calendrier
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Planning", mappedBy="calendrier", cascade={"remove", "persist"})
+     * @var ArrayCollection $plannings
+     * @ORM\OneToMany(targetEntity="Planning", mappedBy="calendrier", cascade={"persist", "remove", "merge"})
      */
     private $plannings;
 
@@ -36,15 +37,19 @@ class Calendrier
     }
 
     /**
-     * Add plannings
+     * Add planning
      *
-     * @param Planning $plannings
+     * @param Planning $planning
      *
      * @return Calendrier
      */
-    public function addPlanning(Planning $plannings)
+    public function addPlanning(Planning $planning)
     {
-        $this->plannings[] = $plannings;
+        $planning->setCalendrier($this);
+
+        if (!$this->plannings->contains($planning)) {
+            $this->plannings->add($planning);
+        }
 
         return $this;
     }
@@ -52,11 +57,11 @@ class Calendrier
     /**
      * Set plannings
      *
-     * @param Collection $plannings
+     * @param ArrayCollection $plannings
      *
      * @return Calendrier
      */
-    public function setPlannings(Collection $plannings)
+    public function setPlannings(ArrayCollection $plannings)
     {
         $this->plannings = $plannings;
 
@@ -66,7 +71,7 @@ class Calendrier
     /**
      * Get plannings
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getPlannings()
     {

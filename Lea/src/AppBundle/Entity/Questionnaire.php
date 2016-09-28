@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,8 +22,9 @@ class Questionnaire
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Promotion", inversedBy="questionnaires")
-     * @ORM\JoinTable(name="promotion_questionnaires")
+     * @var ArrayCollection $promotions
+     * Inverse Side
+     * @ORM\ManyToMany(targetEntity="Promotion", mappedBy="questionnaires", cascade={"persist", "merge"})
      */
     private $promotions;
 
@@ -45,7 +47,10 @@ class Questionnaire
     private $delai;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Question", mappedBy="questionnaires")
+     * @var ArrayCollection $questions
+     * Owning Side
+     * @ORM\ManyToMany(targetEntity="Question", inversedBy="questionnaires", cascade={"persist", "merge"})
+     * @ORM\JoinTable(name="questionnaire_questions", joinColumns={@ORM\JoinColumn(name="id_questionnaire", referencedColumnName="id")}, inverseJoinColumns={@ORM\JoinColumn(name="id_question", referencedColumnName="id")})
      */
     private $questions;
 
@@ -61,15 +66,17 @@ class Questionnaire
     }
 
     /**
-     * Add promotions
+     * Add promotion
      *
-     * @param Promotion $promotions
+     * @param Promotion $promotion
      *
      * @return Questionnaire
      */
-    public function addPromotion(Promotion $promotions)
+    public function addPromotion(Promotion $promotion)
     {
-        $this->promotions[] = $promotions;
+        if (!$this->promotions->contains($promotion)) {
+            $this->promotions->add($promotion);
+        }
 
         return $this;
     }
@@ -77,11 +84,11 @@ class Questionnaire
     /**
      * Set promotions
      *
-     * @param Collection $promotions
+     * @param ArrayCollection $promotions
      *
      * @return Questionnaire
      */
-    public function setPromotions(Collection $promotions)
+    public function setPromotions(ArrayCollection $promotions)
     {
         $this->promotions = $promotions;
 
@@ -91,7 +98,7 @@ class Questionnaire
     /**
      * Get promotions
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getPromotions()
     {
@@ -171,15 +178,19 @@ class Questionnaire
     }
 
     /**
-     * Add questions
+     * Add question
      *
-     * @param Question $questions
+     * @param Question $question
      *
      * @return Questionnaire
      */
-    public function addQuestion(Question $questions)
+    public function addQuestion(Question $question)
     {
-        $this->questions[] = $questions;
+        $question->addQuestionnaire($this);
+
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+        }
 
         return $this;
     }
@@ -187,11 +198,11 @@ class Questionnaire
     /**
      * Set questions
      *
-     * @param Collection $questions
+     * @param ArrayCollection $questions
      *
      * @return Questionnaire
      */
-    public function setQuestions(Collection $questions)
+    public function setQuestions(ArrayCollection $questions)
     {
         $this->questions = $questions;
 
@@ -201,7 +212,7 @@ class Questionnaire
     /**
      * Get questions
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getQuestions()
     {

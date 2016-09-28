@@ -21,14 +21,16 @@ class Planning
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Evenement", inversedBy="plannings", cascade={"remove"})
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @var Evenement $evenement
+     * @ORM\ManyToOne(targetEntity="Evenement", inversedBy="plannings", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="id_evenement", referencedColumnName="id")
      */
     private $evenement;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Calendrier", inversedBy="plannings", cascade={"remove"})
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @var Calendrier $calendrier
+     * @ORM\ManyToOne(targetEntity="Calendrier", inversedBy="plannings", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="id_calendrier", referencedColumnName="id")
      */
     private $calendrier;
 

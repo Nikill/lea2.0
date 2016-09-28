@@ -21,8 +21,9 @@ class Formation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ecole", inversedBy="formations", cascade={"remove"})
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @var Ecole $ecole
+     * @ORM\ManyToOne(targetEntity="Ecole", inversedBy="formations", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="id_ecole", referencedColumnName="id")
      */
     private $ecole;
 
@@ -33,7 +34,8 @@ class Formation
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity="Promotion", mappedBy="formation", cascade={"remove", "persist"})
+     * @var ArrayCollection $promotions
+     * @ORM\OneToMany(targetEntity="Promotion", mappedBy="formation", cascade={"persist", "remove", "merge"})
      */
     private $promotions;
 
@@ -95,15 +97,19 @@ class Formation
     }
 
     /**
-     * Add promotions
+     * Add promotion
      *
-     * @param Promotion $promotions
+     * @param Promotion $promotion
      *
      * @return Formation
      */
-    public function addPromotion(Promotion $promotions)
+    public function addPromotion(Promotion $promotion)
     {
-        $this->promotions[] = $promotions;
+        $promotion->setFormation($this);
+
+        if (!$this->promotions->contains($promotion)) {
+            $this->promotions->add($promotion);
+        }
 
         return $this;
     }
@@ -111,11 +117,11 @@ class Formation
     /**
      * Set promotions
      *
-     * @param Collection $promotions
+     * @param ArrayCollection $promotions
      *
      * @return Formation
      */
-    public function setPromotions(Collection $promotions)
+    public function setPromotions(ArrayCollection $promotions)
     {
         $this->promotions = $promotions;
 
@@ -125,7 +131,7 @@ class Formation
     /**
      * Get promotions
      *
-     * @return Collection
+     * @return ArrayCollection $promotions
      */
     public function getPromotions()
     {

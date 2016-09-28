@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,8 +22,9 @@ class Question
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Questionnaire", inversedBy="questions")
-     * @ORM\JoinTable(name="questionnaire_questions")
+     * @var ArrayCollection $questionnaires
+     * Inverse Side
+     * @ORM\ManyToMany(targetEntity="Questionnaire", mappedBy="questions", cascade={"persist", "merge"})
      */
     private $questionnaires;
 
@@ -56,15 +58,17 @@ class Question
     }
 
     /**
-     * Add questionnaires
+     * Add questionnaire
      *
-     * @param Questionnaire $questionnaires
+     * @param Questionnaire $questionnaire
      *
      * @return Question
      */
-    public function addQuestionnaire(Questionnaire $questionnaires)
+    public function addQuestionnaire(Questionnaire $questionnaire)
     {
-        $this->questionnaires[] = $questionnaires;
+        if (!$this->questionnaires->contains($questionnaire)) {
+            $this->questionnaires->add($questionnaire);
+        }
 
         return $this;
     }
@@ -72,11 +76,11 @@ class Question
     /**
      * Set questionnaires
      *
-     * @param Collection $questionnaires
+     * @param ArrayCollection $questionnaires
      *
      * @return Question
      */
-    public function setQuestionnaires(Collection $questionnaires)
+    public function setQuestionnaires(ArrayCollection $questionnaires)
     {
         $this->questionnaires = $questionnaires;
 
@@ -86,7 +90,7 @@ class Question
     /**
      * Get questionnaires
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getQuestionnaires()
     {

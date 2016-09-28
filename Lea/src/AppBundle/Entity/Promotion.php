@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,8 +22,9 @@ class Promotion
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Formation", inversedBy="promotions", cascade={"remove"})
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @var Formation $formation
+     * @ORM\ManyToOne(targetEntity="Formation", inversedBy="promotions", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="id_formation", referencedColumnName="id")
      */
     private $formation;
 
@@ -45,13 +47,17 @@ class Promotion
     private $anneeFin;
 
     /**
-     * @ORM\OneToOne(targetEntity="Calendrier")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @var Calendrier
+     * @ORM\OneToOne(targetEntity="Calendrier", cascade={"persist", "merge", "remove"})
+     * @ORM\JoinColumn(name="id_calendrier", referencedColumnName="id")
      */
     private $calendrier;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Questionnaire", mappedBy="promotions")
+     * @var ArrayCollection $questionnaires
+     * Owning Side
+     * @ORM\ManyToMany(targetEntity="Questionnaire", inversedBy="promotions", cascade={"persist", "merge"})
+     * @ORM\JoinTable(name="promotion_questionnaires", joinColumns={@ORM\JoinColumn(name="id_promotion", referencedColumnName="id")}, inverseJoinColumns={@ORM\JoinColumn(name="id_questionnaire", referencedColumnName="id")})
      */
     private $questionnaires;
 
@@ -187,15 +193,19 @@ class Promotion
     }
 
     /**
-     * Add questionnaires
+     * Add questionnaire
      *
-     * @param Questionnaire $questionnaires
+     * @param Questionnaire $questionnaire
      *
      * @return Promotion
      */
-    public function addQuestionnaire(Questionnaire $questionnaires)
+    public function addQuestionnaire(Questionnaire $questionnaire)
     {
-        $this->questionnaires[] = $questionnaires;
+        $questionnaire->addPromotion($this);
+
+        if (!$this->questionnaires->contains($questionnaire)) {
+            $this->questionnaires->add($questionnaire);
+        }
 
         return $this;
     }
@@ -203,11 +213,11 @@ class Promotion
     /**
      * Set questionnaires
      *
-     * @param Collection $questionnaires
+     * @param ArrayCollection $questionnaires
      *
      * @return Promotion
      */
-    public function setQuestionnaires(Collection $questionnaires)
+    public function setQuestionnaires(ArrayCollection $questionnaires)
     {
         $this->questionnaires = $questionnaires;
 
@@ -217,7 +227,7 @@ class Promotion
     /**
      * Get questionnaires
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getQuestionnaires()
     {
