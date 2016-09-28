@@ -7,5 +7,9 @@ services:
         class: AppBundle\Manager\QuestionManager
         arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
 
+    app.questionnaire.manager:
+        class: AppBundle\Manager\QuestionnaireManager
+        arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
+
     fos_user.doctrine_registry:
         alias: doctrine

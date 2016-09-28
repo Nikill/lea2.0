@@ -29,6 +29,12 @@ class Questionnaire
     private $promotions;
 
     /**
+     * @var string
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
      * @var int
      * @ORM\Column(name="type", type="integer")
      */
@@ -41,10 +47,10 @@ class Questionnaire
     private $dateOuverture;
 
     /**
-     * @var int
-     * @ORM\Column(name="delai", type="integer", nullable=true)
+     * @var \DateTime
+     * @ORM\Column(name="date_fermeture", type="date", nullable=true)
      */
-    private $delai;
+    private $dateFermeture;
 
     /**
      * @var ArrayCollection $questions
@@ -54,6 +60,10 @@ class Questionnaire
      */
     private $questions;
 
+    public function __construct() {
+        $this->promotions = new ArrayCollection();
+        $this->questions = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -106,6 +116,30 @@ class Questionnaire
     }
 
     /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Question
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Set type
      *
      * @param integer $type
@@ -154,27 +188,27 @@ class Questionnaire
     }
 
     /**
-     * Set delai
+     * Set dateFermeture
      *
-     * @param integer $delai
+     * @param \DateTime $dateFermeture
      *
      * @return Questionnaire
      */
-    public function setDelai($delai)
+    public function setDateFermeture($dateFermeture)
     {
-        $this->delai = $delai;
+        $this->dateFermeture = $dateFermeture;
 
         return $this;
     }
 
     /**
-     * Get delai
+     * Get dateFermeture
      *
-     * @return int
+     * @return \DateTime
      */
-    public function getDelai()
+    public function getDateFermeture()
     {
-        return $this->delai;
+        return $this->dateFermeture;
     }
 
     /**
@@ -217,5 +251,31 @@ class Questionnaire
     public function getQuestions()
     {
         return $this->questions;
+    }
+
+    /**
+     * @param integer $type
+     *
+     * @return String
+     */
+    public function typeIs($type) {
+        switch ($type)
+        {
+            case 0:
+                return 'Rapport d\'activité au centre de formation';
+                break;
+            case 1:
+                return 'Rapport d\'activité en entreprise';
+                break;
+            case 2:
+                return 'Évaluation en entreprise';
+                break;
+            case 3:
+                return 'Visite en entreprise';
+                break;
+            case 4:
+                return 'Missions en entreprise';
+                break;
+        }
     }
 }

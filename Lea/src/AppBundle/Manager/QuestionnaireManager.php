@@ -2,13 +2,13 @@
 
 namespace AppBundle\Manager;
 
-use AppBundle\Entity\Question;
-use AppBundle\Form\QuestionType;
+use AppBundle\Entity\Questionnaire;
+use AppBundle\Form\QuestionnaireType;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class QuestionManager extends BaseManager
+class QuestionnaireManager extends BaseManager
 {
     /**
      * CategoryManager constructor.
@@ -27,7 +27,7 @@ class QuestionManager extends BaseManager
      */
     public function find($id)
     {
-        return $this->em->getRepository('AppBundle:Question')->findOneBy(array('id' => $id));
+        return $this->em->getRepository('AppBundle:Questionnaire')->findOneBy(array('id' => $id));
     }
 
     /**
@@ -35,7 +35,7 @@ class QuestionManager extends BaseManager
      */
     public function findAll()
     {
-        return $this->em->getRepository('AppBundle:Question')->findAll();
+        return $this->em->getRepository('AppBundle:Questionnaire')->findAll();
     }
 
     /**
@@ -44,8 +44,8 @@ class QuestionManager extends BaseManager
      */
     public function save(Request $request)
     {
-        $question = new Question();
-        return $this->handleForm($request, $question);
+        $questionnaire = new Questionnaire();
+        return $this->handleForm($request, $questionnaire);
     }
 
     /**
@@ -55,8 +55,8 @@ class QuestionManager extends BaseManager
      */
     public function edit(Request $request, $id)
     {
-        $question = $this->em->getRepository('AppBundle:Question')->find($id);
-        return $this->handleForm($request, $question);
+        $questionnaire = $this->em->getRepository('AppBundle:Questionnaire')->find($id);
+        return $this->handleForm($request, $questionnaire);
     }
 
     /**
@@ -66,19 +66,19 @@ class QuestionManager extends BaseManager
      */
     public function delete(Request $request, $id)
     {
-        $question = $this->em->getRepository('AppBundle:Question')->find($id);
-        $this->removeAndFlush($question);
-        return $this->redirect('question_index');
+        $questionnaire = $this->em->getRepository('AppBundle:Questionnaire')->find($id);
+        $this->removeAndFlush($questionnaire);
+        return $this->redirect('questionnaire_index');
     }
 
     /**
      * @param Request $request
-     * @param Question $question
+     * @param Questionnaire $questionnaire
      * @return array|RedirectResponse
      */
-    public function handleForm(Request $request, Question $question)
+    public function handleForm(Request $request, Questionnaire $questionnaire)
     {
-        $form = $this->formFactory->create(QuestionType::class, $question);
-        return $this->handleBaseForm($request, $form, $question, "question_index");
+        $form = $this->formFactory->create(QuestionnaireType::class, $questionnaire);
+        return $this->handleBaseForm($request, $form, $questionnaire, "questionnaire_index");
     }
 }

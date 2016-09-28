@@ -61,6 +61,10 @@ class Promotion
      */
     private $questionnaires;
 
+    public function __construct() {
+        $this->questionnaires = new ArrayCollection();
+    }
+
 
     /**
      * Get id

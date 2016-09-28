@@ -39,6 +39,9 @@ class Formation
      */
     private $promotions;
 
+    public function __construct() {
+        $this->promotions = new ArrayCollection();
+    }
 
     /**
      * Get id

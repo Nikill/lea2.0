@@ -26,6 +26,10 @@ class Calendrier
      */
     private $plannings;
 
+    public function __construct() {
+        $this->plannings = new ArrayCollection();
+    }
+
     /**
      * Get id
      *

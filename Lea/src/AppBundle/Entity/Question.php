@@ -46,6 +46,9 @@ class Question
      */
     private $cible;
 
+    public function __construct() {
+        $this->questionnaires = new ArrayCollection();
+    }
 
     /**
      * Get id
