@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -36,7 +37,7 @@ class QuestionController extends Controller
 
     /**
      * @Template()
-     * @Route("/{id}/edit", name="question_edit")
+     * @Route("/id={id}/edit", name="question_edit")
      * @param Request $request
      * @param $id
      * @return array
@@ -48,7 +49,7 @@ class QuestionController extends Controller
 
     /**
      * @Template()
-     * @Route("/{id}/delete", name="question_delete")
+     * @Route("/id={id}/delete", name="question_delete")
      * @param Request $request
      * @param $id
      * @return array
@@ -56,5 +57,43 @@ class QuestionController extends Controller
     public function deleteAction(Request $request, $id)
     {
         return $this->get('app.question.manager')->delete($request, $id);
+    }
+
+    /**
+     * @Template("AppBundle:Question:edit.html.twig")
+     * @Route("/id={id}&id_choix={id_choix}/add", name="choix_add")
+     * @param Request $request
+     * @param $id
+     * @param $id_choix
+     * @return array
+     */
+    public function addAction(Request $request, $id, $id_choix)
+    {
+        return $this->get('app.question.manager')->add($request, $id, $id_choix);
+    }
+
+    /**
+     * @Template("AppBundle:Question:edit.html.twig")
+     * @Route("/id={id}&id_choix={id_choix}/remove", name="choix_remove")
+     * @param Request $request
+     * @param $id
+     * @param $id_choix
+     * @return array
+     */
+    public function removeAction(Request $request, $id, $id_choix)
+    {
+        return $this->get('app.question.manager')->remove($request, $id, $id_choix);
+    }
+
+    /**
+     * @Template("AppBundle:Question:display.html.twig")
+     * @Route("/id={id}/display", name="question_display")
+     * @param Request $request
+     * @param $id
+     * @return array
+     */
+    public function displayAction(Request $request, $id)
+    {
+        return $this->get('app.question.manager')->display($request, $id);
     }
 }

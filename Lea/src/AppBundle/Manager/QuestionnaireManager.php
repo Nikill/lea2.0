@@ -3,8 +3,11 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Entity\Questionnaire;
+use AppBundle\Form\DisplayQuestionnaireType;
 use AppBundle\Form\QuestionnaireType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -73,12 +76,90 @@ class QuestionnaireManager extends BaseManager
 
     /**
      * @param Request $request
+     * @param $id
+     * @param $id_question
+     * @return RedirectResponse
+     */
+    public function add(Request $request, $id, $id_question)
+    {
+        $questionnaire = $this->em->getRepository('AppBundle:Questionnaire')->find($id);
+        $question = $this->em->getRepository('AppBundle:Question')->find($id_question);
+
+        $questionnaire->addQuestion($question);
+        $this->persistAndFlush($questionnaire);
+        return $this->handleForm($request, $questionnaire);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @param $id_question
+     * @return RedirectResponse
+     */
+    public function remove(Request $request, $id, $id_question)
+    {
+        $questionnaire = $this->em->getRepository('AppBundle:Questionnaire')->find($id);
+        $question = $this->em->getRepository('AppBundle:Question')->find($id_question);
+
+        $questionnaire->removeQuestion($question);
+        $this->persistAndFlush($questionnaire);
+        return $this->handleForm($request, $questionnaire);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function display(Request $request, $id)
+    {
+        $questionnaire = $this->em->getRepository('AppBundle:Questionnaire')->find($id);
+        return $this->handleForm($request, $questionnaire, "display");
+    }
+
+    /**
+     * @param Request $request
      * @param Questionnaire $questionnaire
      * @return array|RedirectResponse
      */
-    public function handleForm(Request $request, Questionnaire $questionnaire)
+    public function handleForm(Request $request, Questionnaire $questionnaire, $option = null)
     {
-        $form = $this->formFactory->create(QuestionnaireType::class, $questionnaire);
+        if (!is_null($option) && $option == 'display') {
+            $form = $this->formFactory->create(DisplayQuestionnaireType::class, $questionnaire, array('questionnaire' => $questionnaire));
+        } else {
+            $form = $this->formFactory->create(QuestionnaireType::class, $questionnaire);
+        }
         return $this->handleBaseForm($request, $form, $questionnaire, "questionnaire_index");
+    }
+
+    /**
+     * @param Request $request
+     * @param Form $form
+     * @param $entity
+     * @param $path
+     * @return array|RedirectResponse
+     */
+    protected function handleBaseForm(Request $request, Form $form, $entity, $path)
+    {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->persistAndFlush($entity);
+            return new RedirectResponse($this->router->generate("questionnaire_index"));
+        }
+
+        //Suppression des questions déjà présentes dans le questionnaire
+        $questions = $this->em->getRepository('AppBundle:Question')->findByType($entity->getType());
+        $questions = new ArrayCollection($questions);
+
+        if (!is_null($entity->getQuestions())) {
+            foreach ($questions as $question) {
+                if ($entity->getQuestions()->contains($question)) {
+                    $questions->removeElement($question);
+                }
+            }
+        }
+
+        return array('form' => $form->createView(), 'questionnaire' => $entity, 'questions' => $questions);
     }
 }

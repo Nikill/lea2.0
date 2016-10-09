@@ -18,11 +18,11 @@ class QuestionnaireType extends AbstractType
             ->add('description', TextType::class)
             ->add('type', ChoiceType::class, array(
                 'choices' => array(
-                    'Évaluation en entreprise' => 2,
-                    'Missions en entreprise' => 4,
-                    'Rapport d\'activité au centre de formation' => 0,
-                    'Rapport d\'activité en entreprise' => 1,
-                    'Visite en entreprise' => 3,
+                    'Évaluation en entreprise' => 3,
+                    'Missions en entreprise' => 5,
+                    'Rapport d\'activité au centre de formation' => 1,
+                    'Rapport d\'activité en entreprise' => 2,
+                    'Visite en entreprise' => 4,
                 ),
             ))
             ->add('dateOuverture', DateType::class, array(

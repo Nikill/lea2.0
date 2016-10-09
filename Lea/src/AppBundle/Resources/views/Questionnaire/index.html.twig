@@ -1,7 +1,7 @@
 {% extends "AppBundle::base.html.twig" %}
 
 {% block body %}
-    <h3>Questionnaires</h3>
+    <h3>Ensemble des questionnaires</h3>
     <div class="row text-center">
         <div class="col-sm-6 col-lg-4">
         </div>
@@ -20,11 +20,11 @@
         <div class="col-sm-6 col-lg-4">
         </div>
     </div>
-    <table class="table table-bordered table-striped datatable" id="table-question">
+    <table class="table table-bordered table-striped datatable" id="table-questionnaire">
         <thead>
             <tr>
                 <th>Description</th>
-                <th>Type</th>
+                <th>Type du questionnaire</th>
                 <th>Date d'ouverture</th>
                 <th>Date de fermeture</th>
                 <th>Promotion(s)</th>
@@ -51,6 +51,9 @@
                         <a href="{{ path('questionnaire_delete', {'id': questionnaire.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left">
                             <i class="entypo-cancel"></i> Supprimer
                         </a>
+                        <a href="{{ path('questionnaire_display', {'id': questionnaire.id}) }}" class="btn btn-info btn-sm btn-icon icon-left">
+                            <i class="entypo-info"></i> Afficher
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
@@ -62,7 +65,7 @@
     {{ parent() }}
     <script>
         jQuery(document).ready(function($){
-            var $table1 = jQuery('#table-question');
+            var $table1 = jQuery('#table-questionnaire');
 
             // Initialize DataTable
             $table1.DataTable({

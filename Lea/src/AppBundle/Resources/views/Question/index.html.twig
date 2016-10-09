@@ -1,7 +1,7 @@
 {% extends "AppBundle::base.html.twig" %}
 
 {% block body %}
-    <h3>Questions</h3>
+    <h3>Ensemble des questions</h3>
     <div class="row text-center">
         <div class="col-sm-6 col-lg-4">
         </div>
@@ -9,7 +9,7 @@
             <a href="{{ path('question_create') }}" class="widget widget-hover-effect2">
                 <div class="widget-extra themed-background-amethyst">
                     <h4 class="widget-content-light">
-                        <strong>Ajouter une nouvelle</strong> question
+                        <strong>Créer une nouvelle</strong> question
                     </h4>
                 </div>
                 <div class="widget-extra-full">
@@ -24,8 +24,10 @@
         <thead>
             <tr>
                 <th>Description</th>
-                <th>Type</th>
+                <th>Type du questionnaire</th>
+                <th>Type de la question</th>
                 <th>Cible</th>
+                <th>Choix</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -35,13 +37,22 @@
                 <tr>
                     <td class="text-center">{{ question.description }}</td>
                     <td class="text-center">{{ question.typeIs(question.type) }}</td>
+                    <td class="text-center">{{ question.typeQuestionIs(question.typeQuestion) }}</td>
                     <td class="text-center">{{ question.cibleIs(question.cible) }}</td>
+                    <td class="text-center">
+                        {% for choix in question.choix %}
+                            {{ choix.rang }}. {{ choix.description }}</br>
+                        {% endfor %}
+                    </td>
                     <td>
                         <a href="{{ path('question_edit', {'id': question.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
                             <i class="entypo-pencil"></i> Éditer
                         </a>
                         <a href="{{ path('question_delete', {'id': question.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left">
                             <i class="entypo-cancel"></i> Supprimer
+                        </a>
+                        <a href="{{ path('question_display', {'id': question.id}) }}" class="btn btn-info btn-sm btn-icon icon-left">
+                            <i class="entypo-info"></i> Afficher
                         </a>
                     </td>
                 </tr>

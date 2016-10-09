@@ -1,0 +1,10 @@
+{% extends "AppBundle::base.html.twig" %}
+
+{% block body %}
+    <h3>{{ question.description }}</h3>
+    {% if question.typeQuestion == 1 %}
+        {{ form_widget(form.description, { 'attr': {'cols': '150', 'rows': '5'} }) }}
+    {% elseif question.typeQuestion == 2 %}
+        {{ form_widget(form.choix) }}
+    {% endif %}
+{% endblock %}

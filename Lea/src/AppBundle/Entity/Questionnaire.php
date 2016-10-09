@@ -230,6 +230,24 @@ class Questionnaire
     }
 
     /**
+     * Remove question
+     *
+     * @param Question $question
+     *
+     * @return Questionnaire
+     */
+    public function removeQuestion(Question $question)
+    {
+        $question->removeQuestionnaire($this);
+
+        if ($this->questions->contains($question)) {
+            $this->questions->removeElement($question);
+        }
+
+        return $this;
+    }
+
+    /**
      * Set questions
      *
      * @param ArrayCollection $questions
@@ -261,19 +279,19 @@ class Questionnaire
     public function typeIs($type) {
         switch ($type)
         {
-            case 0:
+            case 1:
                 return 'Rapport d\'activité au centre de formation';
                 break;
-            case 1:
+            case 2:
                 return 'Rapport d\'activité en entreprise';
                 break;
-            case 2:
+            case 3:
                 return 'Évaluation en entreprise';
                 break;
-            case 3:
+            case 4:
                 return 'Visite en entreprise';
                 break;
-            case 4:
+            case 5:
                 return 'Missions en entreprise';
                 break;
         }

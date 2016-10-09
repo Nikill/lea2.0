@@ -17,6 +17,10 @@
                         {{ form_widget(form.type) }}
                     </div>
                     <div class="col-md-9">
+                        {{ form_label(form.typeQuestion) }}
+                        {{ form_widget(form.typeQuestion) }}
+                    </div>
+                    <div class="col-md-9">
                         {{ form_label(form.cible) }}
                         {{ form_widget(form.cible) }}
                     </div>
@@ -30,4 +34,83 @@
             {{ form_end(form) }}
         </div>
     </div>
+
+    {% if question.typeQuestion == 2 %}
+        <h3>Choix</h3>
+        <div class="row text-center">
+            <div class="col-sm-6 col-lg-4">
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <a href="{{ path('choix_create') }}" class="widget widget-hover-effect2">
+                    <div class="widget-extra themed-background-amethyst">
+                        <h4 class="widget-content-light">
+                            <strong>Créer un nouveau</strong> choix
+                        </h4>
+                    </div>
+                    <div class="widget-extra-full">
+                        <span class="h2 text-danger animation-expandOpen"><i class="fa fa-users"></i></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+            </div>
+        </div>
+        <table class="table table-bordered table-striped datatable" id="table-choix">
+            <thead>
+            <tr>
+                <th>Rang</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+                {% for choi in question.choix %}
+                    <tr>
+                        <td class="text-center">{{ choi.rang }}</td>
+                        <td class="text-center">{{ choi.description }}</td>
+                        <td>
+                            <a href="{{ path('choix_edit', {'id': choi.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
+                                <i class="entypo-pencil"></i> Éditer
+                            </a>
+                            <a href="{{ path('choix_remove', {'id': question.id, 'id_choix': choi.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left">
+                                <i class="entypo-cancel"></i> Enlever
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% for choi in choix %}
+                    <tr>
+                        <td class="text-center">{{ choi.description }}</td>
+                        <td class="text-center">{{ choi.rang }}</td>
+                        <td>
+                            <a href="{{ path('choix_edit', {'id': choi.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
+                                <i class="entypo-pencil"></i> Éditer
+                            </a>
+                            <a href="{{ path('choix_add', {'id': question.id, 'id_choix': choi.id}) }}" class="btn btn-info btn-sm btn-icon icon-left">
+                                <i class="entypo-plus"></i> Ajouter
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}
+
+{% if question.typeQuestion == 1 %}
+    {% block javascript %}
+        {{ parent() }}
+        <script>
+            jQuery(document).ready(function($){
+                var $table1 = jQuery('#table-choix');
+
+                // Initialize DataTable
+                $table1.DataTable({
+                    "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "bStateSave": true
+                });
+            });
+        </script>
+    {% endblock %}
+{% endif %}
