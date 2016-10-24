@@ -24,11 +24,12 @@ class UserType extends AbstractType
             ->add('prenom', TextType::class)
             ->add('adresse', TextType::class)
             ->add('ville', TextType::class)
+            ->add('codePostal', TextType::class)
             ->add('telephoneFix', TextType::class)
             ->add('telephonePortable', TextType::class)
             ->add('fax', TextType::class)
             ->add('dateNaissance', BirthdayType::class)
-            ->add('estHandicape', CheckboxType::class)
+            ->add('estHandicape', CheckboxType::class, array("required" => false))
             ->add('save', SubmitType::class, array('label' => 'Créer un utilisateur'))
         ;
     }

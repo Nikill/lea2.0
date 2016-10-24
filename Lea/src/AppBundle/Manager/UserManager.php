@@ -104,7 +104,7 @@ class UserManager extends BaseManager
 
             }else {
                 //create a fresh user from form datas
-                $this->registerUser($entity->getEmail(), $entity->getUsername(), $entity->getNom(), $entity->getPrenom(), $entity->getAdresse(), $entity->getVille(), $entity->getTelephoneFix(),
+                $this->registerUser($entity->getEmail(), $entity->getUsername(), $entity->getNom(), $entity->getPrenom(), $entity->getAdresse(), $entity->getVille(), $entity->getCodePostal(), $entity->getTelephoneFix(),
                     $entity->getTelephonePortable(), $entity->getFax(), $entity->getDateNaissance(), $entity->getEstHandicape());
             }
 
@@ -120,7 +120,7 @@ class UserManager extends BaseManager
      * @param $username
      * @return bool
      */
-    private function registerUser($email, $username, $nom, $prenom, $adresse, $ville, $telephoneFix, $telephonePortable, $fax, $dateNaissance, $estHandicape)
+    private function registerUser($email, $username, $nom, $prenom, $adresse, $ville, $codePostal, $telephoneFix, $telephonePortable, $fax, $dateNaissance, $estHandicape)
     {
         $emailExist = $this->userManager->findUserByEmail($email);
 
@@ -140,6 +140,7 @@ class UserManager extends BaseManager
         $user->setPrenom($prenom);
         $user->setAdresse($adresse);
         $user->setVille($ville);
+        $user->setCodePostal($codePostal);
         $user->setTelephoneFix($telephoneFix);
         $user->setTelephonePortable($telephonePortable);
         $user->setFax($fax);

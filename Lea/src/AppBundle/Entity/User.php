@@ -52,6 +52,13 @@ class User extends BaseUser
     /**
      * @var string
      * @ORM\Column(nullable=true)
+     * @ORM\Column(name="codePostal", type="string", length=255)
+     */
+    private $codePostal;
+
+    /**
+     * @var string
+     * @ORM\Column(nullable=true)
      * @ORM\Column(name="telephoneFix", type="string", length=10)
      */
     private $telephoneFix;
@@ -71,9 +78,9 @@ class User extends BaseUser
     private $fax;
 
     /**
-     * @var string
+     * @var \DateTime
      * @ORM\Column(nullable=true)
-     * @ORM\Column(name="dateNaissance", type="date")
+     * @ORM\Column(name="dateNaissance", type="datetime")
      */
     private $dateNaissance;
 
@@ -162,6 +169,22 @@ class User extends BaseUser
     public function setVille($ville)
     {
         $this->ville = $ville;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCodePostal()
+    {
+        return $this->codePostal;
+    }
+
+    /**
+     * @param string $codePostal
+     */
+    public function setCodePostal($codePostal)
+    {
+        $this->codePostal = $codePostal;
     }
 
     /**
