@@ -120,12 +120,14 @@ class QuestionnaireManager extends BaseManager
     /**
      * @param Request $request
      * @param Questionnaire $questionnaire
+     * @param String $option
      * @return array|RedirectResponse
      */
     public function handleForm(Request $request, Questionnaire $questionnaire, $option = null)
     {
         if (!is_null($option) && $option == 'display') {
-            $form = $this->formFactory->create(DisplayQuestionnaireType::class, $questionnaire, array('questionnaire' => $questionnaire));
+            $questions = $questionnaire->getQuestions();
+            $form = $this->formFactory->create(DisplayQuestionnaireType::class, $questionnaire, array('questionnaire' => $questionnaire, 'questions' => $questions, 'em' => $this->em));
         } else {
             $form = $this->formFactory->create(QuestionnaireType::class, $questionnaire);
         }

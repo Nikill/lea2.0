@@ -126,7 +126,7 @@ class QuestionManager extends BaseManager
     public function handleForm(Request $request, Question $question, $option = null)
     {
         if (!is_null($option) && $option == 'display') {
-            $form = $this->formFactory->create(DisplayQuestionType::class, $question, array('question' => $question));
+            $form = $this->formFactory->create(DisplayQuestionType::class, $question, array('question' => $question, 'em' => $this->em, 'display' => 1));
         } else {
             $form = $this->formFactory->create(QuestionType::class, $question);
         }

@@ -12,13 +12,5 @@ use AppBundle\Entity\Question;
  */
 class ChoixRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getChoixQuestion(Question $question) {
-        $qb = $this->createQueryBuilder('c');
-        $qb -> leftJoin('c.questions', 'q');
-        $qb -> where($qb->expr()->eq('q.id', ':question'))
-                ->setParameter('question', $question->getId());
-        $qb -> orderby('c.rang', 'ASC');
 
-        return $qb;
-    }
 }
