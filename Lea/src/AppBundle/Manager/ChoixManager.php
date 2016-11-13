@@ -60,11 +60,10 @@ class ChoixManager extends BaseManager
     }
 
     /**
-     * @param Request $request
      * @param $id
      * @return RedirectResponse
      */
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
         $choix = $this->em->getRepository('AppBundle:Choix')->find($id);
         $this->removeAndFlush($choix);

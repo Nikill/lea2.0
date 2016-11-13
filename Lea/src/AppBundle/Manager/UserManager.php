@@ -58,15 +58,14 @@ class UserManager extends BaseManager
     }
 
     /**
-     * @param Request $request
      * @param $id
      * @return RedirectResponse
      */
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
         $script = $this->em->getRepository('AppBundle:User')->find($id);
         $this->removeAndFlush($script);
-        return $this->redirect('users_index');
+        return $this->redirect('user_index');
     }
 
     /**
@@ -78,7 +77,7 @@ class UserManager extends BaseManager
     public function handleForm(Request $request, User $user)
     {
         $form = $this->formFactory->create(UserType::class, $user);
-        return $this->handleBaseForm($request, $form, $user, "users_index");
+        return $this->handleBaseForm($request, $form, $user, "user_index");
     }
 
     /**

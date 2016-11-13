@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     /**
      * @Template()
-     * @Route("/", name="users_index")
+     * @Route("/", name="user_index")
      * @return array
      */
     public function indexAction()
@@ -44,12 +44,12 @@ class UserController extends Controller
             // get all scripts done by the user
             $this->redirectToRoute('script_index');
         }
-        return $this->redirectToRoute('users_index');
+        return $this->redirectToRoute('user_index');
     }
 
     /**
      * @Template()
-     * @Route("/new", name="users_create")
+     * @Route("/new", name="user_create")
      * @param Request $request
      * @return array
      */
@@ -60,7 +60,7 @@ class UserController extends Controller
 
     /**
      * @Template()
-     * @Route("/{id}/edit", name="users_edit")
+     * @Route("/{id}/edit", name="user_edit")
      * @param Request $request
      * @param $id
      * @return array
@@ -72,7 +72,7 @@ class UserController extends Controller
 
     /**
      * @Template()
-     * @Route("/{id}/delete", name="users_delete")
+     * @Route("/{id}/delete", name="user_delete")
      * @param Request $request
      * @param $id
      * @return array

@@ -63,11 +63,10 @@ class QuestionManager extends BaseManager
     }
 
     /**
-     * @param Request $request
      * @param $id
      * @return RedirectResponse
      */
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
         $question = $this->em->getRepository('AppBundle:Question')->find($id);
         $this->removeAndFlush($question);

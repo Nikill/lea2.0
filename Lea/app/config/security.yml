@@ -10,7 +10,7 @@ security:
         ROLE_TUTEUR:      ROLE_TUTEUR
         ROLE_ETUDIANT:    ROLE_ETUDIANT
         ROLE_MAP:         ROLE_MAP
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_RESPONSABLE, ROLE_TUTEUR, ROLE_ETUDIANT, ROLE_MAP]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
@@ -49,4 +49,6 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/typeDocument/, role: ROLE_RESPONSABLE }
+        - { path: ^/anneeScolaire/, role: ROLE_SUPER_ADMIN }
         - { path: ^/admin/, role: ROLE_SUPER_ADMIN }

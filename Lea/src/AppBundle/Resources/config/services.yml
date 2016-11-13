@@ -15,5 +15,13 @@ services:
         class: AppBundle\Manager\ChoixManager
         arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
 
+    app.typeDocument.manager:
+            class: AppBundle\Manager\TypeDocumentManager
+            arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
+
+    app.anneeScolaire.manager:
+            class: AppBundle\Manager\AnneeScolaireManager
+            arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
+
     fos_user.doctrine_registry:
         alias: doctrine
