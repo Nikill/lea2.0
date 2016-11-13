@@ -31,63 +31,54 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(nullable=true)
      * @ORM\Column(name="prenom", type="string", length=255)
      */
     private $prenom;
 
     /**
      * @var string
-     * @ORM\Column(nullable=true)
      * @ORM\Column(name="adresse", type="string", length=255)
      */
     private $adresse;
 
     /**
      * @var string
-     * @ORM\Column(nullable=true)
-     * @ORM\Column(name="ville", type="string", length=255)
+     * @ORM\Column(name="ville", type="string", length=255, nullable=true)
      */
     private $ville;
 
     /**
      * @var string
-     * @ORM\Column(nullable=true)
-     * @ORM\Column(name="codePostal", type="string", length=255)
+     * @ORM\Column(name="codePostal", type="string", length=255, nullable=true)
      */
     private $codePostal;
 
     /**
      * @var string
-     * @ORM\Column(nullable=true)
-     * @ORM\Column(name="telephoneFix", type="string", length=10)
+     * @ORM\Column(name="telephoneFix", type="string", length=10, nullable=true)
      */
     private $telephoneFix;
 
     /**
      * @var string
-     * @ORM\Column(nullable=true)
-     * @ORM\Column(name="telephonePortable", type="string", length=10)
+     * @ORM\Column(name="telephonePortable", type="string", length=10, nullable=true)
      */
     private $telephonePortable;
 
     /**
      * @var string
-     * @ORM\Column(nullable=true)
      * @ORM\Column(name="fax", type="string", length=10)
      */
     private $fax;
 
     /**
      * @var \DateTime
-     * @ORM\Column(nullable=true)
-     * @ORM\Column(name="dateNaissance", type="datetime")
+     * @ORM\Column(name="dateNaissance", type="date", nullable=true)
      */
     private $dateNaissance;
 
     /**
      * @var string
-     * @ORM\Column(nullable=true)
      * @ORM\Column(name="estHandicape", type="boolean")
      */
     private $estHandicape;
@@ -244,7 +235,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
     public function getDateNaissance()
     {
@@ -252,7 +243,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param string $dateNaissance
+     * @param \DateTime $dateNaissance
      */
     public function setDateNaissance($dateNaissance)
     {

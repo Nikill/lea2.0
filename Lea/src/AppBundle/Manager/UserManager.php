@@ -99,8 +99,8 @@ class UserManager extends BaseManager
                 // edition and user already exist
 
                 // update existing user throught FOSUser manager method
-                $entity->setPlainPassword($entity->getPassword());
-                $entity->setDateNaissance($entity->getDateNaissance()->format('d-m-Y'));
+                //$entity->setPlainPassword($entity->getPassword());
+                //$entity->setDateNaissance($entity->getDateNaissance()->format('d-m-Y'));
                 $this->userManager->updateUser($entity);
 
             }else {
