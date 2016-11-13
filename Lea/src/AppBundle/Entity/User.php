@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -90,6 +91,13 @@ class User extends BaseUser
      * @ORM\Column(name="estHandicape", type="boolean")
      */
     private $estHandicape;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        // details and/on creation date
+    }
 
     /**
      * @return mixed
@@ -268,11 +276,5 @@ class User extends BaseUser
     }
 
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        // details and/on creation date
-    }
 }
 
