@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TypeDocumentManager extends BaseManager
 {
-
-
     /**
      * CategoryManager constructor.
      * @param $em

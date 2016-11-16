@@ -94,4 +94,3 @@ class Document
         return $this->canView;
     }
 }
-

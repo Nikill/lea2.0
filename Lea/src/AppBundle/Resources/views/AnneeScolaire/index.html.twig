@@ -1,12 +1,29 @@
 {% extends "AppBundle::base.html.twig" %}
 
 {% block body %}
-    <h3>Années scolaires</h3>
-    <a class="btn btn-default" href="{{ path('anneeScolaire_create') }}" role="button">Ajouter une année scolaire</a>
+    <h3>Ensemble des années scolaires</h3>
+    <div class="row text-center">
+        <div class="col-sm-6 col-lg-4">
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <a href="{{ path('anneeScolaire_create') }}" class="widget widget-hover-effect2">
+                <div class="widget-extra themed-background-amethyst">
+                    <h4 class="widget-content-light">
+                        <strong>Créer une nouvelle </strong> année scolaire
+                    </h4>
+                </div>
+                <div class="widget-extra-full">
+                    <span class="h2 text-danger animation-expandOpen"><i class="fa fa-users"></i></span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+        </div>
+    </div>
     <table class="table table-bordered table-striped datatable" id="table-anneeScolaire">
         <thead>
             <tr>
-                <th>Libelle</th>
+                <th>Libellé</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -17,12 +34,11 @@
                     <td class="text-center">{{ anneeScolaire.libelle }}</td>
                     <td>
                         <a href="{{ path('anneeScolaire_edit', {'id': anneeScolaire.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
-                            <i class="entypo-pencil"></i>
-                            Edit
+                            <i class="entypo-pencil"></i> Éditer
                         </a>
 
                         <a href="{{ path('anneeScolaire_delete', {'id': anneeScolaire.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left">
-                            <i class="entypo-cancel"></i> Delete
+                            <i class="entypo-cancel"></i> Supprimer
                         </a>
                     </td>
                 </tr>
