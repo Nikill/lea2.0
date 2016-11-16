@@ -28,7 +28,6 @@ class AnneeScolaire
      */
     private $libelle;
 
-
     /**
      * Get id
      *
@@ -63,4 +62,3 @@ class AnneeScolaire
         return $this->libelle;
     }
 }
-
