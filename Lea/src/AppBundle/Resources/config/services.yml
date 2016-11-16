@@ -3,12 +3,12 @@ services:
         class: AppBundle\Manager\UserManager
         arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router', '@security.token_storage', '@fos_user.user_manager' ]
 
-    app.question.manager:
-        class: AppBundle\Manager\QuestionManager
-        arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
-
     app.questionnaire.manager:
         class: AppBundle\Manager\QuestionnaireManager
+        arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
+
+    app.question.manager:
+        class: AppBundle\Manager\QuestionManager
         arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
 
     app.choix.manager:

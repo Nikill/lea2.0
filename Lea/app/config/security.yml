@@ -49,6 +49,9 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/questionnaire/, role: ROLE_RESPONSABLE }
+        - { path: ^/question/, role: ROLE_RESPONSABLE }
+        - { path: ^/choix/, role: ROLE_RESPONSABLE }
         - { path: ^/typeDocument/, role: ROLE_RESPONSABLE }
         - { path: ^/anneeScolaire/, role: ROLE_SUPER_ADMIN }
         - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
