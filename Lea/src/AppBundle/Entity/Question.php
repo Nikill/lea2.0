@@ -61,6 +61,13 @@ class Question
      */
     private $choix;
 
+    /**
+     * @var ArrayCollection $reponses
+     * @ORM\OneToMany(targetEntity="Reponse", mappedBy="question", cascade={"persist", "remove", "merge"})
+     */
+    private $reponses;
+
+
     public function __construct() {
         $this->questionnaires = new ArrayCollection();
     }
@@ -285,6 +292,48 @@ class Question
     public function getChoix()
     {
         return $this->choix;
+    }
+
+    /**
+     * Add reponse
+     *
+     * @param Reponse $reponse
+     *
+     * @return Question
+     */
+    public function addReponse(Reponse $reponse)
+    {
+        $reponse->setQuestion($this);
+
+        if (!$this->reponses->contains($reponse)) {
+            $this->reponses->add($reponse);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set reponses
+     *
+     * @param ArrayCollection $reponses
+     *
+     * @return Question
+     */
+    public function setReponses(ArrayCollection $reponses)
+    {
+        $this->reponses = $reponses;
+
+        return $this;
+    }
+
+    /**
+     * Get reponses
+     *
+     * @return ArrayCollection $reponses
+     */
+    public function getReponses()
+    {
+        return $this->reponses;
     }
 
     /**

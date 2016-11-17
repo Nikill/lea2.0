@@ -61,6 +61,12 @@ class Promotion
      */
     private $questionnaires;
 
+    /**
+     * @var ArrayCollection $contrats
+     * @ORM\OneToMany(targetEntity="Contrat", mappedBy="promotion", cascade={"persist", "remove", "merge"})
+     */
+    private $contrats;
+
     public function __construct() {
         $this->questionnaires = new ArrayCollection();
     }
@@ -236,5 +242,47 @@ class Promotion
     public function getQuestionnaires()
     {
         return $this->questionnaires;
+    }
+
+    /**
+     * Add contrat
+     *
+     * @param Contrat $contrat
+     *
+     * @return Promotion
+     */
+    public function addContrat(Contrat $contrat)
+    {
+        $contrat->setPromotion($this);
+
+        if (!$this->contrats->contains($contrat)) {
+            $this->contrats->add($contrat);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set contrats
+     *
+     * @param ArrayCollection $contrats
+     *
+     * @return Promotion
+     */
+    public function setContrats(ArrayCollection $contrats)
+    {
+        $this->contrats = $contrats;
+
+        return $this;
+    }
+
+    /**
+     * Get contrats
+     *
+     * @return ArrayCollection $contrats
+     */
+    public function getContrats()
+    {
+        return $this->contrats;
     }
 }
