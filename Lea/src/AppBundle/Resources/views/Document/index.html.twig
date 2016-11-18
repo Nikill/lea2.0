@@ -37,7 +37,7 @@
             {% for document in documents %}
                 <tr>
                     <td class="text-center"><a href="{{ asset('assets/uploads/') }}{{ document.nomFichier }}" target="_blank">{{ document.titre }}</a></td>
-                    <td class="text-center">{{ document.typeDocument }}</td>
+                    <td class="text-center">{{ document.typeDocument }} || {{ document.nomFichier }}</td>
                     <td class="text-center">{{ document.anneeScolaire }}</td>
                     <td class="text-center">{{ document.visibleMAP ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>' }}</td>
                     <td class="text-center">{{ document.visibleTuteur ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>' }}</td>

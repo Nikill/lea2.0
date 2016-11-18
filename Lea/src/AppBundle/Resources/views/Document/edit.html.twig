@@ -8,17 +8,14 @@
             </div>
             {{ form_start(form, { 'attr': { 'class': 'form-horizontal form-bordered' } }) }}
                 <div class="form-group">
+                    {{ entity.nomFichier }}
                     <div class="col-md-3 control-label">
                         {{ form_label(form.titre) }}
                         {{ form_widget(form.titre) }}
                     </div>
                     <div class="col-md-3 control-label">
-                        {{ form_label(form.nomFichier) }}
-                        {{ form_widget(form.nomFichier) }}
-                    </div>
-                    <div class="col-md-3 control-label">
-                        <p>Choisir un nouveau fichier</p>
-                        <input type="file" name="fichier" />
+                        {{ form_label(form.file) }}
+                        {{ form_widget(form.file) }}
                     </div>
                     <div class="col-md-3 control-label">
                         {{ form_label(form.typeDocument) }}

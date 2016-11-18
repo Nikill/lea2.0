@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Document
@@ -44,6 +46,11 @@ class Document
      * @ORM\Column(name="nomFichier", type="string", length=255)
      */
     private $nomFichier;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
 
     /**
      * @var bool
@@ -169,6 +176,22 @@ class Document
     public function setNomFichier($nomFichier)
     {
         $this->nomFichier = $nomFichier;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
     }
 
     /**

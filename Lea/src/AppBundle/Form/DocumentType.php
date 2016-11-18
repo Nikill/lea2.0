@@ -2,7 +2,6 @@
 
 namespace AppBundle\Form;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -17,10 +16,8 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add('titre', TextType::class)
-            ->add('nomFichier', TextType::class)
-            /*->add('fichier', FileType::class, array(
-                'data_class' => null,
-                'required' => false))*/
+            ->add('file', FileType::class, array(
+                'required' => false))
             ->add('typeDocument')
             ->add('anneeScolaire')
             ->add('visibleMAP', CheckboxType::class, array(
@@ -39,5 +36,10 @@ class DocumentType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Document'
         ));
+    }
+
+    public function getName()
+    {
+        return 'documents';
     }
 }

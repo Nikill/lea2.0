@@ -6,6 +6,7 @@ use AppBundle\Entity\Document;
 use AppBundle\Form\DocumentType;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
@@ -85,6 +86,13 @@ class DocumentManager extends BaseManager
     {
         $document = $this->em->getRepository('AppBundle:Document')->find($id);
         $this->removeAndFlush($document);
+
+        $file = $this->container->getParameter('upload_dir').'/'.$document->getNomFichier();
+        if($document->getNomFichier() != null)
+        {
+            unlink($file);
+        }
+
         return $this->redirect('document_index');
     }
 
@@ -96,23 +104,37 @@ class DocumentManager extends BaseManager
     public function handleForm(Request $request, Document $document)
     {
         $form = $this->formFactory->create(DocumentType::class, $document);
+
         return $this->handleBaseForm($request, $form, $document, "document_index");
     }
 
     protected function handleBaseForm(Request $request, Form $form, $entity, $path)
     {
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $file = $entity->getNomFichier();
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $file = $entity->getFile();
+
             if($file)
             {
+                // Delete olf file
+                $oldFile = $this->container->getParameter('upload_dir').'/'.$entity->getNomFichier();
+                if($entity->getNomFichier() != null)
+                {
+                    unlink($oldFile);
+                }
+
                 $fileName =  uniqid() . $file->getClientOriginalName();
                 $file->move($this->container->getParameter('upload_dir'), $fileName);
                 $entity->setNomFichier($fileName);
+            }else {
+                $entity->setNomFichier($entity->getNomFichier());
             }
             $this->persistAndFlush($entity);
             return new RedirectResponse($this->router->generate($path));
         }
-        return array('form' => $form->createView());
+
+        return array('form' => $form->createView(), 'entity' => $entity);
     }
 }
