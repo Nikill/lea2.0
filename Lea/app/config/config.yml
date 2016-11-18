@@ -9,6 +9,7 @@ imports:
 parameters:
     locale: en
     default_locale: fr
+    upload_dir: '%kernel.root_dir%/../web/assets/uploads'
 
 framework:
     #esi:             ~

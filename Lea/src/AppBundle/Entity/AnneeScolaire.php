@@ -28,6 +28,11 @@ class AnneeScolaire
      */
     private $libelle;
 
+    function __toString()
+    {
+        return $this->libelle;
+    }
+    
     /**
      * Get id
      *

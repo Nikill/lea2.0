@@ -1,0 +1,73 @@
+{% extends "AppBundle::base.html.twig" %}
+
+{% block body %}
+    <h3>Ensemble des documents</h3>
+    <div class="row text-center">
+        <div class="col-sm-6 col-lg-4">
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <a href="{{ path('document_create') }}" class="widget widget-hover-effect2">
+                <div class="widget-extra themed-background-amethyst">
+                    <h4 class="widget-content-light">
+                        <strong>Créer un nouveau document</strong>
+                    </h4>
+                </div>
+                <div class="widget-extra-full">
+                    <span class="h2 text-danger animation-expandOpen"><i class="fa fa-users"></i></span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+        </div>
+    </div>
+    <table class="table table-bordered table-striped datatable" id="table-document">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Type de document</th>
+                <th>Année scolaire</th>
+                <th>Visible MAP</th>
+                <th>Visible tuteur</th>
+                <th>Visible responsable de formation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for document in documents %}
+                <tr>
+                    <td class="text-center"><a href="{{ asset('assets/uploads/') }}{{ document.nomFichier }}" target="_blank">{{ document.titre }}</a></td>
+                    <td class="text-center">{{ document.typeDocument }}</td>
+                    <td class="text-center">{{ document.anneeScolaire }}</td>
+                    <td class="text-center">{{ document.visibleMAP ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>' }}</td>
+                    <td class="text-center">{{ document.visibleTuteur ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>' }}</td>
+                    <td class="text-center">{{ document.visibleResponsable ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>' }}</td>
+                    <td>
+                        <a href="{{ path('document_edit', {'id': document.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
+                            <i class="entypo-pencil"></i> Éditer
+                        </a>
+
+                        <a href="{{ path('document_delete', {'id': document.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left">
+                            <i class="entypo-cancel"></i> Supprimer
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        jQuery( document ).ready( function( $ ) {
+            var $table1 = jQuery( '#table-document' );
+
+            // Initialize DataTable
+            $table1.DataTable( {
+                "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "bStateSave": true
+            });
+        } );
+    </script>
+{% endblock %}

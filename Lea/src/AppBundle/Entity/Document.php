@@ -29,12 +29,41 @@ class Document
     private $titre;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TypeDocument")
+     */
+    private $typeDocument;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\AnneeScolaire")
+     */
+    private $anneeScolaire;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="canView", type="string", length=255)
+     * @ORM\Column(name="nomFichier", type="string", length=255)
      */
-    private $canView;
+    private $nomFichier;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="visibleMAP", type="boolean")
+     */
+    private $visibleMAP;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="visibleTuteur", type="boolean")
+     */
+    private $visibleTuteur;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="visibleResponsable", type="boolean")
+     */
+    private $visibleResponsable;
 
     /**
      * Get id
@@ -92,5 +121,101 @@ class Document
     public function getCanView()
     {
         return $this->canView;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTypeDocument()
+    {
+        return $this->typeDocument;
+    }
+
+    /**
+     * @param mixed $typeDocument
+     */
+    public function setTypeDocument($typeDocument)
+    {
+        $this->typeDocument = $typeDocument;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnneeScolaire()
+    {
+        return $this->anneeScolaire;
+    }
+
+    /**
+     * @param mixed $anneeScolaire
+     */
+    public function setAnneeScolaire($anneeScolaire)
+    {
+        $this->anneeScolaire = $anneeScolaire;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNomFichier()
+    {
+        return $this->nomFichier;
+    }
+
+    /**
+     * @param mixed $nomFichier
+     */
+    public function setNomFichier($nomFichier)
+    {
+        $this->nomFichier = $nomFichier;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isVisibleMAP()
+    {
+        return $this->visibleMAP;
+    }
+
+    /**
+     * @param boolean $visibleMAP
+     */
+    public function setVisibleMAP($visibleMAP)
+    {
+        $this->visibleMAP = $visibleMAP;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isVisibleTuteur()
+    {
+        return $this->visibleTuteur;
+    }
+
+    /**
+     * @param boolean $visibleTuteur
+     */
+    public function setVisibleTuteur($visibleTuteur)
+    {
+        $this->visibleTuteur = $visibleTuteur;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isVisibleResponsable()
+    {
+        return $this->visibleResponsable;
+    }
+
+    /**
+     * @param boolean $visibleResponsable
+     */
+    public function setVisibleResponsable($visibleResponsable)
+    {
+        $this->visibleResponsable = $visibleResponsable;
     }
 }
