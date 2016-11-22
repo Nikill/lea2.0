@@ -37,7 +37,7 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(name="adresse", type="string", length=255)
+     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
      */
     private $adresse;
 
@@ -49,7 +49,7 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(name="codePostal", type="string", length=255, nullable=true)
+     * @ORM\Column(name="codePostal", type="string", length=5, nullable=true)
      */
     private $codePostal;
 
@@ -67,7 +67,7 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(name="fax", type="string", length=10)
+     * @ORM\Column(name="fax", type="string", length=10, nullable=true)
      */
     private $fax;
 
