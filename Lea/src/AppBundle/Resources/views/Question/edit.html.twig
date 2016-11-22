@@ -81,8 +81,8 @@
                 {% endfor %}
                 {% for choi in choix %}
                     <tr>
-                        <td class="text-center">{{ choi.description }}</td>
                         <td class="text-center">{{ choi.rang }}</td>
+                        <td class="text-center">{{ choi.description }}</td>
                         <td>
                             <a href="{{ path('choix_edit', {'id': choi.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
                                 <i class="entypo-pencil"></i> Éditer

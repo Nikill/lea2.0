@@ -5,33 +5,45 @@
             <span class="title">Accueil</span>
         </a>
     </li>
-    <li class="root-level">
-        <a href="{{ path('user_index') }}">
-            <i class="entypo-users"></i>
-            <span class="title">Users</span>
-        </a>
-    </li>
-    <li class="root-level">
-        <a href="{{ path('questionnaire_index') }}">
-            <i class="entypo-search"></i>
-            <span class="title">Questionnaires</span>
-        </a>
-    </li>
-    <li class="root-level">
-        <a href="{{ path('typeDocument_index') }}">
-            <i class="entypo-docs"></i>
-            <span class="title">Types de document</span>
-        </a>
-    </li>
-    <li class="root-level">
-        <a href="{{ path('anneeScolaire_index') }}">
-            <i class="entypo-location"></i>
-            <span class="title">Années scolaires</span>
-        </a>
-    </li><li class="root-level">
-        <a href="{{ path('document_index') }}">
-            <i class="entypo-location"></i>
-            <span class="title">Documents</span>
-        </a>
-    </li>
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <li class="root-level">
+            <a href="{{ path('user_index') }}">
+                <i class="entypo-users"></i>
+                <span class="title">Users</span>
+            </a>
+        </li>
+    {% endif %}
+
+    {% if is_granted('ROLE_RESPONSABLE') %}
+        <li class="root-level">
+            <a href="{{ path('questionnaire_index') }}">
+                <i class="entypo-search"></i>
+                <span class="title">Questionnaires</span>
+            </a>
+        </li>
+
+        <li class="root-level">
+            <a href="{{ path('typeDocument_index') }}">
+                <i class="entypo-docs"></i>
+                <span class="title">Types de document</span>
+            </a>
+        </li>
+    {% endif %}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <li class="root-level">
+            <a href="{{ path('anneeScolaire_index') }}">
+                <i class="entypo-location"></i>
+                <span class="title">Années scolaires</span>
+            </a>
+        </li>
+
+        <li class="root-level">
+            <a href="{{ path('document_index') }}">
+                <i class="entypo-docs"></i>
+                <span class="title">Documents</span>
+            </a>
+        </li>
+    {% endif %}
 </ul>
