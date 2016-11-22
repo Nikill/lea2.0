@@ -3,90 +3,101 @@
         <ul class="user-info pull-left pull-none-xsm">
             <li class="profile-info dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ asset("assets/images/thumb-1@2x.png") }}" alt="" class="img-circle" width="44" />
-                    John User
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <img src="{{ asset("assets/images/thumb-1@2x.png") }}" alt="" class="img-circle" width="44" />
+                        {{ app.user.prenom }} {{ app.user.nom }}
+                    {% else %}
+                        <img src="{{ asset("assets/images/member.jpg") }}" alt="" class="img-circle" width="44" />
+                        Connectez-vous !
+                    {% endif %}
                 </a>
-                <ul class="dropdown-menu">
-                    <li class="caret"></li>
-                    <li>
-                        <a href="#">
-                            <i class="entypo-user"></i>
-                            Edit Profile
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="entypo-mail"></i>
-                            Inbox
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="entypo-calendar"></i>
-                            Calendar
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="entypo-clipboard"></i>
-                            Tasks
-                        </a>
-                    </li>
-                </ul>
+
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <ul class="dropdown-menu">
+                        <li class="caret"></li>
+                        <li>
+                            <a href="#">
+                                <i class="entypo-user"></i>
+                                Mon profil
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="entypo-mail"></i>
+                                Email
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="entypo-calendar"></i>
+                                Calendrier
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="entypo-clipboard"></i>
+                                Tâches
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
             </li>
         </ul>
 
         <ul class="user-info pull-left pull-right-xs pull-none-xsm">
             <!-- Raw Notifications -->
-            <li class="notifications dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <i class="entypo-attention"></i>
-                    <span class="badge badge-info">2</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="top">
-                        <p class="small">
-                            <a href="#" class="pull-right">Marquer comme lues</a>
-                            Vous avez <strong>2</strong> nouvelles notifications.
-                        </p>
-                    </li>
-                    <li>
-                        <ul class="dropdown-menu-list scroller">
-                            <li class="unread notification-success">
-                                <a href="#">
-                                    <i class="entypo-user-add pull-right"></i>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <li class="notifications dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <i class="entypo-attention"></i>
+                        <span class="badge badge-info">2</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="top">
+                            <p class="small">
+                                <a href="#" class="pull-right">Marquer comme lues</a>
+                                Vous avez <strong>2</strong> nouvelles notifications.
+                            </p>
+                        </li>
+                        <li>
+                            <ul class="dropdown-menu-list scroller">
+                                <li class="unread notification-success">
+                                    <a href="#">
+                                        <i class="entypo-user-add pull-right"></i>
 
-                                    <span class="line">
-                                        <strong>Nouveau questionnaire</strong>
-                                    </span>
+                                        <span class="line">
+                                            <strong>Nouveau questionnaire</strong>
+                                        </span>
 
-                                    <span class="line small">
-                                        Il y a 30 secondes
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="unread notification-secondary">
-                                <a href="#">
-                                    <i class="entypo-heart pull-right"></i>
+                                        <span class="line small">
+                                            Il y a 30 secondes
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="unread notification-secondary">
+                                    <a href="#">
+                                        <i class="entypo-heart pull-right"></i>
 
-                                    <span class="line">
-                                        <strong>Quelqu'un vous aime</strong>
-                                    </span>
+                                        <span class="line">
+                                            <strong>Quelqu'un vous aime</strong>
+                                        </span>
 
-                                    <span class="line small">
-                                        Il y a 10 ans
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="external">
-                        <a href="#">Voir toutes les notifications</a>
-                    </li>
-                </ul>
-            </li>
+                                        <span class="line small">
+                                            Il y a 10 ans
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="external">
+                            <a href="#">Voir toutes les notifications</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
         </ul>
     </div>
+
 
     <!-- Raw Links -->
     <div class="col-md-6 col-sm-4 clearfix hidden-xs">
