@@ -21,25 +21,11 @@ class Contrat
     private $id;
 
     /**
-     * @var User $etudiant
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="id_etudiant", referencedColumnName="id")
+     * @var ArrayCollection $users
+     * Inverse Side
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="contrats", cascade={"persist", "merge"})
      */
-    private $etudiant;
-
-    /**
-     * @var User $tuteur
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="id_tuteur", referencedColumnName="id")
-     */
-    private $tuteur;
-
-    /**
-     * @var User $map
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="id_map", referencedColumnName="id")
-     */
-    private $map;
+    private $users;
 
     /**
      * @var Promotion $promotion
@@ -81,78 +67,6 @@ class Contrat
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set etudiant
-     *
-     * @param User $etudiant
-     *
-     * @return Contrat
-     */
-    public function setEtudiant($etudiant)
-    {
-        $this->etudiant = $etudiant;
-
-        return $this;
-    }
-
-    /**
-     * Get etudiant
-     *
-     * @return User
-     */
-    public function getEtudiant()
-    {
-        return $this->etudiant;
-    }
-
-    /**
-     * Set tuteur
-     *
-     * @param User $tuteur
-     *
-     * @return Contrat
-     */
-    public function setTuteur($tuteur)
-    {
-        $this->tuteur = $tuteur;
-
-        return $this;
-    }
-
-    /**
-     * Get tuteur
-     *
-     * @return User
-     */
-    public function getTuteur()
-    {
-        return $this->tuteur;
-    }
-
-    /**
-     * Set map
-     *
-     * @param User $map
-     *
-     * @return Contrat
-     */
-    public function setMap($map)
-    {
-        $this->map = $map;
-
-        return $this;
-    }
-
-    /**
-     * Get map
-     *
-     * @return User
-     */
-    public function getMap()
-    {
-        return $this->map;
     }
 
     /**
@@ -291,5 +205,61 @@ class Contrat
     public function getQuestionnaires_individualises()
     {
         return $this->questionnaires_individualises;
+    }
+
+    /**
+     * Add user
+     *
+     * @param User $user
+     *
+     * @return Contrat
+     */
+    public function addUser(User $user)
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param User $user
+     *
+     * @return Contrat
+     */
+    public function removeUser(User $user)
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set users
+     *
+     * @param ArrayCollection $users
+     *
+     * @return Contrat
+     */
+    public function setUsers(ArrayCollection $users)
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * Get users
+     *
+     * @return ArrayCollection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }
