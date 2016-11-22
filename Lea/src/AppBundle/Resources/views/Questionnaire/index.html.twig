@@ -41,7 +41,7 @@
                     <td class="text-center">{{ questionnaire.dateFermeture|date('d M Y') }}</td>
                     <td class="text-center">
                         {% for promotion in questionnaire.promotions %}
-                            {{ promotion.nom }}.' : '.{{ promotion.anneeDebut|date('d M Y') }}.{{ promotion.anneeFin|date('d M Y') }}</br>
+                            {{ promotion.nom }} </br>
                         {% endfor %}
                     </td>
                     <td>

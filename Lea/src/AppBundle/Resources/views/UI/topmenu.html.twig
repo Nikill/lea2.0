@@ -92,9 +92,15 @@
     <div class="col-md-6 col-sm-4 clearfix hidden-xs">
         <ul class="list-inline links-list pull-right">
             <li>
-                <a href="#">
-                    Log Out <i class="entypo-logout right"></i>
-                </a>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        Se déconnecter <i class="entypo-logout right"></i>
+                    </a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}">
+                        Se connecter <i class="entypo-login"></i>
+                    </a>
+                {% endif %}
             </li>
         </ul>
     </div>
