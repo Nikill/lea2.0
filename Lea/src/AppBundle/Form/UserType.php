@@ -3,7 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,6 +17,13 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $permissions = array(
+            'Etudiant'                  => 'ROLE_ETUDIANT',
+            'Tuteur pédagogique'        => 'ROLE_TUTEUR',
+            'Responsable de formation'  => 'ROLE_RESPONSABLE',
+            "Maitre d'apprentissage"    => 'ROLE_MAP',
+            'Administrateur'            => 'ROLE_SUPER_ADMIN'
+        );
         $builder
             ->add('username', TextType::class)
             ->add('password', PasswordType::class)
@@ -27,7 +34,7 @@ class UserType extends AbstractType
             ->add('ville', TextType::class, array("required" => false))
             ->add('codePostal', TextType::class, array("required" => false))
             ->add('telephoneFix', TextType::class, array("required" => false))
-            ->add('telephonePortable', TextType::class)
+            ->add('telephonePortable', TextType::class, array("required" => false))
             ->add('fax', TextType::class, array("required" => false))
             ->add('dateNaissance', DateType::class, [
                 'widget' => 'single_text',
@@ -39,6 +46,15 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('estHandicape', CheckboxType::class, array("required" => false, 'label' => 'En situation de handicap'))
+            ->add(
+                'roles',
+                ChoiceType::class,
+                array(
+                    'label'   => 'Rôle à attribuer',
+                    'choices' => $permissions,
+                    'multiple' => true
+                )
+            )
             ->add('save', SubmitType::class, array('label' => 'Créer un utilisateur'))
         ;
     }
