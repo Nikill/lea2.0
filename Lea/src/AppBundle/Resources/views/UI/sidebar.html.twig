@@ -15,14 +15,16 @@
         </li>
     {% endif %}
 
-    {% if is_granted('ROLE_RESPONSABLE') %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <li class="root-level">
             <a href="{{ path('questionnaire_index') }}">
                 <i class="entypo-search"></i>
                 <span class="title">Questionnaires</span>
             </a>
         </li>
+    {% endif %}
 
+    {% if is_granted('ROLE_RESPONSABLE') %}
         <li class="root-level">
             <a href="{{ path('typeDocument_index') }}">
                 <i class="entypo-docs"></i>

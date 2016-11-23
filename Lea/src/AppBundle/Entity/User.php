@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -83,6 +84,17 @@ class User extends BaseUser
      */
     private $estHandicape;
 
+    /**
+     * @var ArrayCollection $contrats
+     * Owning Side
+     * @ORM\ManyToMany(targetEntity="Contrat", inversedBy="users", cascade={"persist", "merge"})
+     * @ORM\JoinTable(name="user_contrats", joinColumns={@ORM\JoinColumn(name="id_user", referencedColumnName="id")}, inverseJoinColumns={@ORM\JoinColumn(name="id_contrat", referencedColumnName="id")})
+     */
+    private $contrats;
+
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -266,6 +278,63 @@ class User extends BaseUser
         $this->estHandicape = $estHandicape;
     }
 
+    /**
+     * Add contrat
+     *
+     * @param Contrat $contrat
+     *
+     * @return User
+     */
+    public function addContrat(Contrat $contrat)
+    {
+        $contrat->addUser($this);
 
+        if (!$this->contrats->contains($contrat)) {
+            $this->contrats->add($contrat);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove contrat
+     *
+     * @param Contrat $contrat
+     *
+     * @return User
+     */
+    public function removeContrat(Contrat $contrat)
+    {
+        $contrat->removeUser($this);
+
+        if ($this->contrats->contains($contrat)) {
+            $this->contrats->removeElement($contrat);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set contrats
+     *
+     * @param ArrayCollection $contrats
+     *
+     * @return User
+     */
+    public function setContrats(ArrayCollection $contrats)
+    {
+        $this->contrats = $contrats;
+
+        return $this;
+    }
+
+    /**
+     * Get contrats
+     *
+     * @return ArrayCollection
+     */
+    public function getContrats()
+    {
+        return $this->contrats;
+    }
 }
-
