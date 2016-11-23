@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -28,8 +29,16 @@ class UserType extends AbstractType
             ->add('telephoneFix', TextType::class, array("required" => false))
             ->add('telephonePortable', TextType::class)
             ->add('fax', TextType::class, array("required" => false))
-            ->add('dateNaissance', BirthdayType::class)
-            ->add('estHandicape', CheckboxType::class, array("required" => false))
+            ->add('dateNaissance', DateType::class, [
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'attr' => [
+                    'class' => 'form-control input-inline datepicker',
+                    'data-provide' => 'datepicker',
+                    'data-date-format' => 'dd-mm-yyyy'
+                ]
+            ])
+            ->add('estHandicape', CheckboxType::class, array("required" => false, 'label' => 'En situation de handicap'))
             ->add('save', SubmitType::class, array('label' => 'Créer un utilisateur'))
         ;
     }

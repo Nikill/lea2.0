@@ -652,7 +652,7 @@ select[multiple].input-lg {
 }
 .panel-heading > .panel-title {
   float: left;
-  padding: 10px 15px;
+  padding: 0px 15px;
 }
 .panel-heading > .panel-title > * {
   margin: 0;
@@ -691,7 +691,7 @@ select[multiple].input-lg {
   margin-right: 0;
 }
 lesshat-selector {
-  -lh-property: 0; } 
+  -lh-property: 0; }
 @-webkit-keyframes reloadingAnimation{ 0%{ -webkit-transform: rotate(0deg); } 100%{ -webkit-transform: rotate(360deg); }}}
 @-moz-keyframes reloadingAnimation{ 0%{ -moz-transform: rotate(0deg); } 100%{ -moz-transform: rotate(360deg); }}}
 @-o-keyframes reloadingAnimation{ 0%{ -o-transform: rotate(0deg); } 100%{ -o-transform: rotate(360deg); }}}
@@ -717,7 +717,6 @@ lesshat-selector {
 }
 .panel-group .panel {
   margin-bottom: 0;
-  overflow: hidden;
 }
 .panel-group .panel > .panel-heading > .panel-title {
   float: none;
@@ -3195,7 +3194,7 @@ table > tbody > tr.highlight > th {
   margin-bottom: 0;
 }
 .panel-group .panel > .panel-heading {
-  padding: 10px 0px;
+  padding: 10px 12px 10px 5px;
 }
 .panel-group .panel > .panel-heading > .panel-title > a {
   font-size: 15px;
