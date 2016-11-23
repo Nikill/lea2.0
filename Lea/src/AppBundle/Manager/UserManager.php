@@ -57,10 +57,11 @@ class UserManager extends BaseManager
     }
 
     /**
+     * @param Request $request
      * @param $id
      * @return RedirectResponse
      */
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
         $script = $this->em->getRepository('AppBundle:User')->find($id);
         $this->removeAndFlush($script);
