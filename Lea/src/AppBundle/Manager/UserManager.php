@@ -8,12 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Date;
 
 class UserManager extends BaseManager
 {
     protected $token;
-
     protected $userManager;
 
     /**
@@ -101,12 +99,11 @@ class UserManager extends BaseManager
                 // update existing user throught FOSUser manager method
                 //$entity->setPlainPassword($entity->getPassword());
                 //$entity->setDateNaissance($entity->getDateNaissance()->format('d-m-Y'));
-                $this->userManager->updateUser($entity);
+                $this->editRoleAction($request, $entity);
 
             }else {
                 //create a fresh user from form datas
-                $this->registerUser($entity->getEmail(), $entity->getUsername(), $entity->getNom(), $entity->getPrenom(), $entity->getAdresse(), $entity->getVille(), $entity->getCodePostal(), $entity->getTelephoneFix(),
-                    $entity->getTelephonePortable(), $entity->getFax(), $entity->getDateNaissance(), $entity->getEstHandicape());
+                $this->registerUser($request, $entity);
             }
 
             // any case, redirect to users list
@@ -117,40 +114,52 @@ class UserManager extends BaseManager
     }
 
     /**
-     * @param $email
-     * @param $username
+     * @param $entity
      * @return bool
      */
-    private function registerUser($email, $username, $nom, $prenom, $adresse, $ville, $codePostal, $telephoneFix, $telephonePortable, $fax, $dateNaissance, $estHandicape)
+    private function registerUser($request, $entity)
     {
-        $emailExist = $this->userManager->findUserByEmail($email);
+        $emailExist = $this->userManager->findUserByEmail($entity->getEmail());
 
         if($emailExist){
             return false;
         }
 
         $user = $this->userManager->createUser();
-        $user->setUsername($username);
-        $user->setUsernameCanonical($username);
-        $user->setEmail($email);
-        $user->setEmailCanonical($email);
+        $user->setUsername($entity->getUsername());
+        $user->setUsernameCanonical($entity->getUsername());
+        $user->setEmail($entity->getEmail());
+        $user->setEmailCanonical($entity->getEmail());
         $user->setLocked(0);
         $user->setEnabled(1);
-        $user->setPlainPassword("123");
-        $user->setNom($nom);
-        $user->setPrenom($prenom);
-        $user->setAdresse($adresse);
-        $user->setVille($ville);
-        $user->setCodePostal($codePostal);
-        $user->setTelephoneFix($telephoneFix);
-        $user->setTelephonePortable($telephonePortable);
-        $user->setFax($fax);
-        $user->setDateNaissance($dateNaissance);
-        $user->setEstHandicape($estHandicape);
+        $user->setPlainPassword($entity->getPassword());
+        $user->setNom($entity->getNom());
+        $user->setPrenom($entity->getPrenom());
+        $user->setAdresse($entity->getAdresse());
+        $user->setVille($entity->getVille());
+        $user->setCodePostal($entity->getCodePostal());
+        $user->setTelephoneFix($entity->getTelephoneFix());
+        $user->setTelephonePortable($entity->getTelephonePortable());
+        $user->setFax($entity->getFax());
+        $user->setDateNaissance($entity->getDateNaissance());
+        $user->setEstHandicape($entity->getEstHandicape());
+
+        $this->editRoleAction($request, $user);
 
         $this->userManager->updateUser($user, false);
         $this->persistAndFlush($user);
 
         return true;
     }
+    
+    public function editRoleAction(Request $request, $user)
+    {
+        // Getting the variable of the form
+        $valueUser = $request->request->get('user');
+        // Changing the role of the user
+        $user->setRoles($valueUser['roles']);
+        // Updating the user
+        $this->userManager->updateUser($user);
+    }
 }
+
