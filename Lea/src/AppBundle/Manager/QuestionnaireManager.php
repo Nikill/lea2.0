@@ -3,6 +3,7 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Entity\Questionnaire;
+use AppBundle\Entity\User;
 use AppBundle\Form\DisplayQuestionnaireType;
 use AppBundle\Form\QuestionnaireType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -39,6 +40,34 @@ class QuestionnaireManager extends BaseManager
     public function findAll()
     {
         return $this->em->getRepository('AppBundle:Questionnaire')->findAll();
+    }
+
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    public function findByUser(User $userActuel) {
+        $questionnaires = $this->em->getRepository('AppBundle:Questionnaire')->findAll();
+
+        $questionnairesUser = new ArrayCollection();
+        foreach ($questionnaires as $questionnaire) {
+            $find = false;
+            foreach ($questionnaire->getPromotions() as $promotion) {
+                foreach ($promotion->getContrats() as $contrat) {
+                    foreach ($contrat->getUsers() as $user) {
+                        if ($user == $userActuel) {
+                            $questionnairesUser->add($questionnaire);
+                            $find = true;
+                            break;
+                        }
+                    }
+                    if ($find) { break; }
+                }
+                if ($find) { break; }
+            }
+        }
+
+        return $questionnairesUser;
     }
 
     /**

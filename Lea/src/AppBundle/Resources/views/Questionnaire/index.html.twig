@@ -63,7 +63,7 @@
     {% else %}
         {% for questionnaire in questionnaires %}
             <a href="{{ path('questionnaire_display', {'id': questionnaire.id}) }}">
-                {{ questionnaire.description }}
+                <h4>{{ questionnaire.description }}</h4>
             </a>
         {% endfor %}
     {% endif %}

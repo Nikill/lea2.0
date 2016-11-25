@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,7 +20,23 @@ class QuestionnaireController extends Controller
      */
     public function indexAction()
     {
-        $questionnaires = $this->get('app.questionnaire.manager')->findAll();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $roles = new ArrayCollection($user->getRoles());
+
+        // Test si l'utilisateur est un responsable ou un admin
+        $isResponsable = false;
+        foreach ($roles as $role) {
+            if ($role == "ROLE_RESPONSABLE" OR $role == "ROLE_SUPER_ADMIN") {
+                $isResponsable = true;
+                break;
+            }
+        }
+
+        if ($isResponsable) {
+            $questionnaires = $this->get('app.questionnaire.manager')->findAll();
+        } else {
+            $questionnaires = $this->get('app.questionnaire.manager')->findByUser($user);
+        }
         return array('questionnaires' => $questionnaires);
     }
 
