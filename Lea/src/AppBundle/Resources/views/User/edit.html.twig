@@ -7,6 +7,7 @@
                 <h2>Éditer un utilisateur</h2>
             </div>
             {{ form_start(form, { 'attr': { 'class': 'form-horizontal form-bordered'} }) }}
+                {{ form_errors(form) }}
                 <div class="form-group">
                     <div class="col-md-3 control-label">
                         {{ form_label(form.username) }}

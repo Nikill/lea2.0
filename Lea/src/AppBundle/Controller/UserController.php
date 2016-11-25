@@ -24,30 +24,6 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/unapproved", name="user_unapproved")
-     * @return array
-     */
-    public function unapprovedAction()
-    {
-        if ($this->getUser()->hasRole('ROLE_ADMIN'))
-        {
-            $em = $this->getDoctrine()->getManager();
-            $users = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('enabled' => false));
-
-            foreach($users as $user)
-            {
-                $em->remove($user);
-            }
-            $em->flush();
-        }else
-        {
-            // get all scripts done by the user
-            $this->redirectToRoute('script_index');
-        }
-        return $this->redirectToRoute('user_index');
-    }
-
-    /**
      * @Template()
      * @Route("/new", name="user_create")
      * @param Request $request

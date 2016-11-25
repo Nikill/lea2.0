@@ -95,15 +95,11 @@ class UserManager extends BaseManager
         {
             if($entity instanceof User)
             {
-                // edition and user already exist
-
-                // update existing user throught FOSUser manager method
-                //$entity->setPlainPassword($entity->getPassword());
-                //$entity->setDateNaissance($entity->getDateNaissance()->format('d-m-Y'));
-                $this->editRoleAction($request, $entity);
+                // update existing user through FOSUser manager method
+                $this->editRole($request, $entity);
 
             }else {
-                //create a fresh user from form datas
+                //create a fresh user from form data
                 $this->registerUser($request, $entity);
             }
 
@@ -115,10 +111,11 @@ class UserManager extends BaseManager
     }
 
     /**
+     * @param Request $request
      * @param $entity
      * @return bool
      */
-    private function registerUser($request, $entity)
+    private function registerUser(Request $request, $entity)
     {
         $emailExist = $this->userManager->findUserByEmail($entity->getEmail());
 
@@ -145,7 +142,7 @@ class UserManager extends BaseManager
         $user->setDateNaissance($entity->getDateNaissance());
         $user->setEstHandicape($entity->getEstHandicape());
 
-        $this->editRoleAction($request, $user);
+        $this->editRole($request, $user);
 
         $this->userManager->updateUser($user, false);
         $this->persistAndFlush($user);
@@ -153,12 +150,14 @@ class UserManager extends BaseManager
         return true;
     }
     
-    public function editRoleAction(Request $request, $user)
+    public function editRole(Request $request, $user)
     {
         // Getting the variable of the form
         $valueUser = $request->request->get('user');
         // Changing the role of the user
         $user->setRoles($valueUser['roles']);
+        // set plain password here to allow updateUser method to hash it
+        $user->setPlainPassword($user->getPassword());
         // Updating the user
         $this->userManager->updateUser($user);
     }

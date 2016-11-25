@@ -9,7 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,7 +42,7 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'form-control input-inline datepicker',
                     'data-provide' => 'datepicker',
-                    'data-date-format' => 'dd-mm-yyyy'
+                    'data-date-format' => 'dd-MM-yyyy'
                 ]
             ])
             ->add('estHandicape', CheckboxType::class, array("required" => false, 'label' => 'En situation de handicap'))

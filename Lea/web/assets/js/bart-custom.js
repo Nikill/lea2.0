@@ -702,7 +702,7 @@ var public_vars = public_vars || {};
 			{
 				var $this = $(el),
 					opts = {
-						format: attrDefault($this, 'format', 'mm/dd/yyyy'),
+						format: attrDefault($this, 'format', 'dd-MM-yyyy'),
 						startDate: attrDefault($this, 'startDate', ''),
 						endDate: attrDefault($this, 'endDate', ''),
 						daysOfWeekDisabled: attrDefault($this, 'disabledDays', ''),
