@@ -2,6 +2,7 @@
 
 namespace AppBundle\Manager;
 
+use AppBundle\Entity\Contrat;
 use AppBundle\Entity\Questionnaire;
 use AppBundle\Entity\User;
 use AppBundle\Form\DisplayQuestionnaireType;
@@ -47,27 +48,61 @@ class QuestionnaireManager extends BaseManager
      * @return mixed
      */
     public function findByUser(User $userActuel) {
-        $questionnaires = $this->em->getRepository('AppBundle:Questionnaire')->findAll();
+        $questionnaires = new ArrayCollection();
 
-        $questionnairesUser = new ArrayCollection();
-        foreach ($questionnaires as $questionnaire) {
-            $find = false;
-            foreach ($questionnaire->getPromotions() as $promotion) {
-                foreach ($promotion->getContrats() as $contrat) {
-                    foreach ($contrat->getUsers() as $user) {
-                        if ($user == $userActuel) {
-                            $questionnairesUser->add($questionnaire);
-                            $find = true;
-                            break;
-                        }
-                    }
-                    if ($find) { break; }
+        $contrats = $this->em->getRepository('AppBundle:Contrat')->findAll();
+        $contratsUser = new ArrayCollection();
+        foreach ($contrats as $contrat) {
+            foreach ($contrat->getUsers() as $user) {
+                if ($user == $userActuel) {
+                    $contratsUser->add($contrat);
+                    break;
                 }
-                if ($find) { break; }
             }
         }
 
-        return $questionnairesUser;
+        foreach ($contratsUser as $contrat) {
+            $yearDD = $contrat->getDateDebut()->format('Y');
+            $yearDF = $contrat->getDateFin()->format('Y');
+
+            $n = $yearDF - $yearDD;
+            for ($i=0; $i<$n; $i++) {
+                $fyearDD = $yearDD + $i;
+                $lyearDD = $fyearDD + 1;
+                $questionnaires[$fyearDD.'-'.$lyearDD] = $this->findQuestionnaires($contrat, $i);
+            }
+        }
+
+        return $questionnaires;
+    }
+
+    private function findQuestionnaires(Contrat $contrat, $i) {
+        $fyearDD = $contrat->getDateDebut()->format('Y') + $i;
+        $lyearDD = $fyearDD + 1;
+
+        $fyearDD = $fyearDD.'-09-01'; $lyearDD = $lyearDD.'-08-31';
+
+        $er = $this->em->getRepository('AppBundle:Questionnaire');
+
+        $results = $er->createQueryBuilder('q');
+        $results -> leftJoin('q.promotions', 'p');
+
+        $results -> where($results->expr()->between('q.dateOuverture', ':fyear', ':lyear'),
+            $results->expr()->eq('p.id', ':promotion'));
+        $results -> setParameter('fyear', $fyearDD);
+        $results -> setParameter('lyear', $lyearDD);
+        $results -> setParameter('promotion', $contrat->getPromotion()->getId());
+        $results -> orderby('q.type', 'ASC');
+
+        $results = $results->getQuery();
+        $results = $results->getResult();
+
+        $choices = array();
+        foreach($results as $questionnaire){
+            $choices[$questionnaire->getId()] = $questionnaire;
+        }
+
+        return $choices;
     }
 
     /**

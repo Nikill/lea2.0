@@ -61,13 +61,18 @@
             </tbody>
         </table>
     {% else %}
+        {% set keys = questionnaires.keys %}
+        {% set i = 0 %}
         {% for questionnaire in questionnaires %}
-            <a href="{{ path('questionnaire_display', {'id': questionnaire.id}) }}">
-                <h4>{{ questionnaire.description }}</h4>
-            </a>
+            <h4>{{ keys[i] }}</h4>
+            {% for quest in questionnaire %}
+                <a href="{{ path('questionnaire_display', {'id': quest.id}) }}">
+                    <h5>{{ quest.description }}</h5>
+                </a>
+            {% endfor %}
+            {% set i = i + 1 %}
         {% endfor %}
     {% endif %}
-
 {% endblock %}
 
 
