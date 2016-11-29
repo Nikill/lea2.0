@@ -29,10 +29,24 @@ class QuestionnaireType extends AbstractType
                 'widget' => 'choice',
                 'format' => 'dd-MM-yyyy',
             ))
-            ->add('dateFermeture', DateType::class, array(
-                'widget' => 'choice',
+            ->add('dateOuverture', DateType::class, [
+                'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-            ))
+                'attr' => [
+                    'class' => 'form-control input-inline datepicker',
+                    'data-provide' => 'datepicker',
+                    'data-date-format' => 'dd-mm-yyyy'
+                ]
+            ])
+            ->add('dateFermeture', DateType::class, [
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'attr' => [
+                    'class' => 'form-control input-inline datepicker',
+                    'data-provide' => 'datepicker',
+                    'data-date-format' => 'dd-mm-yyyy'
+                ]
+            ])
             ->add('save', SubmitType::class, array('label' => 'Créer un questionnaire'))
         ;
     }
