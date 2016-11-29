@@ -42,7 +42,7 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'form-control input-inline datepicker',
                     'data-provide' => 'datepicker',
-                    'data-date-format' => 'dd-MM-yyyy'
+                    'data-date-format' => 'dd-mm-yyyy'
                 ]
             ])
             ->add('estHandicape', CheckboxType::class, array("required" => false, 'label' => 'En situation de handicap'))

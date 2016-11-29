@@ -91,6 +91,10 @@ class UserManager extends BaseManager
     {
         $form->handleRequest($request);
 
+
+        /*var_dump($form["dateNaissance"]);
+        die();*/
+
         if ($form->isSubmitted() && $form->isValid())
         {
             if($entity instanceof User)

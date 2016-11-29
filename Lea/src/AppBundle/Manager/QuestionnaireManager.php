@@ -43,7 +43,7 @@ class QuestionnaireManager extends BaseManager
     }
 
     /**
-     * @param User $user
+     * @param User $userActuel
      * @return mixed
      */
     public function findByUser(User $userActuel) {
