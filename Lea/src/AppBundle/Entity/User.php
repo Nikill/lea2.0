@@ -56,9 +56,9 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(name="telephoneFix", type="string", length=10, nullable=true)
+     * @ORM\Column(name="telephoneFixe", type="string", length=10, nullable=true)
      */
-    private $telephoneFix;
+    private $telephoneFixe;
 
     /**
      * @var string
@@ -201,17 +201,17 @@ class User extends BaseUser
     /**
      * @return mixed
      */
-    public function getTelephoneFix()
+    public function getTelephoneFixe()
     {
-        return $this->telephoneFix;
+        return $this->telephoneFixe;
     }
 
     /**
-     * @param mixed $telephoneFix
+     * @param mixed $telephoneFixe
      */
-    public function setTelephoneFix($telephoneFix)
+    public function setTelephoneFixe($telephoneFixe)
     {
-        $this->telephoneFix = $telephoneFix;
+        $this->telephoneFixe = $telephoneFixe;
     }
 
     /**

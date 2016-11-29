@@ -140,7 +140,7 @@ class UserManager extends BaseManager
         $user->setAdresse($entity->getAdresse());
         $user->setVille($entity->getVille());
         $user->setCodePostal($entity->getCodePostal());
-        $user->setTelephoneFix($entity->getTelephoneFix());
+        $user->setTelephoneFixe($entity->getTelephoneFixe());
         $user->setTelephonePortable($entity->getTelephonePortable());
         $user->setFax($entity->getFax());
         $user->setDateNaissance($entity->getDateNaissance());
