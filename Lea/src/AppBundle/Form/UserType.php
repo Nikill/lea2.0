@@ -33,7 +33,7 @@ class UserType extends AbstractType
             ->add('adresse', TextType::class, array("required" => false))
             ->add('ville', TextType::class, array("required" => false))
             ->add('codePostal', TextType::class, array("required" => false))
-            ->add('telephoneFix', TextType::class, array("required" => false))
+            ->add('telephoneFixe', TextType::class, array("required" => false))
             ->add('telephonePortable', TextType::class, array("required" => false))
             ->add('fax', TextType::class, array("required" => false))
             ->add('dateNaissance', DateType::class, [
