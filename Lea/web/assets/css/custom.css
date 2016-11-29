@@ -31,3 +31,16 @@
 .panel-heading:hover h4 {
     text-decoration: underline;
 }
+
+#accordionQuestionnaires .panel-title{
+    font-size:15px;
+    font-weight:bold;
+}
+
+.nav-tabs{
+    border-bottom: 3px solid #ddd;
+}
+
+.list-group-item{
+    padding: 2px 15px;
+}

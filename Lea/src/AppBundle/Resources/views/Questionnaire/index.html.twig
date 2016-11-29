@@ -24,55 +24,84 @@
         </div>
         <table class="table table-bordered table-striped datatable" id="table-questionnaire">
             <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Type du questionnaire</th>
-                    <th>Date d'ouverture</th>
-                    <th>Date de fermeture</th>
-                    <th>Promotion(s)</th>
-                    <th>Actions</th>
-                </tr>
+            <tr>
+                <th>Description</th>
+                <th>Type du questionnaire</th>
+                <th>Date d'ouverture</th>
+                <th>Date de fermeture</th>
+                <th>Promotion(s)</th>
+                <th>Actions</th>
+            </tr>
             </thead>
             <tbody>
-                {% for questionnaire in questionnaires %}
-                    <tr>
-                        <td class="text-center">{{ questionnaire.description }}</td>
-                        <td class="text-center">{{ questionnaire.typeIs(questionnaire.type) }}</td>
-                        <td class="text-center">{{ questionnaire.dateOuverture|date('d M Y') }}</td>
-                        <td class="text-center">{{ questionnaire.dateFermeture|date('d M Y') }}</td>
-                        <td class="text-center">
-                            {% for promotion in questionnaire.promotions %}
-                                {{ promotion.nom }} </br>
-                            {% endfor %}
-                        </td>
-                        <td>
-                            <a href="{{ path('questionnaire_edit', {'id': questionnaire.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
-                                <i class="entypo-pencil"></i> Éditer
-                            </a>
-                            <a href="{{ path('questionnaire_delete', {'id': questionnaire.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left">
-                                <i class="entypo-cancel"></i> Supprimer
-                            </a>
-                            <a href="{{ path('questionnaire_display', {'id': questionnaire.id}) }}" class="btn btn-info btn-sm btn-icon icon-left">
-                                <i class="entypo-info"></i> Afficher
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
+            {% for questionnaire in questionnaires %}
+                <tr>
+                    <td class="text-center">{{ questionnaire.description }}</td>
+                    <td class="text-center">{{ questionnaire.typeIs(questionnaire.type) }}</td>
+                    <td class="text-center">{{ questionnaire.dateOuverture|date('d M Y') }}</td>
+                    <td class="text-center">{{ questionnaire.dateFermeture|date('d M Y') }}</td>
+                    <td class="text-center">
+                        {% for promotion in questionnaire.promotions %}
+                            {{ promotion.nom }} </br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ path('questionnaire_edit', {'id': questionnaire.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
+                            <i class="entypo-pencil"></i> Éditer
+                        </a>
+                        <a href="{{ path('questionnaire_delete', {'id': questionnaire.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left">
+                            <i class="entypo-cancel"></i> Supprimer
+                        </a>
+                        <a href="{{ path('questionnaire_display', {'id': questionnaire.id}) }}" class="btn btn-info btn-sm btn-icon icon-left">
+                            <i class="entypo-info"></i> Afficher
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     {% else %}
-        {% set keys = questionnaires.keys %}
-        {% set i = 0 %}
-        {% for questionnaire in questionnaires %}
-            <h4>{{ keys[i] }}</h4>
-            {% for quest in questionnaire %}
-                <a href="{{ path('questionnaire_display', {'id': quest.id}) }}">
-                    <h5>{{ quest.description }}</h5>
-                </a>
+        <ul class="nav nav-tabs">
+            {% for key in questionnaires.keys %}
+
+                {% if loop.index0==0 %}
+                     <li class="active"><a data-toggle="tab" href="#{{ key }}">{{ key }}</a></li>
+                {% else %}
+                    <li><a data-toggle="tab" href="#{{ key }}">{{ key }}</a></li>
+                {% endif %}
+
             {% endfor %}
-            {% set i = i + 1 %}
-        {% endfor %}
+        </ul>
+
+        <div class="tab-content">
+            {% set keys = questionnaires.keys %}
+            {% set i = 0 %}
+            {% for questionnaire in questionnaires %}
+                {% if i==0 %}
+                     <div id="{{ keys[i] }}" class="tab-pane fade in active">
+                {% else %}
+                    <div id="{{ keys[i] }}" class="tab-pane fade">
+                {% endif %}
+                    <h3>{{ keys[i] }}</h3>
+                    <ul class="list-group">
+                        {% for quest in questionnaire %}
+                            <li class="list-group-item">
+                                <a href="{{ path('questionnaire_display', {'id': quest.id}) }}">
+                                    <h5>{{ quest.description }}</h5>
+                                </a>
+                            </li>
+                        {% endfor %}
+                        {% set i = i + 1 %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+
+
+
+
     {% endif %}
+
 {% endblock %}
 
 
