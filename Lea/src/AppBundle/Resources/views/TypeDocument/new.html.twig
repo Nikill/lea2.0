@@ -1,14 +1,13 @@
 {% extends "AppBundle::base.html.twig" %}
 
 {% block body %}
-    <div class="col-md-offset-3 col-md-6">
-        <div class="block">
-            <div class="block-title">
-                <h2>Nouveau type de document</h2>
-            </div>
-            {{ form_start(form, { 'attr': { 'class': 'form-horizontal form-bordered'} }) }}
-            {{ form_rest(form) }}
-            {{ form_end(form) }}
-        </div>
+<div class="row">
+    <div class="col-md-6">
+         <h2>Création d'un type de document</h2>
+         <br>
+         {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+         {{ form_start(form)}}
+         {{ form_end(form) }}
     </div>
+</div>
 {% endblock %}
