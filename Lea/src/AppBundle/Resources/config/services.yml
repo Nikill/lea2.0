@@ -31,5 +31,9 @@ services:
         class: AppBundle\Manager\DocumentManager
         arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
 
+    app.typeQuestionnaire.manager:
+            class: AppBundle\Manager\TypeQuestionnaireManager
+            arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
+
     fos_user.doctrine_registry:
         alias: doctrine

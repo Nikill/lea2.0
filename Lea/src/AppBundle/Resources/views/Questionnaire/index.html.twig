@@ -77,22 +77,41 @@
             {% set keys = questionnaires.keys %}
             {% set i = 0 %}
             {% for questionnaire in questionnaires %}
+                {% set index = loop.index %}
                 {% if i==0 %}
                      <div id="{{ keys[i] }}" class="tab-pane fade in active">
                 {% else %}
                     <div id="{{ keys[i] }}" class="tab-pane fade">
                 {% endif %}
                     <h3>{{ keys[i] }}</h3>
-                    <ul class="list-group">
-                        {% for quest in questionnaire %}
-                            <li class="list-group-item">
-                                <a href="{{ path('questionnaire_display', {'id': quest.id}) }}">
-                                    <h5>{{ quest.description }}</h5>
-                                </a>
-                            </li>
+                    {% set quests = questionnaire %}
+                    <div class="panel-group" id="accordionQuestionnaires">
+                    {% for type in types %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{ keys[i] }}_{{loop.index}}">
+                                <h4 class="panel-title">{{type.libelle}}</h4>
+                            </div>
+                            <div id="collapse{{ keys[i] }}_{{loop.index}}" class="panel-collapse collapse">
+                                <div class="panel-body">
+
+                                    <ul class="list-group">
+                                        {% for quest in quests %}
+                                            {% if quest.type.id==type.id %}
+                                            <li class="list-group-item">
+                                                <a href="{{ path('questionnaire_display', {'id': quest.id}) }}">
+                                                    <h5>{{ quest.description }}</h5>
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </ul>
+                                </div>
+                            </div>
+                         </div>
                         {% endfor %}
                         {% set i = i + 1 %}
-                    </ul>
+                     </div>
                 </div>
             {% endfor %}
         </div>
