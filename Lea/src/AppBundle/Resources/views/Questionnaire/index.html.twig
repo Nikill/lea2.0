@@ -37,7 +37,7 @@
             {% for questionnaire in questionnaires %}
                 <tr>
                     <td class="text-center">{{ questionnaire.description }}</td>
-                    <td class="text-center">{{ questionnaire.typeIs(questionnaire.type) }}</td>
+                    <td class="text-center">{{ questionnaire.type }}</td>
                     <td class="text-center">{{ questionnaire.dateOuverture|date('d M Y') }}</td>
                     <td class="text-center">{{ questionnaire.dateFermeture|date('d M Y') }}</td>
                     <td class="text-center">
