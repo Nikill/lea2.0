@@ -109,8 +109,8 @@ class QuestionnaireManager extends BaseManager
      * @param User $userActuel
      * @return mixed
      */
-    public function findTestByUser(User $userActuel) {
-        return $this->em->getRepository('AppBundle:Questionnaire_Individualise')->findQuestionnairesAcompleter($userActuel);
+    public function findQuestionnairesNotCompletedByUser(User $userActuel, $colonneSignature) {
+        return $this->em->getRepository('AppBundle:Questionnaire_Individualise')->findQuestionnairesAcompleter($userActuel, $colonneSignature);
     }
 
     /**

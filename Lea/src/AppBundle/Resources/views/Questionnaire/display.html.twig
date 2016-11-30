@@ -1,44 +1,38 @@
 {% extends "AppBundle::base.html.twig" %}
-
+{% block body %}
 <!-- Gestion des dates d'ouverture et des dates de fermeture du questionnaire -->
 {% if (questionnaire.dateOuverture > date() or questionnaire.dateFermeture < date()) %}
     {% set open = false %}
 {% else %}
     {% set open = true %}
 {% endif %}
-
-{% block body %}
-    <div class="col-md-offset-3 col-md-6">
-        <div class="block">
+    <div class="row">
+        <div class="col-md-8">
             <div class="block-title">
                 <h2>{{ questionnaire.description }}</h2>
             </div>
-            {{ form_start(form, { 'attr': { 'class': 'form-horizontal form-bordered'} }) }}
-            <div class="form-group">
-                {% for question in form.questions %}
-                    <h3>{{ question.vars.value.description }}</h3>
-                    <div class="col-md-9">
-                        {% if question.vars.value.typeQuestion == 1 %}
-                            {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
-                                {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '5'} }) }}
-                            {% else %}
-                                {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '5', 'disabled': 'disabled'} }) }}
-                            {% endif %}
-                        {% elseif question.vars.value.typeQuestion == 2 %}
-                            {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
-                                {{ form_widget(question.children.choix) }}
-                            {% else %}
-                                {{ form_widget(question.children.choix, { 'attr': {'disabled': 'disabled'} }) }}
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="form-group form-actions">
-                <div class="col-md-9 col-md-offset-3">
-                    {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
-                    {{ form_widget(form.validate, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
-                </div>
+            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+            {{ form_start(form)}}
+            {% for question in form.questions %}
+                <h3>{{ question.vars.value.description }}</h3>
+
+                {% if question.vars.value.typeQuestion == 1 %}
+                    {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
+                        {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '5'} }) }}
+                    {% else %}
+                        {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '5', 'disabled': 'disabled'} }) }}
+                    {% endif %}
+                {% elseif question.vars.value.typeQuestion == 2 %}
+                    {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
+                        {{ form_widget(question.children.choix) }}
+                    {% else %}
+                        {{ form_widget(question.children.choix, { 'attr': {'disabled': 'disabled'} }) }}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
+            {{ form_widget(form.validate, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
             </div>
         </div>
     </div>
