@@ -100,6 +100,11 @@ class UserManager extends BaseManager
             if($entity instanceof User)
             {
                 // update existing user through FOSUser manager method
+                var_dump($entity->getPassword());
+                die();
+                if ($entity->getPassword() == null) {
+                    
+                }
                 $this->editRole($request, $entity);
 
             }else {
