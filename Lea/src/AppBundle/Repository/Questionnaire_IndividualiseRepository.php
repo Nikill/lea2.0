@@ -14,6 +14,21 @@ class Questionnaire_IndividualiseRepository extends \Doctrine\ORM\EntityReposito
         $qb= $this->createQueryBuilder('q');
         $qb->innerJoin('AppBundle:Questionnaire', 'q2', 'WITH', 'q2.id=q.questionnaire');
         $qb ->where("q.signatureEtudiant=false and q2.dateOuverture < :date");
+
+        $i=0;
+        $nbContrats = sizeof($user->getContrats());
+        foreach ($user->getContrats() as $contrat) {
+            if($i==0){
+                $qb ->andWhere("q.contrat = :idContrat");
+            }elseif ($i<$nbContrats && $i>0){
+                $qb ->orWhere("q.contrat = :idContrat");
+            }
+
+            $qb->setParameter("idContrat", $contrat->getId());
+            $i++;
+        }
+
+
         $qb->setParameter("date", new \DateTime());
 
         return $qb
