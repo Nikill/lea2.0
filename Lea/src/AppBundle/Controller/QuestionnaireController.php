@@ -34,10 +34,10 @@ class QuestionnaireController extends Controller
 
         if ($isResponsable) {
             $questionnaires = $this->get('app.questionnaire.manager')->findAll();
+            return array('questionnaires' => $questionnaires);
         } else {
-            $questionnaires = $this->get('app.questionnaire.manager')->findByUser($user);
+            return array('questionnaires' => $this->get('app.questionnaire.manager')->findByUser($user));
         }
-        return array('questionnaires' => $questionnaires);
     }
 
     /**

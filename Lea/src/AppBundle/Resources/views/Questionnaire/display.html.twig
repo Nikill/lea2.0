@@ -12,9 +12,17 @@
                     <h3>{{ question.vars.value.description }}</h3>
                     <div class="col-md-9">
                         {% if question.vars.value.typeQuestion == 1 %}
-                            {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '5'} }) }}
+                            {% if (question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP')) %}
+                                {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '5'} }) }}
+                            {% else %}
+                                {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '5', 'disabled': 'disabled'} }) }}
+                            {% endif %}
                         {% elseif question.vars.value.typeQuestion == 2 %}
-                            {{ form_widget(question.children.choix) }}
+                            {% if (question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP')) %}
+                                {{ form_widget(question.children.choix) }}
+                            {% else %}
+                                {{ form_widget(question.children.choix, { 'attr': {'disabled': 'disabled'} }) }}
+                            {% endif %}
                         {% endif %}
                     </div>
                 {% endfor %}

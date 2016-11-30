@@ -91,7 +91,7 @@ class Contrat
      */
     public function getPromotion()
     {
-        return $this->idPromotion;
+        return $this->promotion;
     }
 
     /**
