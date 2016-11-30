@@ -35,8 +35,7 @@ class Questionnaire
     private $description;
 
     /**
-     * @var int
-     * @ORM\Column(name="type", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TypeQuestionnaire")
      */
     private $type;
 
@@ -140,17 +139,11 @@ class Questionnaire
     }
 
     /**
-     * Set type
-     *
-     * @param integer $type
-     *
-     * @return Questionnaire
+     * @param mixed $type
      */
     public function setType($type)
     {
         $this->type = $type;
-
-        return $this;
     }
 
     /**
