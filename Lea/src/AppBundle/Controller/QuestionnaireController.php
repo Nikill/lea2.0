@@ -115,4 +115,16 @@ class QuestionnaireController extends Controller
     {
         return $this->get('app.questionnaire.manager')->display($request, $id);
     }
+
+    /**
+     * @Template("AppBundle:Questionnaire:modalDisplay.html.twig")
+     * @Route("/id={id}/displayModal", name="questionnaire_displayModal")
+     * @param Request $request
+     * @param $id
+     * @return array
+     */
+    public function displayActionModal(Request $request, $id)
+    {
+        return $this->get('app.questionnaire.manager')->display($request, $id);
+    }
 }

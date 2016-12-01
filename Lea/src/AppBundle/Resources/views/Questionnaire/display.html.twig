@@ -5,34 +5,40 @@
 {% else %}
     {% set open = true %}
 {% endif %}
-    <div class="row">
-        <div class="col-md-8">
-            <div class="block-title">
-                <h2>{{ questionnaire.description }}</h2>
-            </div>
-            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
-            {{ form_start(form)}}
-            {% for question in form.questions %}
-                <h3>{{ question.vars.value.description }}</h3>
+        <div class="row">
+            <div class="col-md-12">
+                {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+                {{ form_start(form)}}
 
-                {% if question.vars.value.typeQuestion == 1 %}
-                    {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
-                        {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '5'} }) }}
-                    {% else %}
-                        {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '5', 'disabled': 'disabled'} }) }}
-                    {% endif %}
-                {% elseif question.vars.value.typeQuestion == 2 %}
-                    {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
-                        {{ form_widget(question.children.choix) }}
-                    {% else %}
-                        {{ form_widget(question.children.choix, { 'attr': {'disabled': 'disabled'} }) }}
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
 
-            {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
-            {{ form_widget(form.validate, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
+                {% for question in form.questions %}
+                     <div class="row">
+                        <div class="col-md-3">
+                            {{ question.vars.value.description }}
+                        </div>
+                        <div class="col-md-9">
+                            {% if question.vars.value.typeQuestion == 1 %}
+                                {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
+                                    {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '3'} }) }}
+                                {% else %}
+                                    {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '3', 'disabled': 'disabled'} }) }}
+                                {% endif %}
+                            {% elseif question.vars.value.typeQuestion == 2 %}
+                                {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
+                                    {{ form_widget(question.children.choix) }}
+                                {% else %}
+                                    {{ form_widget(question.children.choix, { 'attr': {'disabled': 'disabled'} }) }}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                {% endfor %}
+                {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
+                {{ form_widget(form.validate, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
             </div>
         </div>
     </div>
+    {{ form_end(form)}}
 {% endblock %}
