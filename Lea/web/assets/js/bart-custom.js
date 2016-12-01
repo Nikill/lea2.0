@@ -2118,11 +2118,11 @@ function afficherQuestionnaire(idQuestionnaire){
 
 	$("#questionnaire"+idQuestionnaire).attr('onclick','');
 	$.ajax({
-		url : '/lea/lea/web/app_dev.php/questionnaire/id='+idQuestionnaire+'/display',
+		url : '/lea/lea/web/app_dev.php/questionnaire/id='+idQuestionnaire+'/displayModal',
 		type : 'GET',
 		dataType : 'html',
 		success : function(code_html, statut){
-			$("#modalQuestionnaire .modal-body").html(code_html);
+			$("#modalQuestionnaire .modal-content").html(code_html);
 		},
 
 		error : function(resultat, statut, erreur){
