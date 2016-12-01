@@ -33,6 +33,15 @@
         </li>
     {% endif %}
 
+    {% if is_granted('ROLE_USER') %}
+        <li class="root-level">
+            <a href="{{ path('document_index') }}">
+                <i class="entypo-docs"></i>
+                <span class="title">Documents</span>
+            </a>
+        </li>
+    {% endif %}
+
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <li class="root-level">
             <a href="{{ path('anneeScolaire_index') }}">
@@ -41,12 +50,6 @@
             </a>
         </li>
 
-        <li class="root-level">
-            <a href="{{ path('document_index') }}">
-                <i class="entypo-docs"></i>
-                <span class="title">Documents</span>
-            </a>
-        </li>
     {% endif %}
     <li class="root-level">
         <a href="{{ path('user_edit', {'id': app.user.id }) }}">

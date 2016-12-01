@@ -161,9 +161,8 @@ class UserManager extends BaseManager
         // Changing the role of the user
         $user->setRoles($valueUser['roles']);
         // set plain password here to allow updateUser method to hash it
-        $user->setPlainPassword($user->getPassword());
+        $user->setPassword($user->getPassword());
         // Updating the user
         $this->userManager->updateUser($user);
     }
 }
-
