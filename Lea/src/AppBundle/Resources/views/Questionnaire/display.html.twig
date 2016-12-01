@@ -9,8 +9,6 @@
             <div class="col-md-12">
                 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
                 {{ form_start(form)}}
-
-
                 {% for question in form.questions %}
                      <div class="row">
                         <div class="col-md-3">
@@ -40,5 +38,4 @@
             </div>
         </div>
     </div>
-    {{ form_end(form)}}
 {% endblock %}

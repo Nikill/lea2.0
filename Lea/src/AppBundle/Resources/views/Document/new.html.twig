@@ -1,49 +1,13 @@
 {% extends "AppBundle::base.html.twig" %}
 
 {% block body %}
-    <div class="col-md-offset-3 col-md-6">
-        <div class="block">
+    <div class="row">
+        <div class="col-md-8">
             <div class="block-title">
                 <h2>Nouveau document</h2>
             </div>
-            {{ form_start(form, { 'attr': { 'class': 'form-horizontal form-bordered' } }) }}
-            <div class="form-group">
-                {{ entity.nomFichier }}
-                <div class="col-md-3 control-label">
-                    {{ form_label(form.titre) }}
-                    {{ form_widget(form.titre) }}
-                </div>
-                <div class="col-md-3 control-label">
-                    {{ form_label(form.file) }}
-                    {{ form_widget(form.file) }}
-                </div>
-                <div class="col-md-3 control-label">
-                    {{ form_label(form.typeDocument) }}
-                    {{ form_widget(form.typeDocument) }}
-                </div>
-                <div class="col-md-3 control-label">
-                    {{ form_label(form.anneeScolaire) }}
-                    {{ form_widget(form.anneeScolaire) }}
-                </div>
-                <div class="col-md-3 control-label">
-                    {{ form_label(form.visibleMAP) }}
-                    {{ form_widget(form.visibleMAP) }}
-                </div>
-                <div class="col-md-3 control-label">
-                    {{ form_label(form.visibleTuteur) }}
-                    {{ form_widget(form.visibleTuteur) }}
-                </div>
-                <div class="col-md-3 control-label">
-                    {{ form_label(form.visibleResponsable) }}
-                    {{ form_widget(form.visibleResponsable) }}
-                </div>
-            </div>
-            <div class="form-group form-actions">
-                <div class="col-md-9 col-md-offset-3">
-                    {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
-                </div>
-            </div>
-            {{ form_rest(form) }}
+            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+            {{ form_start(form) }}
             {{ form_end(form) }}
         </div>
     </div>
