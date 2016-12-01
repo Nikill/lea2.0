@@ -1428,6 +1428,11 @@ var public_vars = public_vars || {};
 		// Apply Page Transition
 		onPageAppear(init_page_transitions);
 
+		// On reprend le même id que dans le précédent chapitre
+
+
+
+
 	});
 
 
@@ -2086,4 +2091,46 @@ function numberWithCommas(x) {
     while (pattern.test(x))
         x = x.replace(pattern, "$1,$2");
     return x;
+}
+
+function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
+
+	$("#divCollapse"+collapseId).attr('onclick','');
+	$.ajax({
+		url : '/lea/lea/web/app_dev.php/questionnaire/id='+idQuestionnaire+'/display',
+		type : 'GET',
+		dataType : 'html',
+		success : function(code_html, statut){
+			$("#panel"+collapseId).html(code_html);
+		},
+
+		error : function(resultat, statut, erreur){
+
+		},
+
+		complete : function(resultat, statut){
+
+		}
+	});
+}
+
+function afficherQuestionnaire(idQuestionnaire){
+
+	$("#questionnaire"+idQuestionnaire).attr('onclick','');
+	$.ajax({
+		url : '/lea/lea/web/app_dev.php/questionnaire/id='+idQuestionnaire+'/display',
+		type : 'GET',
+		dataType : 'html',
+		success : function(code_html, statut){
+			$("#modalQuestionnaire .modal-body").html(code_html);
+		},
+
+		error : function(resultat, statut, erreur){
+
+		},
+
+		complete : function(resultat, statut){
+
+		}
+	});
 }

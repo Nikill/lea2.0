@@ -1,4 +1,3 @@
-{% extends "AppBundle::base.html.twig" %}
 {% block body %}
 <!-- Gestion des dates d'ouverture et des dates de fermeture du questionnaire -->
 {% if (questionnaire.dateOuverture > date() or questionnaire.dateFermeture < date()) %}
