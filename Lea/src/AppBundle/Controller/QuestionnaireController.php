@@ -32,12 +32,15 @@ class QuestionnaireController extends Controller
             }
         }
 
+        $types = $this->get('app.typeQuestionnaire.manager')->findAll();
         if ($isResponsable) {
             $questionnaires = $this->get('app.questionnaire.manager')->findAll();
-            return array('questionnaires' => $questionnaires);
+            $questionnaires = array('questionnaires' => $questionnaires,'types' => $types);
         } else {
-            return array('questionnaires' => $this->get('app.questionnaire.manager')->findByUser($user));
+            $questionnaires = array('questionnaires' => $this->get('app.questionnaire.manager')->findByUser($user), 'types' => $types);
         }
+
+        return $questionnaires;
     }
 
     /**

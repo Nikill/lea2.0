@@ -10,10 +10,18 @@ namespace AppBundle\Repository;
  */
 class Questionnaire_IndividualiseRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findQuestionnairesAcompleter($user){
+    public function findQuestionnairesAcompleter($user, $colonneSignature){
+
         $qb= $this->createQueryBuilder('q');
         $qb->innerJoin('AppBundle:Questionnaire', 'q2', 'WITH', 'q2.id=q.questionnaire');
-        $qb ->where("q.signatureEtudiant=false and q2.dateOuverture < :date");
+        $qb ->where("q2.dateOuverture < :date");
+        if("signatureTuteur"==$colonneSignature){
+            $qb ->andWhere("q.signatureTuteur=false");
+        }elseif ("signatureMap"==$colonneSignature){
+            $qb ->andWhere("q.signatureMap=false");
+        }elseif ("signatureEtudiant"==$colonneSignature){
+            $qb ->andWhere("q.signatureEtudiant=false");
+        }
 
         $i=0;
         $nbContrats = sizeof($user->getContrats());
@@ -30,6 +38,7 @@ class Questionnaire_IndividualiseRepository extends \Doctrine\ORM\EntityReposito
 
 
         $qb->setParameter("date", new \DateTime());
+        $qb->addOrderBy("q2.dateFermeture");
 
         return $qb
             ->getQuery()

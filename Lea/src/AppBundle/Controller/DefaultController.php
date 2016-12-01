@@ -21,16 +21,31 @@ class DefaultController extends Controller
         $roles = new ArrayCollection($user->getRoles());
         $questionnaires=array();
         // Test si l'utilisateur est un responsable ou un admin
-        $isInform = false;
+        $isTuteur = false;
+        $isMap=false;
+        $isEtudiant=false;
         foreach ($roles as $role) {
-            if ($role == "ROLE_TUTEUR" OR $role == "ROLE_MAP" OR $role == "ROLE_ETUDIANT") {
-                $isInform = true;
+            if ($role == "ROLE_TUTEUR"){
+                $isTuteur = true;
                 break;
+            }else if($role == "ROLE_MAP"){
+                $isMap = true;
+                break;
+            }else if($role == "ROLE_ETUDIANT"){
+                $isEtudiant=true;
             }
         }
 
-        if ($isInform) {
-            $questionnaires = $this->get('app.questionnaire.manager')->findTestByUser($user);
+        if ($isTuteur) {
+            $questionnaires = $this->get('app.questionnaire.manager')->findQuestionnairesNotCompletedByUser($user, "signatureTuteur");
+        }
+        if($isMap){
+            $questionnairesMap = $this->get('app.questionnaire.manager')->findQuestionnairesNotCompletedByUser($user, "signatureMap");
+            $questionnaires = array_merge($questionnaires, $questionnairesMap);
+        }
+        if($isEtudiant){
+            $questionnairesEtudiant = $this->get('app.questionnaire.manager')->findQuestionnairesNotCompletedByUser($user, "signatureEtudiant");
+            $questionnaires= array_merge($questionnaires, $questionnairesEtudiant);
         }
         return array('questionnairesAcompleter' => $questionnaires);
     }
