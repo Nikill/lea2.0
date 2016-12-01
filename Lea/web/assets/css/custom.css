@@ -44,3 +44,18 @@
 .list-group-item{
     padding: 2px 15px;
 }
+
+.informQuestionnaireUrgent{
+    font-size:large;
+    color: #e74c3c;
+}
+
+.informQuestionnaireMoyenUrgent{
+    font-size:large;
+    color: #d27810;
+}
+
+.informQuestionnaireNonUrgent{
+    font-size:large;
+    color: #82bb42;
+}
