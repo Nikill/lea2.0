@@ -11,6 +11,7 @@
                         <h4 class="panel-title">
                             {% if (q.questionnaire.dateFermeture < date()) %}
                                 <span class="glyphicon glyphicon glyphicon-lock glyphiconLarge informUrgent"></span>
+                                <span class="glyphicon glyphicon glyphicon glyphicon-envelope glyphiconLarge"></span>
                             {% elseif (q.questionnaire.dateFermeture < date("+7 day")) %}
                             <span class="glyphicon glyphicon-exclamation-sign glyphiconLarge informUrgent"></span>
                             {% elseif (q.questionnaire.dateFermeture < date("+14 day") and q.questionnaire.dateFermeture > date("+7 day")) %}
