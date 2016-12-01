@@ -77,7 +77,7 @@ class UserManager extends BaseManager
     public function handleForm(Request $request, User $user)
     {
         $form = $this->formFactory->create(UserType::class, $user);
-        return $this->handleBaseForm($request, $form, $user, "user_index");
+        return $this->handleBaseForm($request, $form, $user, "homepage");
     }
 
     /**
@@ -92,11 +92,15 @@ class UserManager extends BaseManager
         $form->handleRequest($request);
 
 
-        /*var_dump($form["dateNaissance"]);
-        die();*/
-
         if ($form->isSubmitted() && $form->isValid())
         {
+            $userConnecte = $this->get('security.token_storage')->getToken()->getUser();
+            $roles = new ArrayCollection($userConnecte->getRoles());
+            if (in_array("ROLE_SUPER_ADMIN", $roles))
+                $path = "user_index";
+            else
+                $path = "homepage";
+
             if($entity instanceof User)
             {
                 // update existing user through FOSUser manager method
