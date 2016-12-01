@@ -45,17 +45,18 @@
     padding: 2px 15px;
 }
 
-.informQuestionnaireUrgent{
+.glyphiconLarge{
     font-size:large;
+}
+
+.informUrgent{
     color: #e74c3c;
 }
 
-.informQuestionnaireMoyenUrgent{
-    font-size:large;
+.informMoyenUrgent{
     color: #d27810;
 }
 
-.informQuestionnaireNonUrgent{
-    font-size:large;
+.informNonUrgent{
     color: #82bb42;
 }

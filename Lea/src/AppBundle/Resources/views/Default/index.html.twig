@@ -9,15 +9,16 @@
                 <div class="panel panel-default">
                     <div id="divCollapse{{ loop.index }}" onclick="afficherQuestionnaireDashBord({{ q.questionnaire.id }}, {{ loop.index }})" class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{ loop.index }}">
                         <h4 class="panel-title">
-                           {% if (q.questionnaire.dateFermeture < date("+7 day")) %}
-                            <span class="glyphicon glyphicon-exclamation-sign informQuestionnaireUrgent"></span>
+                            {% if (q.questionnaire.dateFermeture < date()) %}
+                                <span class="glyphicon glyphicon glyphicon-lock glyphiconLarge informUrgent"></span>
+                            {% elseif (q.questionnaire.dateFermeture < date("+7 day")) %}
+                            <span class="glyphicon glyphicon-exclamation-sign glyphiconLarge informUrgent"></span>
                             {% elseif (q.questionnaire.dateFermeture < date("+14 day") and q.questionnaire.dateFermeture > date("+7 day")) %}
-                            <span class="glyphicon glyphicon-exclamation-sign informQuestionnaireMoyenUrgent"></span>
+                            <span class="glyphicon glyphicon-exclamation-sign glyphiconLarge informMoyenUrgent"></span>
                             {% elseif (q.questionnaire.dateFermeture < date("+30 day") and q.questionnaire.dateFermeture > date("+14 day"))%}
-                            <span class="glyphicon glyphicon-bell informQuestionnaireNonUrgent"></span>
+                            <span class="glyphicon glyphicon-bell glyphiconLarge informNonUrgent"></span>
                             {% endif %}
                             {{ q.questionnaire.description }} du {{  q.questionnaire.dateOuverture|date('d M Y') }} au {{  q.questionnaire.dateFermeture|date('d M Y') }}
-
 
                         </h4>
 
