@@ -328,6 +328,7 @@ var public_vars = public_vars || {};
 
 
 
+
 		// Popovers and tooltips
 		$('[data-toggle="popover"]').each(function(i, el)
 		{
@@ -2102,6 +2103,10 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 		dataType : 'html',
 		success : function(code_html, statut){
 			$("#panel"+collapseId).html(code_html);
+			$('.disabledRadio').each(function(i, el) // Temporary for demo purpose only
+			{
+				$(el).find("input[type=radio]").attr('disabled','disabled');
+			});
 		},
 
 		error : function(resultat, statut, erreur){
@@ -2123,6 +2128,10 @@ function afficherQuestionnaire(idQuestionnaire){
 		dataType : 'html',
 		success : function(code_html, statut){
 			$("#modalQuestionnaire .modal-content").html(code_html);
+			$('.disabledRadio').each(function(i, el) // Temporary for demo purpose only
+			{
+				$(el).find("input[type=radio]").attr('disabled','disabled');
+			});
 		},
 
 		error : function(resultat, statut, erreur){

@@ -25,7 +25,7 @@
                                 {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
                                     {{ form_widget(question.children.choix) }}
                                 {% else %}
-                                    {{ form_widget(question.children.choix, { 'attr': {'disabled': 'disabled'} }) }}
+                                    {{ form_widget(question.children.choix, { 'attr': {'class': 'disabledRadio'} }) }}
                                 {% endif %}
                             {% endif %}
                         </div>

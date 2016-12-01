@@ -60,3 +60,11 @@
 .informNonUrgent{
     color: #82bb42;
 }
+
+.form-horizontal .radio{
+    display: inline;
+}
+
+.radio label{
+    padding-left:34px;
+}
