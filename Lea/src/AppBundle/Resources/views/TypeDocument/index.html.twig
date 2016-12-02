@@ -1,7 +1,6 @@
 {% extends "AppBundle::base.html.twig" %}
 
 {% block body %}
-    <h2>Ensemble des types de document</h2>
     <div class="row">
         <div class="col-md-6">
             <h2>Création d'un type de document</h2>
@@ -11,6 +10,7 @@
             {{ form_end(form) }}
         </div>
     </div>
+    <h2>Ensemble des types de document</h2>
     <table class="table table-bordered table-striped datatable" id="table-typeDocument">
         <thead>
             <tr>

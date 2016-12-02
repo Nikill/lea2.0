@@ -2,7 +2,8 @@
 
 {% block body %}
 
-    <h2>Ensemble des questionnaires</h2>
+<h2>Création d'un questionnaire</h2>
+
 
     {% if is_granted('ROLE_RESPONSABLE') %}
         <div class="row">
@@ -11,11 +12,9 @@
 
                 {{ form_start( form ) }}
                 {{ form_end( form ) }}
-                <h2>Création d'un questionnaire</h2>
-                <br>
-
             </div>
         </div>
+         <h2>Ensemble des questionnaires</h2>
         <table class="table table-bordered table-striped datatable" id="table-questionnaire">
             <thead>
             <tr>

@@ -3,8 +3,8 @@
 {% block body %}
     <h2>{{ question.description }}</h2>
     {% if question.typeQuestion == 1 %}
-        {{ form_widget(form.description, { 'attr': {'cols': '150', 'rows': '5'} }) }}
+        {{ form_widget(formQuestion.description, { 'attr': {'cols': '150', 'rows': '5'} }) }}
     {% elseif question.typeQuestion == 2 %}
-        {{ form_widget(form.choix) }}
+        {{ form_widget(formQuestion.choix) }}
     {% endif %}
 {% endblock %}
