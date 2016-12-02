@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Document;
+use AppBundle\Form\DocumentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,9 +22,12 @@ class DocumentController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $arrayform = $this->newAction($request);
+
         $documents = $this->getDoctrine()->getRepository('AppBundle:Document')->findAll();
-        $form = $this->get('app.Document.manager')->create($request);
-        return array('documents' => $documents, 'form'=>$form);
+        $arrayform['documents'] = $documents;
+
+        return $arrayform;
     }
 
     /**

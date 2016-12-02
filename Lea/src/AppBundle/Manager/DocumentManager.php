@@ -103,8 +103,8 @@ class DocumentManager extends BaseManager
      */
     public function handleForm(Request $request, Document $document)
     {
-        $form = $this->formFactory->create(DocumentType::class, $document);
 
+        $form = $this->formFactory->create(DocumentType::class, $document);
         return $this->handleBaseForm($request, $form, $document, "document_index");
     }
 
@@ -131,8 +131,9 @@ class DocumentManager extends BaseManager
             }else {
                 $entity->setNomFichier($entity->getNomFichier());
             }
+
             $this->persistAndFlush($entity);
-            return new RedirectResponse($this->router->generate($path));
+            $form = $this->formFactory->create(DocumentType::class, new Document());
         }
 
         return array('form' => $form->createView(), 'entity' => $entity);

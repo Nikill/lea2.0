@@ -2143,3 +2143,23 @@ function afficherQuestionnaire(idQuestionnaire){
 		}
 	});
 }
+
+function editerDocument(idDoc) {
+
+	$.ajax({
+		url: idDoc+'/edit',
+		type: 'GET',
+		dataType: 'html',
+		success: function (code_html, statut) {
+			$("#modalEditDoc .modal-content").html(code_html);
+		},
+
+		error: function (resultat, statut, erreur) {
+
+		},
+
+		complete: function (resultat, statut) {
+
+		}
+	});
+}

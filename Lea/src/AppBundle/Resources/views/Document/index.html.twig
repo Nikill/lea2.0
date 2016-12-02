@@ -35,7 +35,7 @@
                     <td class="text-center">{{ document.visibleTuteur ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>' }}</td>
                     <td class="text-center">{{ document.visibleResponsable ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>' }}</td>
                     <td>
-                        <a href="{{ path('document_edit', {'id': document.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
+                        <a onclick="editerDocument({{ document.id }})" data-toggle="modal" data-target="#modalEditDoc" class="btn btn-default btn-sm btn-icon icon-left">
                             <i class="entypo-pencil"></i> Éditer
                         </a>
 
@@ -47,6 +47,17 @@
             {% endfor %}
         </tbody>
     </table>
+    <!-- Modal -->
+    <div class="modal fade" id="modalEditDoc" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+
+            </div>
+
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}
