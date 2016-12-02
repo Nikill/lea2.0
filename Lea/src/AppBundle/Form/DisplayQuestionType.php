@@ -36,7 +36,9 @@ class DisplayQuestionType extends AbstractType
         if (!is_null($question)) {
             switch($question->getTypeQuestion()) {
                 case 1:
-                    $builder->add('description', TextareaType::class);
+                    $builder->add('description', TextareaType::class, array(
+
+                    ));
                     break;
                 case 2:
                     $builder->add('choix', ChoiceType::class, array(

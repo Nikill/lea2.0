@@ -149,7 +149,7 @@ class Choix
      *
      * @return ArrayCollection
      */
-    public function getQuestions(   )
+    public function getQuestions()
     {
         return $this->questions;
     }

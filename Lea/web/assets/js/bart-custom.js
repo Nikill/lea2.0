@@ -2120,7 +2120,6 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 }
 
 function afficherQuestionnaire(idQuestionnaire){
-
 	$("#questionnaire"+idQuestionnaire).attr('onclick','');
 	$.ajax({
 		url : '/lea/lea/web/app_dev.php/questionnaire/id='+idQuestionnaire+'/displayModal',
