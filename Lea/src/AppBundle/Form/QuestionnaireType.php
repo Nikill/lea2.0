@@ -39,7 +39,7 @@ class QuestionnaireType extends AbstractType
                     'data-date-format' => 'dd-mm-yyyy'
                 ]
             ])
-            ->add('save', SubmitType::class, array('label' => 'Créer un questionnaire'))
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer questionnaire'))
         ;
     }
 

@@ -1,60 +1,29 @@
 {% extends "AppBundle::base.html.twig" %}
 
 {% block body %}
-    <div class="col-md-offset-3 col-md-6">
-        <div class="block">
-            <div class="block-title">
-                <h2>Éditer un questionnaire</h2>
-            </div>
-            {{ form_start(form, { 'attr': { 'class': 'form-horizontal form-bordered'} }) }}
-                <div class="form-group">
-                    <div class="col-md-3 control-label">
-                        {{ form_label(form.description) }}
-                        {{ form_widget(form.description) }}
-                    </div>
-                    <div class="col-md-9">
-                        {{ form_label(form.type) }}
-                        {{ form_widget(form.type) }}
-                    </div>
-                    <div class="col-md-9">
-                        {{ form_label(form.dateOuverture) }}
-                        {{ form_widget(form.dateOuverture) }}
-                    </div>
-                    <div class="col-md-9">
-                        {{ form_label(form.dateFermeture) }}
-                        {{ form_widget(form.dateFermeture) }}
-                    </div>
-                </div>
-                <div class="form-group form-actions">
-                    <div class="col-md-9 col-md-offset-3">
-                        {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
-                    </div>
-                </div>
-            {{ form_rest(form) }}
-            {{ form_end(form) }}
+    <div class="col-md-6">
+        <div class="col-md-10 row">
+            <h3>Modifier le questionnaire</h3>
+            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+            {{ form_start( form ) }}
+            {{ form_end( form ) }}
         </div>
     </div>
 
-    <h3>Questions</h3>
-    <div class="row text-center">
-        <div class="col-sm-6 col-lg-4">
-        </div>
-        <div class="col-sm-6 col-lg-4">
-            <a href="{{ path('question_create') }}" class="widget widget-hover-effect2">
-                <div class="widget-extra themed-background-amethyst">
-                    <h4 class="widget-content-light">
-                        <strong>Créer une nouvelle</strong> question
-                    </h4>
-                </div>
-                <div class="widget-extra-full">
-                    <span class="h2 text-danger animation-expandOpen"><i class="fa fa-users"></i></span>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-6 col-lg-4">
+    <div class="col-md-6">
+        <div class="col-md-10 row">
+            <h3>Créer une question</h3>
+            {% form_theme formQuestion 'bootstrap_3_horizontal_layout.html.twig' %}
+
+            {{ form_start( formQuestion ) }}
+            {{ form_end( formQuestion ) }}
         </div>
     </div>
+    <br><br>
+
     <table class="table table-bordered table-striped datatable" id="table-question">
+        <h3>Liste des questions</h3>
         <thead>
         <tr>
             <th>Description</th>
@@ -80,9 +49,34 @@
                         <a href="{{ path('question_edit', {'id': question.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
                             <i class="entypo-pencil"></i> Éditer
                         </a>
-                        <a href="{{ path('question_remove', {'id': questionnaire.id, 'id_question': question.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left">
+
+                        <button type="button" class="btn btn-danger btn-sm btn-icon icon-left" data-toggle="modal" data-target="#modalSupprimerQuestion{{ questionnaire.id }}_{{ question.id }}">
                             <i class="entypo-cancel"></i> Enlever
-                        </a>
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalSupprimerQuestion{{ questionnaire.id }}_{{ question.id }}" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Supprimer question</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Confirmez-vous la supression de la question "{{question.description}}" dans le questionnaire ?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ path('question_remove',{'id': questionnaire.id, 'id_question': question.id}) }}" class="btn btn-default">
+                                            Confirmer
+                                        </a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                         <a href="{{ path('question_display', {'id': question.id}) }}" class="btn btn-info btn-sm btn-icon icon-left">
                             <i class="entypo-info"></i> Afficher
                         </a>

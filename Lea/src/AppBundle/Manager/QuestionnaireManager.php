@@ -332,7 +332,8 @@ class QuestionnaireManager extends BaseManager
     {
         if (!is_null($option) && $option == 'display') {
             $questions = $questionnaire->getQuestions();
-            $form = $this->formFactory->create(DisplayQuestionnaireType::class, $questionnaire, array('questionnaire' => $questionnaire, 'questions' => $questions, 'em' => $this->em));
+            $form = $this->formFactory->create(DisplayQuestionnaireType::class, $questionnaire, array('questionnaire' => $questionnaire,
+                'questions' => $questions, 'em' => $this->em));
         } else {
             $form = $this->formFactory->create(QuestionnaireType::class, $questionnaire);
         }
@@ -352,7 +353,7 @@ class QuestionnaireManager extends BaseManager
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->persistAndFlush($entity);
-            return new RedirectResponse($this->router->generate("questionnaire_index"));
+            $form = $this->formFactory->create(QuestionnaireType::class, new Questionnaire());
         }
 
         //Suppression des questions déjà présentes dans le questionnaire

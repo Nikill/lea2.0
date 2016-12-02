@@ -146,7 +146,7 @@ class QuestionManager extends BaseManager
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->persistAndFlush($entity);
-            return new RedirectResponse($this->router->generate("question_index"));
+            $form = $this->formFactory->create(QuestionType::class, new Question());
         }
 
         //Suppression des choix déjà présents pour la question
@@ -161,6 +161,6 @@ class QuestionManager extends BaseManager
             }
         }
 
-        return array('form' => $form->createView(), 'question' => $entity, 'choix' => $choix);
+        return array('formQuestion' => $form->createView(), 'question' => $entity, 'choix' => $choix);
     }
 }

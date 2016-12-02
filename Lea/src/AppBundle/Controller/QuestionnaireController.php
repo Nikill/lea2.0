@@ -18,9 +18,11 @@ class QuestionnaireController extends Controller
      * @Route("/", name="questionnaire_index")
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
+        $arrayForm = $this->get('app.questionnaire.manager')->save($request);
+
         $roles = new ArrayCollection($user->getRoles());
 
         // Test si l'utilisateur est un responsable ou un admin
@@ -33,14 +35,17 @@ class QuestionnaireController extends Controller
         }
 
         $types = $this->get('app.typeQuestionnaire.manager')->findAll();
+        $arrayForm['types']=$types;
+
         if ($isResponsable) {
             $questionnaires = $this->get('app.questionnaire.manager')->findAll();
-            $questionnaires = array('questionnaires' => $questionnaires,'types' => $types);
         } else {
-            $questionnaires = array('questionnaires' => $this->get('app.questionnaire.manager')->findByUser($user), 'types' => $types);
+            $questionnaires = $this->get('app.questionnaire.manager')->findByUser($user);
         }
 
-        return $questionnaires;
+        $arrayForm['questionnaires']=$questionnaires;
+
+        return $arrayForm;
     }
 
     /**
@@ -63,7 +68,8 @@ class QuestionnaireController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        return $this->get('app.questionnaire.manager')->edit($request, $id);
+        $arrayForm = $this->get('app.question.manager')->save($request);
+        return array_merge($arrayForm, $this->get('app.questionnaire.manager')->edit($request, $id));
     }
 
     /**
