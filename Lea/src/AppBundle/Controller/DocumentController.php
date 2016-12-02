@@ -15,12 +15,14 @@ class DocumentController extends Controller
     /**
      * @Template()
      * @Route("/", name="document_index")
+     * @param Request $request
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $documents = $this->getDoctrine()->getRepository('AppBundle:Document')->findAll();
-        return array('documents' => $documents);
+        $form = $this->get('app.Document.manager')->create($request);
+        return array('documents' => $documents, 'form'=>$form);
     }
 
     /**

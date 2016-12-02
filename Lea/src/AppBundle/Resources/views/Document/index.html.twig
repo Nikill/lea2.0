@@ -2,22 +2,14 @@
 
 {% block body %}
     <h2>Ensemble des documents</h2>
-    <div class="row text-center">
-        <div class="col-sm-6 col-lg-4">
-        </div>
-        <div class="col-sm-6 col-lg-4">
-            <a href="{{ path('document_create') }}" class="widget widget-hover-effect2">
-                <div class="widget-extra themed-background-amethyst">
-                    <h4 class="widget-content-light">
-                        <strong>Créer un nouveau</strong> document
-                    </h4>
-                </div>
-                <div class="widget-extra-full">
-                    <span class="h2 text-danger animation-expandOpen"><i class="fa fa-users"></i></span>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-6 col-lg-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="block-title">
+                <h2>Nouveau document</h2>
+            </div>
+            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_end(form) }}
         </div>
     </div>
     <table class="table table-bordered table-striped datatable" id="table-document">
