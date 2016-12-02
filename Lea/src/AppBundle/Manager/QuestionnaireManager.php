@@ -4,6 +4,8 @@ namespace AppBundle\Manager;
 
 use AppBundle\Entity\Contrat;
 use AppBundle\Entity\Questionnaire;
+use AppBundle\Entity\Questionnaire_Individualise;
+use AppBundle\Entity\Reponse;
 use AppBundle\Entity\User;
 use AppBundle\Form\DisplayQuestionnaireType;
 use AppBundle\Form\QuestionnaireType;
@@ -181,12 +183,143 @@ class QuestionnaireManager extends BaseManager
     /**
      * @param Request $request
      * @param $id
+     * @param $user
      * @return RedirectResponse
      */
-    public function display(Request $request, $id)
+    public function display(Request $request, $id, User $user)
     {
         $questionnaire = $this->em->getRepository('AppBundle:Questionnaire')->find($id);
-        return $this->handleForm($request, $questionnaire, "display");
+        if ($request->request->get('display_questionnaire') != null) {
+            $contrats = $this->em->getRepository('AppBundle:Contrat')->findAll();
+            $contratsUser = new ArrayCollection();
+            foreach ($contrats as $contrat) {
+                foreach ($contrat->getUsers() as $userWI) {
+                    if ($user == $userWI) {
+                        $contratsUser->add($contrat);
+                        break;
+                    }
+                }
+            }
+
+            $this->saveAnswers($request, $contratsUser, $questionnaire);
+            if (isset($request->request->get('display_questionnaire')['validate'])) {
+                $this->validateAnswers($request, $user, $contratsUser, $questionnaire);
+            }
+            return $this->redirect('questionnaire_index');
+        } else {
+            return $this->handleForm($request, $questionnaire, "display");
+        }
+    }
+
+    /**
+     * Sauvegarde les réponses
+     * @param Request $request
+     * @param ArrayCollection $contratsUser
+     * @param Questionnaire $questionnaire
+     * @return array|RedirectResponse
+     */
+    public function saveAnswers(Request $request, ArrayCollection $contratsUser, Questionnaire $questionnaire)
+    {
+        $questionnaireIndividualise = $this->em->getRepository('AppBundle:Questionnaire_Individualise')->findOneBy(array('questionnaire' => $questionnaire, 'contrat' => $contratsUser->get(0)));
+
+        if ($questionnaireIndividualise == null) {
+            $questionnaireIndividualise = new Questionnaire_Individualise();
+            $questionnaireIndividualise->setContrat($contratsUser->get(0));
+            $questionnaireIndividualise->setQuestionnaire($questionnaire);
+            $questionnaireIndividualise->setSignatureEtudiant(0);
+            $questionnaireIndividualise->setSignatureMap(0);
+            $questionnaireIndividualise->setSignatureTuteur(0);
+
+            $this->persistAndFlush($questionnaireIndividualise);
+        }
+
+        $i = 0;
+
+        $reponses = new ArrayCollection($request->request->get('display_questionnaire')['questions']);
+        foreach ($questionnaire->getQuestions() as $question) {
+            $reponse = $this->em->getRepository('AppBundle:Reponse')->findOneBy(array('questionnaire_individualise' => $questionnaireIndividualise, 'question' => $question));
+            if ($reponse == null) {
+                $reponse = new Reponse();
+                $reponse->setQuestionnaireIndividualise($questionnaireIndividualise);
+                $reponse->setQuestion($question);
+
+                $this->persistAndFlush($reponse);
+            }
+
+            $j = 0;
+            foreach ($reponses as $reponseQ) {
+                if ($i == $j) {
+                    foreach ($reponseQ as $descriptionRQ) {
+                        if ($question->getTypeQuestion() == 2) {
+                            switch ($descriptionRQ) {
+                                case 0:
+                                    $val = "Défavorable";
+                                    break;
+                                case 1:
+                                    $val = "Neutre";
+                                    break;
+                                case 2:
+                                    $val = "Bon";
+                                    break;
+                                case 3:
+                                    $val = "Favorable";
+                                    break;
+                                case 4:
+                                    $val = "Très favorable";
+                                    break;
+                            }
+                            $reponse->setDescription($val);
+                            /*$k = 0;
+                            foreach ($question->getChoix() as $choix) {
+                                if ($descriptionRQ == $k) {
+                                    $reponse->setDescription($choix->getDescription());
+                                    break;
+                                }
+                                $k++;
+                            }*/
+                        } else {
+                            $reponse->setDescription($descriptionRQ);
+                        }
+                        $this->persistAndFlush($reponse);
+                    }
+                    break;
+                }
+                $j++;
+            }
+            $i++;
+        }
+
+        return $this->handleForm($request, $questionnaire);
+    }
+
+    /**
+     * Valider un questionnaire
+     * @param Request $request
+     * @param User $user
+     * @param ArrayCollection $contratsUser
+     * @param Questionnaire $questionnaire
+     * @return array|RedirectResponse
+     */
+    public function validateAnswers(Request $request, User $user, ArrayCollection $contratsUser, Questionnaire $questionnaire) {
+        $questionnaireIndividualise = $this->em->getRepository('AppBundle:Questionnaire_Individualise')->findOneBy(array('questionnaire' => $questionnaire, 'contrat' => $contratsUser->get(0)));
+
+        $roles = new ArrayCollection($user->getRoles());
+        foreach ($roles as $role) {
+            switch ($role) {
+                case "ROLE_ETUDIANT":
+                    $questionnaireIndividualise->setSignatureEtudiant(1);
+                    break;
+                case "ROLE_TUTEUR":
+                    $questionnaireIndividualise->setSignatureTuteur(1);
+                    break;
+                case "ROLE_MAP":
+                    $questionnaireIndividualise->setSignatureMap(1);
+                    break;
+            }
+            $this->persistAndFlush($questionnaireIndividualise);
+        }
+
+        return $this->handleForm($request, $questionnaire);
     }
 
     /**

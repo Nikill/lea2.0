@@ -113,7 +113,8 @@ class QuestionnaireController extends Controller
      */
     public function displayAction(Request $request, $id)
     {
-        return $this->get('app.questionnaire.manager')->display($request, $id);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        return $this->get('app.questionnaire.manager')->display($request, $id, $user);
     }
 
     /**

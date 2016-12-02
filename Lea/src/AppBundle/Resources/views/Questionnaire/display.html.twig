@@ -1,41 +1,47 @@
 {% block body %}
-<!-- Gestion des dates d'ouverture et des dates de fermeture du questionnaire -->
-{% if (questionnaire.dateOuverture > date() or questionnaire.dateFermeture < date()) %}
-    {% set open = false %}
-{% else %}
-    {% set open = true %}
-{% endif %}
-        <div class="row">
-            <div class="col-md-12">
-                {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
-                {{ form_start(form)}}
-                {% for question in form.questions %}
-                     <div class="row">
-                        <div class="col-md-3">
+    <!-- Gestion des dates d'ouverture et des dates de fermeture du questionnaire -->
+    {% if (questionnaire.dateOuverture > date() or questionnaire.dateFermeture < date()) %}
+        {% set open = false %}
+    {% else %}
+        {% set open = true %}
+    {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+            {{ form_start(form)}}
+            {% if is_granted('ROLE_RESPONSABLE') %}
+                <h1>{{ questionnaire.description }}</h1>
+            {% endif %}
+
+            {% for question in form.questions %}
+                 <div class="row">
+                    <div class="col-md-3">
+                        {% if is_granted('ROLE_RESPONSABLE') %}
+                            <h3>{{ question.vars.value.description }}</h3>
+                        {% else %}
                             {{ question.vars.value.description }}
-                        </div>
-                        <div class="col-md-9">
-                            {% if question.vars.value.typeQuestion == 1 %}
-                                {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
-                                    {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '3'} }) }}
-                                {% else %}
-                                    {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '3', 'disabled': 'disabled'} }) }}
-                                {% endif %}
-                            {% elseif question.vars.value.typeQuestion == 2 %}
-                                {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
-                                    {{ form_widget(question.children.choix) }}
-                                {% else %}
-                                    {{ form_widget(question.children.choix, { 'attr': {'class': 'disabledRadio'} }) }}
-                                {% endif %}
-                            {% endif %}
-                        </div>
+                        {% endif %}
                     </div>
-                    <br>
-                    <br>
-                {% endfor %}
-                {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
-                {{ form_widget(form.validate, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
-            </div>
+                    <div class="col-md-9">
+                        {% if question.vars.value.typeQuestion == 1 %}
+                            {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
+                                {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '3'} }) }}
+                            {% else %}
+                                {{ form_widget(question.children.description, { 'attr': {'cols': '100', 'rows': '3', 'disabled': 'disabled'} }) }}
+                            {% endif %}
+                        {% elseif question.vars.value.typeQuestion == 2 %}
+                            {% if ((question.vars.value.cible == 1 and is_granted('ROLE_ETUDIANT')) or (question.vars.value.cible == 2 and is_granted('ROLE_TUTEUR')) or (question.vars.value.cible == 3 and is_granted('ROLE_MAP'))) and open == true %}
+                                {{ form_widget(question.children.choix) }}
+                            {% else %}
+                                {{ form_widget(question.children.choix, { 'attr': {'class': 'disabledRadio'} }) }}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                <br><br>
+            {% endfor %}
+            {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
+            {{ form_widget(form.validate, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
         </div>
     </div>
 {% endblock %}

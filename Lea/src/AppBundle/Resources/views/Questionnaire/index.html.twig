@@ -63,13 +63,11 @@
     {% else %}
         <ul class="nav nav-tabs">
             {% for key in questionnaires.keys %}
-
                 {% if loop.index0==0 %}
                      <li class="active"><a data-toggle="tab" href="#{{ key }}">{{ key }}</a></li>
                 {% else %}
                     <li><a data-toggle="tab" href="#{{ key }}">{{ key }}</a></li>
                 {% endif %}
-
             {% endfor %}
         </ul>
 
@@ -93,7 +91,6 @@
                             </div>
                             <div id="collapse{{ keys[i] }}_{{loop.index}}" class="panel-collapse collapse">
                                 <div class="panel-body{{loop.index}}">
-
                                     <ul class="list-group">
                                         {% for quest in quests %}
                                             {% if quest.type.id==type.id %}
@@ -114,22 +111,16 @@
                 </div>
             {% endfor %}
         </div>
-
-
-
-
     {% endif %}
-<!-- Modal -->
-  <div class="modal fade" id="modalQuestionnaire" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <!-- Modal -->
+    <div class="modal fade" id="modalQuestionnaire" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-
-      </div>
-
+            </div>
+        </div>
     </div>
-  </div>
 {% endblock %}
 
 

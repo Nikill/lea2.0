@@ -1,10 +1,10 @@
 {% block body %}
-<!-- Gestion des dates d'ouverture et des dates de fermeture du questionnaire -->
-{% if (questionnaire.dateOuverture > date() or questionnaire.dateFermeture < date()) %}
-    {% set open = false %}
-{% else %}
-    {% set open = true %}
-{% endif %}
+    <!-- Gestion des dates d'ouverture et des dates de fermeture du questionnaire -->
+    {% if (questionnaire.dateOuverture > date() or questionnaire.dateFermeture < date()) %}
+        {% set open = false %}
+    {% else %}
+        {% set open = true %}
+    {% endif %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">
@@ -16,7 +16,6 @@
             <div class="col-md-12">
                 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
                 {{ form_start(form)}}
-
                 {% for question in form.questions %}
                     <div class="row">
                         <div class="col-md-3">
@@ -38,11 +37,8 @@
                             {% endif %}
                         </div>
                     </div>
-                    <br>
-                    <br>
-
+                    <br><br>
                 {% endfor %}
-
             </div>
         </div>
     </div>
