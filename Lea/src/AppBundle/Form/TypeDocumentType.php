@@ -14,7 +14,7 @@ class TypeDocumentType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class)
-            ->add('save', SubmitType::class, array('label' => 'Sauvegarder un type de document'))
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer type de document'))
         ;
     }
 

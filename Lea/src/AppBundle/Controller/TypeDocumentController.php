@@ -17,10 +17,13 @@ class TypeDocumentController extends Controller
      * @Route("/", name="typeDocument_index")
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $arrayform = $this->get('app.TypeDocument.manager')->create($request);
         $typesDocument = $this->getDoctrine()->getRepository('AppBundle:TypeDocument')->findAll();
-        return array('typesDocument' => $typesDocument);
+        $arrayform['typesDocument'] = $typesDocument;
+
+        return $arrayform;
     }
 
     /**

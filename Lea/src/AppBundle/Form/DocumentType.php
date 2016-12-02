@@ -17,17 +17,21 @@ class DocumentType extends AbstractType
         $builder
             ->add('titre', TextType::class)
             ->add('file', FileType::class, array(
-                'required' => false))
+                'required' => false,
+                'label' => "Fichier"))
             ->add('typeDocument')
             ->add('anneeScolaire')
             ->add('visibleMAP', CheckboxType::class, array(
-                'required' => false))
+                'required' => false,
+                'label' => "MAP"))
             ->add('visibleTuteur', CheckboxType::class, array(
-                'required' => false))
+                'required' => false,
+                'label' => "Tuteur"))
             ->add('visibleResponsable', CheckboxType::class, array(
-                'required' => false))
+                'required' => false,
+                'label' => "Responsable"))
 
-            ->add('save', SubmitType::class, array('label' => 'Sauvegarder un document'))
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer document'))
         ;
     }
 

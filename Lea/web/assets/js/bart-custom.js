@@ -2163,3 +2163,23 @@ function editerDocument(idDoc) {
 		}
 	});
 }
+
+function editerTypeDocument(idTypeDoc) {
+
+	$.ajax({
+		url: idTypeDoc+'/edit',
+		type: 'GET',
+		dataType: 'html',
+		success: function (code_html, statut) {
+			$("#modalEditTypeDoc .modal-content").html(code_html);
+		},
+
+		error: function (resultat, statut, erreur) {
+
+		},
+
+		complete: function (resultat, statut) {
+
+		}
+	});
+}

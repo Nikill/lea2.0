@@ -39,9 +39,33 @@
                             <i class="entypo-pencil"></i> Éditer
                         </a>
 
-                        <a href="{{ path('document_delete', {'id': document.id}) }}" class="btn btn-danger btn-sm btn-icon icon-left">
+                        <button type="button" class="btn btn-danger btn-sm btn-icon icon-left" data-toggle="modal" data-target="#modalSupprimerDoc{{ document.id }}">
                             <i class="entypo-cancel"></i> Supprimer
-                        </a>
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalSupprimerDoc{{ document.id }}" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Supprimer document</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Confirmez-vous la supression du document "{{document.titre}}" ?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ path('document_delete', {'id': document.id}) }}" class="btn btn-default">
+                                            Supprimer
+                                        </a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
