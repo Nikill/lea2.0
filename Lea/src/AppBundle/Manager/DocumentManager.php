@@ -75,8 +75,6 @@ class DocumentManager extends BaseManager
     public function edit(Request $request, $id)
     {
         $document = $this->em->getRepository('AppBundle:Document')->find($id);
-        var_dump($document);
-
         return $this->handleForm($request, $document);
     }
 
@@ -133,7 +131,8 @@ class DocumentManager extends BaseManager
             }else {
                 $entity->setNomFichier($entity->getNomFichier());
             }
-
+            $entity->setDate(new \DateTime());
+            $entity->setProprietaire($this->container->get('security.token_storage')->getToken()->getUser());
             $this->persistAndFlush($entity);
             $form = $this->formFactory->create(DocumentType::class, new Document());
         }

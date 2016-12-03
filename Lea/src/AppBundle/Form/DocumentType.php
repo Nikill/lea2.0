@@ -20,7 +20,6 @@ class DocumentType extends AbstractType
                 'required' => false,
                 'label' => "Fichier"))
             ->add('typeDocument')
-            ->add('anneeScolaire')
             ->add('visibleMAP', CheckboxType::class, array(
                 'required' => false,
                 'label' => "MAP"))

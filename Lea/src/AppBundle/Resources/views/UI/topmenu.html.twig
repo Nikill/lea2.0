@@ -43,10 +43,10 @@
                 {% endif %}
             </li>
         </ul>
-
+        {% if (is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_SUPER_ADMIN') == false) %}
         <ul class="user-info pull-left pull-right-xs pull-none-xsm">
             <!-- Raw Notifications -->
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
                 <li class="notifications dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <i class="entypo-attention"></i>
@@ -66,8 +66,9 @@
                         </li>
                     </ul>
                 </li>
-            {% endif %}
+
         </ul>
+        {% endif %}
     </div>
 
 

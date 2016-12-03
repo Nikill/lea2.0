@@ -61,5 +61,4 @@ security:
         - { path: ^/choix/, role: ROLE_RESPONSABLE }
         - { path: ^/typeDocument/, role: ROLE_RESPONSABLE }
         - { path: ^/document/, role: ROLE_USER }
-        - { path: ^/anneeScolaire/, role: ROLE_SUPER_ADMIN }
         - { path: ^/admin/, role: ROLE_SUPER_ADMIN }

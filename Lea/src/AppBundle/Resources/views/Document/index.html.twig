@@ -18,23 +18,26 @@
             <tr>
                 <th>Titre</th>
                 <th>Type de document</th>
-                <th>Année scolaire</th>
+                {% if (is_granted('ROLE_ETUDIANT') or is_granted('ROLE_SUPER_ADMIN')) %}
                 <th>Visible MAP</th>
                 <th>Visible tuteur</th>
                 <th>Visible responsable de formation</th>
+
                 <th>Actions</th>
+                {% endif %}
             </tr>
         </thead>
 
         <tbody>
             {% for document in documents %}
                 <tr>
-                    <td class="text-center"><a href="{{ asset('assets/uploads/') }}{{ document.nomFichier }}" target="_blank">{{ document.titre }}</a></td>
-                    <td class="text-center">{{ document.typeDocument }} || {{ document.nomFichier }}</td>
-                    <td class="text-center">{{ document.anneeScolaire }}</td>
-                    <td class="text-center">{{ document.visibleMAP ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>' }}</td>
-                    <td class="text-center">{{ document.visibleTuteur ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>' }}</td>
-                    <td class="text-center">{{ document.visibleResponsable ? '<span class="label label-success"><i class="fa fa-check"></i></span>' : '<span class="label label-danger"><i class="fa fa-times"></i></span>' }}</td>
+                    <td><a href="{{ asset('assets/uploads/') }}{{ document.nomFichier }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></button></a> {{ document.titre }}</td>
+                    <td>{{ document.typeDocument }} || {{ document.nomFichier }}</td>
+                    {% if (is_granted('ROLE_ETUDIANT') or is_granted('ROLE_SUPER_ADMIN')) %}
+                    <td>{{ document.visibleMAP ? '<span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>' : '<span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>' }}</td>
+                    <td>{{ document.visibleTuteur ? '<span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>' : '<span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>' }}</td>
+                    <td>{{ document.visibleResponsable ? '<span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>' : '<span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>' }}</td>
+
                     <td>
                         <a onclick="editerDocument({{ document.id }})" data-toggle="modal" data-target="#modalEditDoc" class="btn btn-default btn-sm btn-icon icon-left">
                             <i class="entypo-pencil"></i> Éditer
@@ -68,6 +71,7 @@
                             </div>
                         </div>
                     </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

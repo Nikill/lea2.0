@@ -23,10 +23,6 @@ services:
         class: AppBundle\Manager\TypeDocumentManager
         arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
 
-    app.anneeScolaire.manager:
-        class: AppBundle\Manager\AnneeScolaireManager
-        arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]
-
     app.document.manager:
         class: AppBundle\Manager\DocumentManager
         arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@router' ]

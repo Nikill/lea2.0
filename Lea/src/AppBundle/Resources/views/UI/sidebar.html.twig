@@ -41,13 +41,4 @@
             </a>
         </li>
     {% endif %}
-
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <li class="root-level">
-            <a href="{{ path('anneeScolaire_index') }}">
-                <i class="entypo-location"></i>
-                <span class="title">Années scolaires</span>
-            </a>
-        </li>
-    {% endif %}
 </ul>
