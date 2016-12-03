@@ -36,9 +36,15 @@ class Document
     private $typeDocument;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\AnneeScolaire")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      */
-    private $anneeScolaire;
+    private $proprietaire;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="date", type="date", nullable=true)
+     */
+    private $date;
 
     /**
      * @var string
@@ -107,30 +113,6 @@ class Document
     }
 
     /**
-     * Set canView
-     *
-     * @param string $canView
-     *
-     * @return Document
-     */
-    public function setCanView($canView)
-    {
-        $this->canView = $canView;
-
-        return $this;
-    }
-
-    /**
-     * Get canView
-     *
-     * @return string
-     */
-    public function getCanView()
-    {
-        return $this->canView;
-    }
-
-    /**
      * @return mixed
      */
     public function getTypeDocument()
@@ -149,17 +131,33 @@ class Document
     /**
      * @return mixed
      */
-    public function getAnneeScolaire()
+    public function getProprietaire()
     {
-        return $this->anneeScolaire;
+        return $this->proprietaire;
     }
 
     /**
-     * @param mixed $anneeScolaire
+     * @param mixed $proprietaire
      */
-    public function setAnneeScolaire($anneeScolaire)
+    public function setProprietaire($proprietaire)
     {
-        $this->anneeScolaire = $anneeScolaire;
+        $this->proprietaire = $proprietaire;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 
     /**
