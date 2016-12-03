@@ -20,33 +20,22 @@ class DefaultController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $roles = new ArrayCollection($user->getRoles());
         $questionnaires=array();
+
         // Test si l'utilisateur est un responsable ou un admin
-        $isTuteur = false;
-        $isMap=false;
-        $isEtudiant=false;
+        $isInform = false;
         foreach ($roles as $role) {
-            if ($role == "ROLE_TUTEUR"){
-                $isTuteur = true;
+            if ($role == "ROLE_TUTEUR" OR $role == "ROLE_MAP" OR $role == "ROLE_ETUDIANT") {
+                $isInform = true;
+                $roleUser=$role;
                 break;
-            }else if($role == "ROLE_MAP"){
-                $isMap = true;
-                break;
-            }else if($role == "ROLE_ETUDIANT"){
-                $isEtudiant=true;
             }
         }
 
-        if ($isTuteur) {
-            $questionnaires = $this->get('app.questionnaire.manager')->findQuestionnairesNotCompletedByUser($user, "signatureTuteur");
+        if ($isInform) {
+            $questionnaires = $this->get('app.questionnaire.manager')->findQuestionnairesNotCompletedByUser($user,$role);
         }
-        if($isMap){
-            $questionnairesMap = $this->get('app.questionnaire.manager')->findQuestionnairesNotCompletedByUser($user, "signatureMap");
-            $questionnaires = array_merge($questionnaires, $questionnairesMap);
-        }
-        if($isEtudiant){
-            $questionnairesEtudiant = $this->get('app.questionnaire.manager')->findQuestionnairesNotCompletedByUser($user, "signatureEtudiant");
-            $questionnaires= array_merge($questionnaires, $questionnairesEtudiant);
-        }
+        $questionnaires = $this->get('app.questionnaire.manager')->findQuestionnairesNotCompletedByUser($user,$role);
+
         return array('questionnairesAcompleter' => $questionnaires);
     }
 }

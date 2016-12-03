@@ -10,17 +10,22 @@ namespace AppBundle\Repository;
  */
 class Questionnaire_IndividualiseRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findQuestionnairesAcompleter($user, $colonneSignature){
+    public function findQuestionnairesAcompleter($user, $role){
 
         $qb= $this->createQueryBuilder('q');
         $qb->innerJoin('AppBundle:Questionnaire', 'q2', 'WITH', 'q2.id=q.questionnaire');
         $qb ->where("q2.dateOuverture < :date");
-        if("signatureTuteur"==$colonneSignature){
-            $qb ->andWhere("q.signatureTuteur=false");
-        }elseif ("signatureMap"==$colonneSignature){
-            $qb ->andWhere("q.signatureMap=false");
-        }elseif ("signatureEtudiant"==$colonneSignature){
-            $qb ->andWhere("q.signatureEtudiant=false");
+
+        switch ($role) {
+            case "ROLE_ETUDIANT":
+                $qb ->andWhere("q.signatureEtudiant=false");
+                break;
+            case "ROLE_TUTEUR":
+                $qb ->andWhere("q.signatureTuteur=false");
+                break;
+            case "ROLE_MAP":
+                $qb ->andWhere("q.signatureMap=false");
+                break;
         }
 
         $i=0;
