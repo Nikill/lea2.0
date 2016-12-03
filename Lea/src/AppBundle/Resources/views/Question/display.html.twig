@@ -1,10 +1,24 @@
-{% extends "AppBundle::base.html.twig" %}
-
 {% block body %}
-    <h2>{{ question.description }}</h2>
-    {% if question.typeQuestion == 1 %}
-        {{ form_widget(form.description, { 'attr': {'cols': '150', 'rows': '5'} }) }}
-    {% elseif question.typeQuestion == 2 %}
-        {{ form_widget(form.choix) }}
-    {% endif %}
+    <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">
+            Visualiser question
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div>
+            {% form_theme formQuestion 'bootstrap_3_horizontal_layout.html.twig' %}
+            <h2>{{ question.description }}</h2>
+            {% if question.typeQuestion == 1 %}
+                {{ form_widget(formQuestion.description, { 'attr': {'cols': '150', 'rows': '5'} }) }}
+            {% elseif question.typeQuestion == 2 %}
+                {{ form_widget(formQuestion.choix) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+    </div>
+
 {% endblock %}

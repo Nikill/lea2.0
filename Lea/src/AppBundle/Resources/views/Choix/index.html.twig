@@ -2,23 +2,26 @@
 
 {% block body %}
     <h2>Ensemble des choix</h2>
-    <div class="row text-center">
-        <div class="col-sm-6 col-lg-4">
+    <div class="row">
+        {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+        {{ form_start(form)}}
+        <div class="form-group">
+            <div class="col-md-3 control-label">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_label(form.rang) }}
+                {{ form_widget(form.rang) }}
+            </div>
         </div>
-        <div class="col-sm-6 col-lg-4">
-            <a href="{{ path('choix_create') }}" class="widget widget-hover-effect2">
-                <div class="widget-extra themed-background-amethyst">
-                    <h4 class="widget-content-light">
-                        <strong>Créer un nouveau</strong> choix
-                    </h4>
-                </div>
-                <div class="widget-extra-full">
-                    <span class="h2 text-danger animation-expandOpen"><i class="fa fa-users"></i></span>
-                </div>
-            </a>
+        <div class="form-group form-actions">
+            <div class="col-md-3 col-md-offset-3">
+                {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
+            </div>
         </div>
-        <div class="col-sm-6 col-lg-4">
-        </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
     </div>
     <table class="table table-bordered table-striped datatable" id="table-choix">
         <thead>

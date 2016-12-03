@@ -2119,18 +2119,26 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 	});
 }
 
-function afficherQuestionnaire(idQuestionnaire){
-	$("#questionnaire"+idQuestionnaire).attr('onclick','');
+function afficherQuestionnaire(idQuestionnaire, visu){
+
+	;
 	$.ajax({
 		url : '/lea/lea/web/app_dev.php/questionnaire/id='+idQuestionnaire+'/displayModal',
 		type : 'GET',
 		dataType : 'html',
 		success : function(code_html, statut){
-			$("#modalQuestionnaire .modal-content").html(code_html);
+			var modal=$("#modalQuestionnaire");
+			modal.find(".modal-content").html(code_html);
 			$('.disabledRadio').each(function(i, el) // Temporary for demo purpose only
 			{
 				$(el).find("input[type=radio]").attr('disabled','disabled');
 			});
+
+			if(visu){
+				modal.find(".modal-footer").html('<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>')
+			}else{
+				$("#questionnaire"+idQuestionnaire).attr('onclick','')
+			}
 		},
 
 		error : function(resultat, statut, erreur){
@@ -2147,7 +2155,8 @@ function editerDocument(idDoc) {
 
 	$.ajax({
 		url: idDoc+'/edit',
-		type: 'GET',
+		type: 'POST',
+		data: { id: idDoc},
 		dataType: 'html',
 		success: function (code_html, statut) {
 			$("#modalEditDoc .modal-content").html(code_html);
@@ -2181,4 +2190,117 @@ function editerTypeDocument(idTypeDoc) {
 
 		}
 	});
+}
+
+function afficherQuestion(idQuestion){
+	$.ajax({
+		url : '/lea/lea/web/app_dev.php/question/id='+idQuestion+'/display',
+		type : 'GET',
+		dataType : 'html',
+		success : function(code_html, statut){
+			$("#modalQuestion .modal-content").html(code_html);
+		},
+
+		error : function(resultat, statut, erreur){
+
+		},
+
+		complete : function(resultat, statut){
+
+		}
+	});
+}
+
+function editerQuestion(idQuestion, typeQuestion) {
+
+	$.ajax({
+		url: '/lea/lea/web/app_dev.php/question/id='+idQuestion+'/edit',
+		type: 'GET',
+		dataType: 'html',
+		success: function (code_html, statut) {
+			var modal = $("#modalEditerQuestion");
+			modal.find(".modal-content").html(code_html);
+				if(typeQuestion ==2) {
+					var $table1 = jQuery('#table-choix');
+
+					// Initialize DataTable
+					$table1.DataTable({
+						"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+						"bStateSave": true
+					});
+				}
+
+
+		},
+
+		error: function (resultat, statut, erreur) {
+
+		},
+
+		complete: function (resultat, statut) {
+
+		}
+	});
+}
+
+function ajouterChoixQuestion(idQuestion, idChoix) {
+
+	$.ajax({
+
+		url: window.location.origin + '/lea/lea/web/app_dev.php/question/id='+idQuestion+'&id_choix='+idChoix+'/add',
+		type: 'POST',
+		dataType: 'html',
+		success: function (code_html, statut) {
+			$("#modalEditerQuestion .modal-content").html(code_html)
+				var $table1 = jQuery('#table-choix');
+
+				// Initialize DataTable
+				$table1.DataTable({
+					"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+					"bStateSave": true
+				});
+
+		},
+
+		error: function (resultat, statut, erreur) {
+
+		},
+
+		complete: function (resultat, statut) {
+
+		}
+	});
+}
+
+function supprimerChoixQuestion(idQuestion, idChoix) {
+
+	$.ajax({
+
+		url: window.location.origin + '/lea/lea/web/app_dev.php/question/id='+idQuestion+'&id_choix='+idChoix+'/remove',
+		type: 'POST',
+		dataType: 'html',
+		success: function (code_html, statut) {
+			$("#modalEditerQuestion .modal-content").html(code_html)
+			var $table1 = jQuery('#table-choix');
+
+			// Initialize DataTable
+			$table1.DataTable({
+				"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"bStateSave": true
+			});
+
+		},
+
+		error: function (resultat, statut, erreur) {
+
+		},
+
+		complete: function (resultat, statut) {
+
+		}
+	});
+}
+
+function reload(){
+   location.reload(true);
 }

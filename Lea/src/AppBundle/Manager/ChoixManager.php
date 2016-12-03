@@ -7,6 +7,8 @@ use AppBundle\Form\ChoixType;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Form;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class ChoixManager extends BaseManager
 {
@@ -80,5 +82,23 @@ class ChoixManager extends BaseManager
     {
         $form = $this->formFactory->create(ChoixType::class, $choix);
         return $this->handleBaseForm($request, $form, $choix, "choix_index");
+    }
+
+    /**
+     * @param Request $request
+     * @param Form $form
+     * @param $entity
+     * @param $path
+     * @return array|RedirectResponse
+     */
+    protected function handleBaseForm(Request $request, Form $form, $entity, $path)
+    {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->persistAndFlush($entity);
+            $form = $this->formFactory->create(ChoixType::class, $form);
+        }
+        return array('formChoix' => $form->createView());
     }
 }

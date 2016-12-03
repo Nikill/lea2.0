@@ -75,6 +75,8 @@ class DocumentManager extends BaseManager
     public function edit(Request $request, $id)
     {
         $document = $this->em->getRepository('AppBundle:Document')->find($id);
+        var_dump($document);
+
         return $this->handleForm($request, $document);
     }
 

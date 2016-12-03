@@ -28,10 +28,6 @@
     cursor: pointer;
 }
 
-.panel-heading:hover h4 {
-    text-decoration: underline;
-}
-
 #accordionQuestionnaires .panel-title{
     font-size:15px;
     font-weight:bold;
@@ -67,4 +63,8 @@
 
 .radio label{
     padding-left:34px;
+}
+
+#debloquerQuestionnaire{
+    display:inline;
 }
