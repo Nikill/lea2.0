@@ -1446,6 +1446,7 @@ var public_vars = public_vars || {};
 		wid = setTimeout(trigger_resizable, 200);
 	});
 
+	test();
 
 
 })(jQuery, window);
@@ -2212,7 +2213,9 @@ function afficherQuestion(idQuestion){
 }
 
 function editerQuestion(idQuestion, typeQuestion) {
-
+	$("#modalEditerQuestion").on("shown.bs.modal", function () {
+		alert('Hi');
+	});
 	$.ajax({
 		url: '/lea/lea/web/app_dev.php/question/id='+idQuestion+'/edit',
 		type: 'GET',
@@ -2229,6 +2232,7 @@ function editerQuestion(idQuestion, typeQuestion) {
 						"bStateSave": true
 					});
 				}
+			test();
 
 
 		},
@@ -2260,6 +2264,7 @@ function ajouterChoixQuestion(idQuestion, idChoix) {
 					"bStateSave": true
 				});
 
+			test();
 		},
 
 		error: function (resultat, statut, erreur) {
@@ -2280,7 +2285,8 @@ function supprimerChoixQuestion(idQuestion, idChoix) {
 		type: 'POST',
 		dataType: 'html',
 		success: function (code_html, statut) {
-			$("#modalEditerQuestion .modal-content").html(code_html)
+			var modal= $('#modalEditerQuestion');
+			modal.find(".modal-content").html(code_html)
 			var $table1 = jQuery('#table-choix');
 
 			// Initialize DataTable
@@ -2288,6 +2294,7 @@ function supprimerChoixQuestion(idQuestion, idChoix) {
 				"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
 				"bStateSave": true
 			});
+			test();
 
 		},
 
@@ -2301,6 +2308,72 @@ function supprimerChoixQuestion(idQuestion, idChoix) {
 	});
 }
 
+function test(){
+	$('#modalEditerQuestion').on('hide.bs.modal', function (e) {
+		console.log("coucou");
+		reload();
+	});
+}
 function reload(){
    location.reload(true);
 }
+
+function creerChoix() {
+
+	var rang = $('#choix_rang').val();
+	var description = $('#choix_description').val();
+	creerChoixAjax(rang, description, 0);
+}
+
+function creerChoixAjax(rang, description, id) {
+
+	$.ajax({
+
+		url: window.location.origin + '/lea/lea/web/app_dev.php/question/newChoix',
+		type: 'POST',
+		dataType: 'html',
+		data : {
+			'rang': rang,
+			'description':description,
+			'id':id
+		},
+		success: function (code_html, statut) {
+			$("#modalEditerQuestion .modal-content").html(code_html)
+			var $table1 = jQuery('#table-choix');
+
+			// Initialize DataTable
+			$table1.DataTable({
+				"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"bStateSave": true
+			});
+
+			test();
+
+		},
+
+		error: function (resultat, statut, erreur) {
+
+		},
+
+		complete: function (resultat, statut) {
+
+		}
+	});
+}
+
+function editerChoix(indexTr) {
+
+	var rang = $('#rang'+indexTr).val();
+	var description = $('#description'+indexTr).val();
+	creerChoixAjax(rang, description);
+}
+
+function editerRow(indexTr, rang, description){
+	$('#tdRang'+indexTr).html("<input id='rang"+indexTr+"' type='number' value=\'"+rang+"\' />");
+	$('#tdDescription'+indexTr).html("<input id='description"+indexTr+"' type='text' value=\'"+description+"\' />");
+
+	$('#btnEditer'+indexTr).attr("onclick", "editerChoix(\'"+indexTr+"\')");
+
+
+}
+

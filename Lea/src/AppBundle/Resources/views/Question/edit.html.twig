@@ -34,10 +34,9 @@
 
 
                     <div class="col-md-1">
-                        {{ form_widget(formChoix.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
+                        <a onclick="creerChoix()" class="btn-default btn">Enregistrer</a>
                     </div>
-                    {{ form_rest(formChoix) }}
-                    {{ form_end(formChoix) }}
+
                 </div>
                 <table class="table table-bordered table-striped datatable" id="table-choix">
                     <thead>
@@ -51,10 +50,10 @@
                     <tbody>
                     {% for choi in question.choix %}
                         <tr>
-                            <td class="text-center">{{ choi.rang }}</td>
-                            <td class="text-center">{{ choi.description }}</td>
+                            <td id="tdRangAssocier{{ loop.index }}" class="text-center">{{ choi.rang }}</td>
+                            <td id="tdDescriptionAssocier{{ loop.index }}" class="text-center">{{ choi.description }}</td>
                             <td>
-                                <a href="{{ path('choix_edit', {'id': choi.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
+                                <a id="btnEditerAssocier{{ loop.index }}" onclick="editerRow('Associer{{ loop.index }}', {{ choi.rang }}, '{{ choi.description }}')" class="btn btn-default btn-sm btn-icon icon-left">
                                     <i class="entypo-pencil"></i> Éditer
                                 </a>
                                 <a onclick="supprimerChoixQuestion({{ question.id}}, {{ choi.id }})" class="btn btn-danger btn-sm btn-icon icon-left">
@@ -63,13 +62,14 @@
 
                             </td>
                         </tr>
+
                     {% endfor %}
                     {% for choi in choix %}
                         <tr>
-                            <td class="text-center">{{ choi.rang }}</td>
-                            <td class="text-center">{{ choi.description }}</td>
+                            <td id="tdRangDissocier{{ loop.index }}" class="text-center">{{ choi.rang }}</td>
+                            <td id="tdDescriptionDissocier{{ loop.index }}" class="text-center">{{ choi.description }}</td>
                             <td>
-                                <a href="{{ path('choix_edit', {'id': choi.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
+                                <a id="btnEditerDissocier{{ loop.index }}" onclick="editerRow('Dissocier{{ loop.index }}', {{ choi.rang }}, '{{ choi.description }}')" class="btn btn-default btn-sm btn-icon icon-left">
                                     <i class="entypo-pencil"></i> Éditer
                                 </a>
                                 <a onclick="ajouterChoixQuestion({{ question.id}}, {{ choi.id }})" class="btn btn-success btn-sm btn-icon icon-left">
@@ -84,7 +84,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a onclick="reload()" class="btn btn-default">
+        <a onclick="reload()" data-backdrop="static" data-keyboard="false" class="btn btn-default">
             Fermer
         </a>
     </div>

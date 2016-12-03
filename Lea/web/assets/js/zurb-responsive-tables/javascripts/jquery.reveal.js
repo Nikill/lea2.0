@@ -6,7 +6,6 @@
  * http://www.opensource.org/licenses/mit-license.php
 */
 
-
 (function ($) {
   $('a[data-reveal-id]').live('click', function (event) {
     event.preventDefault();

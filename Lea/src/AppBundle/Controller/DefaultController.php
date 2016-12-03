@@ -37,6 +37,15 @@ class DefaultController extends Controller
             $this->get('session')->set('nombreQuestionnaires', $nombreQuestionnaires);
         }
 
+        foreach ($questionnaires as $key =>$questionnaire){
+
+            if($questionnaire->getQuestionnaire()->getType()->getId()==3){
+                if($questionnaire->getSignatureMap()==false){
+
+                    unset($questionnaires[$key]);
+                }
+            }
+        }
 
 
         return array('questionnairesAcompleter' => $questionnaires);

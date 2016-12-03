@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Choix;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,7 +32,13 @@ class ChoixController extends Controller
      */
     public function newAction(Request $request)
     {
-        return $this->get('app.choix.manager')->save($request);
+        $rang = $request->get('rang');
+        $description = $request->get('description');
+
+        $choix = new Choix();
+        $choix->setRang($rang);
+        $choix->setDescription($description);
+        return $this->get('app.choix.manager')->saveAjax($choix);
     }
 
     /**
