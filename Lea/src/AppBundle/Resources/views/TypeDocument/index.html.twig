@@ -6,8 +6,22 @@
             <h2>Création d'un type de document</h2>
             <br>
             {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
-            {{ form_start(form)}}
-            {{ form_end(form) }}
+            <div class="form-group row">
+                {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+                {{ form_start(form)}}
+                <div class="col-md-2">
+                    {{ form_label(form.libelle) }}
+                </div>
+                <div class="col-md-7">
+                    {{ form_widget(form.libelle) }}
+                </div>
+
+                <div class="col-md-1">
+                    {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-default'} }) }}
+                </div>
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
         </div>
     </div>
     <h2>Ensemble des types de document</h2>

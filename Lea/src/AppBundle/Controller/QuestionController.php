@@ -43,7 +43,8 @@ class QuestionController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        return $this->get('app.question.manager')->edit($request, $id);
+        $arrayForm = $this->get('app.choix.manager')->save($request);
+        return array_merge($arrayForm,  $this->get('app.question.manager')->edit($request, $id));
     }
 
     /**
@@ -68,7 +69,8 @@ class QuestionController extends Controller
      */
     public function addAction(Request $request, $id, $id_choix)
     {
-        return $this->get('app.question.manager')->add($request, $id, $id_choix);
+        $arrayForm = $this->get('app.choix.manager')->save($request);
+        return array_merge($arrayForm, $this->get('app.question.manager')->add($request, $id, $id_choix));
     }
 
     /**
@@ -81,7 +83,8 @@ class QuestionController extends Controller
      */
     public function removeAction(Request $request, $id, $id_choix)
     {
-        return $this->get('app.question.manager')->remove($request, $id, $id_choix);
+        $arrayForm = $this->get('app.choix.manager')->save($request);
+        return array_merge($arrayForm, $this->get('app.question.manager')->remove($request, $id, $id_choix));
     }
 
     /**

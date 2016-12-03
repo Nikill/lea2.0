@@ -1,29 +1,34 @@
 {% extends "AppBundle::base.html.twig" %}
 
 {% block body %}
-    <div class="col-md-6">
-        <div class="col-md-10 row">
-            <h3>Modifier le questionnaire</h3>
-            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+    <a href="{{ path('questionnaire_index') }}" class="btn btn-default btn-md">
+        <i class="entypo-reply"></i>
+        <span class="title">Retour à la liste</span>
+    </a>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-10 row">
+                <h3>Modifier le questionnaire</h3>
+                {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
-            {{ form_start( form ) }}
-            {{ form_end( form ) }}
+                {{ form_start( form ) }}
+                {{ form_end( form ) }}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-10 row">
+                <h3>Créer une question</h3>
+                {% form_theme formQuestion 'bootstrap_3_horizontal_layout.html.twig' %}
+
+                {{ form_start( formQuestion ) }}
+                {{ form_end( formQuestion ) }}
+            </div>
         </div>
     </div>
-
-    <div class="col-md-6">
-        <div class="col-md-10 row">
-            <h3>Créer une question</h3>
-            {% form_theme formQuestion 'bootstrap_3_horizontal_layout.html.twig' %}
-
-            {{ form_start( formQuestion ) }}
-            {{ form_end( formQuestion ) }}
-        </div>
-    </div>
-    <br><br>
-
+    <h3>Liste des questions</h3>
     <table class="table table-bordered table-striped datatable" id="table-question">
-        <h3>Liste des questions</h3>
+
         <thead>
         <tr>
             <th>Description</th>
@@ -46,26 +51,26 @@
                         {% endfor %}
                     </td>
                     <td>
-                        <a href="{{ path('question_edit', {'id': question.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
+                        <a onclick="editerQuestion({{ question.id }}, {{ question.typeQuestion }}, {{ questionnaire.id}})" data-toggle="modal" data-target="#modalEditerQuestion" class="btn btn-default btn-sm btn-icon icon-left">
                             <i class="entypo-pencil"></i> Éditer
                         </a>
 
-                        <button type="button" class="btn btn-danger btn-sm btn-icon icon-left" data-toggle="modal" data-target="#modalSupprimerQuestion{{ questionnaire.id }}_{{ question.id }}">
-                            <i class="entypo-cancel"></i> Enlever
+                        <button type="button" class="btn btn-danger btn-sm btn-icon icon-left" data-toggle="modal" data-target="#modalDissocierQuestion{{ questionnaire.id }}_{{ question.id }}">
+                            <i class="entypo-cancel"></i> Dissocier
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="modalSupprimerQuestion{{ questionnaire.id }}_{{ question.id }}" role="dialog">
+                        <div class="modal fade" id="modalDissocierQuestion{{ questionnaire.id }}_{{ question.id }}" role="dialog">
                             <div class="modal-dialog">
 
                                 <!-- Modal content-->
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Supprimer question</h4>
+                                        <h4 class="modal-title">Dissocier question</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Confirmez-vous la supression de la question "{{question.description}}" dans le questionnaire ?</p>
+                                        <p>Voulez-vous vraiment retirer la question "{{question.description}}" du questionnaire ?</p>
                                     </div>
                                     <div class="modal-footer">
                                         <a href="{{ path('question_remove',{'id': questionnaire.id, 'id_question': question.id}) }}" class="btn btn-default">
@@ -77,7 +82,7 @@
 
                             </div>
                         </div>
-                        <a href="{{ path('question_display', {'id': question.id}) }}" class="btn btn-info btn-sm btn-icon icon-left">
+                        <a onclick="afficherQuestion({{ question.id }})" data-toggle="modal" data-target="#modalQuestion" class="btn btn-info btn-sm btn-icon icon-left">
                             <i class="entypo-info"></i> Afficher
                         </a>
                     </td>
@@ -94,20 +99,66 @@
                         {% endfor %}
                     </td>
                     <td>
-                        <a href="{{ path('question_edit', {'id': question.id}) }}" class="btn btn-default btn-sm btn-icon icon-left">
+                        <a onclick="editerQuestion({{ question.id}}, {{ question.typeQuestion }}, {{ questionnaire.id}})" data-toggle="modal" data-target="#modalEditerQuestion" class="btn btn-default btn-sm btn-icon icon-left">
                             <i class="entypo-pencil"></i> Éditer
                         </a>
-                        <a href="{{ path('question_add', {'id': questionnaire.id, 'id_question': question.id}) }}" class="btn btn-success btn-sm btn-icon icon-left">
+
+                        <button type="button" class="btn btn-success btn-sm btn-icon icon-left" data-toggle="modal" data-target="#modalAssocierQuestion{{ questionnaire.id }}_{{ question.id }}">
                             <i class="entypo-plus"></i> Ajouter
-                        </a>
-                        <a href="{{ path('question_display', {'id': question.id}) }}" class="btn btn-info btn-sm btn-icon icon-left">
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalAssocierQuestion{{ questionnaire.id }}_{{ question.id }}" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Dissocier question</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Voulez-vous vraiment ajouter la question "{{question.description}}" au questionnaire ?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ path('question_add',{'id': questionnaire.id, 'id_question': question.id}) }}" class="btn btn-default">
+                                            Confirmer
+                                        </a>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <a onclick="afficherQuestion({{ question.id }})" data-toggle="modal" data-target="#modalQuestion" class="btn btn-info btn-sm btn-icon icon-left">
                             <i class="entypo-info"></i> Afficher
                         </a>
+
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <!-- Modal -->
+    <div class="modal fade" id="modalQuestion" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalEditerQuestion" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+
+            </div>
+
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}

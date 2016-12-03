@@ -37,7 +37,7 @@ class QuestionType extends AbstractType
                     'Tuteur pédagogique' => 2,
                 ),
             ))
-            ->add('save', SubmitType::class, array('label' => 'Créer une question'))
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer'))
         ;
     }
 

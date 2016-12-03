@@ -94,7 +94,8 @@ class QuestionnaireController extends Controller
      */
     public function addAction(Request $request, $id, $id_question)
     {
-        return $this->get('app.questionnaire.manager')->add($request, $id, $id_question);
+        $arrayForm = $this->get('app.question.manager')->save($request);
+        return array_merge($arrayForm,  $this->get('app.questionnaire.manager')->add($request, $id, $id_question));
     }
 
     /**
@@ -107,7 +108,8 @@ class QuestionnaireController extends Controller
      */
     public function removeAction(Request $request, $id, $id_question)
     {
-        return $this->get('app.questionnaire.manager')->remove($request, $id, $id_question);
+        $arrayForm = $this->get('app.question.manager')->save($request);
+        return array_merge($arrayForm,  $this->get('app.questionnaire.manager')->remove($request, $id, $id_question));
     }
 
     /**
