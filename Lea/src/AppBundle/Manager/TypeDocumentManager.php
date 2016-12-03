@@ -74,7 +74,7 @@ class TypeDocumentManager extends BaseManager
      * @param $id
      * @return RedirectResponse
      */
-    public function delete($id)
+    public function delete($request, $id)
     {
         $typeDocument = $this->em->getRepository('AppBundle:TypeDocument')->find($id);
         $this->removeAndFlush($typeDocument);
