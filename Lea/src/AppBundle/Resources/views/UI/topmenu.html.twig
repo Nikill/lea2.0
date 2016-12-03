@@ -50,20 +50,15 @@
                 <li class="notifications dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <i class="entypo-attention"></i>
-                        <span class="badge badge-info">1</span>
+                        <span class="badge badge-info">{{app.session.get('nombreQuestionnaires')}}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="top">
-                            <p class="small">
-                                Vous avez <strong>1</strong> notification.
-                            </p>
-                        </li>
                         <li>
                             <ul class="dropdown-menu-list scroller">
                                 <li class="unread notification-success">
                                     <a href="#">
                                         <span class="line">
-                                            <strong>Vous avez x questionnnaires à compléter</strong>
+                                            <strong>Vous avez {{app.session.get('nombreQuestionnaires')}} questionnnaires à compléter</strong>
                                         </span>
                                     </a>
                                 </li>

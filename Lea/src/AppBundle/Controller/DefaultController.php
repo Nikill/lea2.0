@@ -47,6 +47,8 @@ class DefaultController extends Controller
             $questionnairesEtudiant = $this->get('app.questionnaire.manager')->findQuestionnairesNotCompletedByUser($user, "signatureEtudiant");
             $questionnaires= array_merge($questionnaires, $questionnairesEtudiant);
         }
+        $nombreQuestionnaires = count($questionnaires);
+        $this->get('session')->set('nombreQuestionnaires', $nombreQuestionnaires);
         return array('questionnairesAcompleter' => $questionnaires);
     }
 }
