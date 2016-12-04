@@ -31,7 +31,7 @@
         <tbody>
             {% for document in documents %}
                 <tr>
-                    <td><a href="{{ asset('assets/uploads/') }}{{ document.nomFichier }}"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></button></a> {{ document.titre }}</td>
+                    <td><a href="{{ asset('assets/uploads/') }}{{ document.nomFichier }}" target="_blank"><button type="button" class="btn btn-info"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></button></a> {{ document.titre }}</td>
                     <td>{{ document.typeDocument }} || {{ document.nomFichier }}</td>
                     {% if (is_granted('ROLE_ETUDIANT') or is_granted('ROLE_SUPER_ADMIN')) %}
                     <td>{{ document.visibleMAP ? '<span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>' : '<span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>' }}</td>
