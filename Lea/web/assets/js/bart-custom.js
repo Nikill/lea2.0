@@ -708,7 +708,8 @@ var public_vars = public_vars || {};
 						endDate: attrDefault($this, 'endDate', ''),
 						daysOfWeekDisabled: attrDefault($this, 'disabledDays', ''),
 						startView: attrDefault($this, 'startView', 0),
-						rtl: rtl()
+						rtl: rtl(),
+						language:'fr'
 					},
 					$n = $this.next(),
 					$p = $this.prev();
@@ -737,6 +738,16 @@ var public_vars = public_vars || {};
 			});
 		}
 
+		var calendrierAlternance = $('#calendrierAlternance');
+		calendrierAlternance.find('tr .day').each( function(){
+			var day= this.innerText;
+			if(day>=1 && day<12){
+				$(this).addClass('periodCours');
+			}
+			if(day>=12 && day<=31){
+				$(this).addClass('periodEntreprise');
+			}
+		} )
 
 
 
@@ -1446,7 +1457,7 @@ var public_vars = public_vars || {};
 		wid = setTimeout(trigger_resizable, 200);
 	});
 
-	test();
+;
 
 
 })(jQuery, window);

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,6 +36,8 @@ class DefaultController extends Controller
             $questionnaires = $this->get('app.questionnaire.manager')->findQuestionnairesNotCompletedByUser($user,$role);
             $nombreQuestionnaires = count($questionnaires);
             $this->get('session')->set('nombreQuestionnaires', $nombreQuestionnaires);
+        }else{
+            $roleUser='ROLE_SUPER_ADMIN';
         }
 
         foreach ($questionnaires as $key =>$questionnaire){
@@ -47,6 +50,30 @@ class DefaultController extends Controller
             }
         }
 
+        if($roleUser == 'ROLE_ETUDIANT'){
+            $contrats=$user->getContrats();
+            $contrat= $contrats[0];
+            $users = $contrat->getUsers();
+            $map=new User();
+            $tuteur=new User();
+            foreach ($users as $user){
+                $roles = $user->getRoles();
+                foreach ($roles as $role) {
+                    switch ($role) {
+                        case "ROLE_TUTEUR":
+                            $tuteur = $user;
+                            break;
+                        case "ROLE_MAP":
+                            $map = $user;
+                            break;
+                    }
+                }
+            }
+
+            $this->get('session')->set('tuteur', $tuteur);
+            $this->get('session')->set('map', $map);
+        }
+        $this->get('session')->set('roleUser', $roleUser);
 
         return array('questionnairesAcompleter' => $questionnaires);
     }

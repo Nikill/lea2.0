@@ -68,3 +68,28 @@
 #debloquerQuestionnaire{
     display:inline;
 }
+
+#contactsSideBar{
+    margin-top: 380px;
+    margin-left: 27px;
+    color: #BCBDCE;
+
+}
+
+.periodEntreprise{
+    background: #FFC000;
+    color: white;
+}
+
+.periodCours{
+    background: #00B0F0;
+    color: white;
+}
+
+.carreEntreprise{
+    color: #FFC000;
+}
+
+.carreCours{
+    color: #00B0F0;
+}

@@ -22,7 +22,7 @@ class DocumentType extends AbstractType
             ->add('typeDocument')
             ->add('visibleMAP', CheckboxType::class, array(
                 'required' => false,
-                'label' => "MAP"))
+                'label' => "Maître d'apprentissage"))
             ->add('visibleTuteur', CheckboxType::class, array(
                 'required' => false,
                 'label' => "Tuteur"))

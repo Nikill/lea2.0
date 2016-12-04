@@ -55,7 +55,7 @@ class UserType extends AbstractType
                     'multiple' => true
                 )
             )
-            ->add('save', SubmitType::class, array('label' => "Enregistrer l'utilisateur"))
+            ->add('save', SubmitType::class, array('label' => "Enregistrer"))
         ;
     }
 

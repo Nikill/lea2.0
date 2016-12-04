@@ -10,7 +10,7 @@
         <li class="root-level">
             <a href="{{ path('user_index') }}">
                 <i class="entypo-users"></i>
-                <span class="title">Users</span>
+                <span class="title">Utilisateurs</span>
             </a>
         </li>
     {% endif %}
@@ -41,4 +41,19 @@
             </a>
         </li>
     {% endif %}
+    {% if 'ROLE_ETUDIANT' == app.session.get('roleUser') %}
+    <div id="contactsSideBar">
+        <i class="entypo-info-circled"></i>
+        <span class="title">Contacts</span><br><br>
+        <span class="title">Maître d'apprentissage <br>
+        {{app.session.get('map').prenom}} {{app.session.get('map').nom}}<br>
+        {{app.session.get('map').email}}
+            </span>
+        <br><br>
+        <span class="title">Tuteur <br>
+        {{app.session.get('tuteur').prenom}} {{app.session.get('tuteur').nom}}<br>
+        {{app.session.get('tuteur').email}}
+            </span>
+    </div>
+{% endif %}
 </ul>

@@ -5411,7 +5411,7 @@ body {
 .page-container .sidebar-menu {
   display: table-cell;
   vertical-align: top;
-  background: #303641;
+  background: #006690;
   width: 280px;
   position: relative;
   z-index: 100;
@@ -5444,7 +5444,7 @@ body {
 }
 .page-container .sidebar-menu .logo-env {
   width: 100%;
-  padding: 35px;
+  padding: 19px 32px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -5507,7 +5507,7 @@ body {
   position: relative;
   margin: 0;
   font-size: 12px;
-  border-bottom: 1px solid rgba(69, 74, 84, 0.7);
+  border-bottom: 1px solid rgba(188, 189, 206, 0.13);
 }
 .page-container .sidebar-menu #main-menu li#search {
   background: #262b34;
@@ -5571,7 +5571,7 @@ body {
   position: relative;
   display: block;
   padding: 10px 20px;
-  color: #aaabae;
+  color: #BCBDCE;
   z-index: 2;
   -webkit-transition: color 250ms ease-in-out, background-color 250ms ease-in-out;
   -moz-transition: color 250ms ease-in-out, background-color 250ms ease-in-out;
@@ -5589,7 +5589,7 @@ body {
   transition: 350ms opacity ease-in-out;
 }
 .page-container .sidebar-menu #main-menu li a:hover {
-  background-color: rgba(69, 74, 84, 0.3);
+  background-color: rgba(104, 121, 154, 0.3);
   color: #fff;
 }
 .page-container .sidebar-menu #main-menu li a .badge {
@@ -5983,7 +5983,7 @@ float: left;
 }
 .page-container.sidebar-collapsed .sidebar-menu .logo-env {
   display: block;
-  padding: 20px;
+  padding: 19px 32px;
 }
 .page-container.sidebar-collapsed .sidebar-menu .logo-env > div.logo {
   overflow: hidden;
@@ -6010,7 +6010,7 @@ float: left;
   top: 0px;
   left: 65px;
   background: #262b34;
-  border: 1px solid #454a54;
+  border: 1px solid #BCBDCE;
   width: 250px;
   -webkit-border-radius: 0 3px 3px 0;
   -webkit-background-clip: padding-box;
@@ -6041,8 +6041,8 @@ float: left;
   margin-top: -1px;
   padding: 12px 10px;
   background: #303641;
-  border-top: 1px solid #454a54;
-  border-bottom: 1px solid #454a54;
+  border-top: 1px solid #BCBDCE;
+  border-bottom: 1px solid #BCBDCE;
   width: 250px;
   visibility: hidden;
   -webkit-border-radius: 0 3px 3px 0;
@@ -6096,7 +6096,7 @@ float: left;
   display: none;
 }
 .page-container.sidebar-collapsed .sidebar-menu #main-menu > li > ul li {
-  border-bottom: 1px solid #454a54;
+  border-bottom: 1px solid #BCBDCE;
 }
 .page-container.sidebar-collapsed .sidebar-menu #main-menu > li > ul li a {
   padding-left: 10px;
