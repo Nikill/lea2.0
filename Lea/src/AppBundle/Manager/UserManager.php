@@ -40,7 +40,6 @@ class UserManager extends BaseManager
      */
     public function create(Request $request)
     {
-        //$user = new User();
         $user = $this->userManager->createUser();
         return $this->handleForm($request, $user);
     }
@@ -76,39 +75,44 @@ class UserManager extends BaseManager
      */
     public function handleForm(Request $request, User $user)
     {
+
         $form = $this->formFactory->create(UserType::class, $user);
+
         return $this->handleBaseForm($request, $form, $user, "homepage");
     }
 
     /**
      * @param Request $request
      * @param Form $form
-     * @param $entity
+     * @param $user
      * @param $path
      * @return array|RedirectResponse
+     * @internal param $entity
      */
-    protected function handleBaseForm(Request $request, Form $form, $entity, $path)
+    protected function handleBaseForm(Request $request, Form $form, $user, $path)
     {
-        $form->handleRequest($request);
+        // handle request bind form to password
+        $oldPass = $user->getPassword();
 
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $userConnecte = $this->get('security.token_storage')->getToken()->getUser();
-            $roles = new ArrayCollection($userConnecte->getRoles());
-            if (in_array("ROLE_SUPER_ADMIN", $roles))
-                $path = "user_index";
-            else
-                $path = "homepage";
 
-            if($entity instanceof User)
+            $userConnecte = $this->token->getToken()->getUser();
+
+            $path = (in_array("ROLE_SUPER_ADMIN", $userConnecte->getRoles())) ? "user_index" : $path = "homepage";
+
+            // TODO: OMFG ===============
+            if($user->getId())
             {
                 // update existing user through FOSUser manager method
-                $this->editRole($request, $entity);
+                $user->setPassword($oldPass);
+                $this->editRole($request, $user);
 
             }else {
                 //create a fresh user from form data
-                $this->registerUser($request, $entity);
+                $this->registerUser($request, $user);
             }
 
             // any case, redirect to users list
@@ -123,7 +127,7 @@ class UserManager extends BaseManager
      * @param $entity
      * @return bool
      */
-    private function registerUser(Request $request, $entity)
+    private function registerUser(Request $request, User $entity)
     {
         $emailExist = $this->userManager->findUserByEmail($entity->getEmail());
 
@@ -136,8 +140,7 @@ class UserManager extends BaseManager
         $user->setUsernameCanonical($entity->getUsername());
         $user->setEmail($entity->getEmail());
         $user->setEmailCanonical($entity->getEmail());
-        $user->setLocked(0);
-        $user->setEnabled(1);
+        $user->setEnabled(true);
         $user->setPlainPassword($entity->getPassword());
         $user->setNom($entity->getNom());
         $user->setPrenom($entity->getPrenom());
@@ -152,9 +155,6 @@ class UserManager extends BaseManager
 
         $this->editRole($request, $user);
 
-        $this->userManager->updateUser($user, false);
-        $this->persistAndFlush($user);
-
         return true;
     }
     
@@ -165,7 +165,6 @@ class UserManager extends BaseManager
         // Changing the role of the user
         $user->setRoles($valueUser['roles']);
         // set plain password here to allow updateUser method to hash it
-        $user->setPassword($user->getPassword());
         // Updating the user
         $this->userManager->updateUser($user);
     }

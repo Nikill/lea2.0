@@ -102,6 +102,11 @@ class User extends BaseUser
         // details and/on creation date
     }
 
+    public function getPassword()
+    {
+        return parent::getPassword();
+    }
+
     /**
      * @return mixed
      */
