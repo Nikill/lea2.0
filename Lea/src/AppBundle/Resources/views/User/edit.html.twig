@@ -1,10 +1,12 @@
 {% extends "AppBundle::base.html.twig" %}
 
 {% block body %}
+    {% if (is_granted('ROLE_SUPER_ADMIN')) %}
     <a href="{{ path('user_index') }}" class="btn btn-default btn-md">
         <i class="entypo-reply"></i>
         <span class="title">Retour à la liste</span>
     </a>
+    {% endif %}
     <div class="row">
         <div class="col-md-8">
             <h2>Modification de l'utilisateur</h2>

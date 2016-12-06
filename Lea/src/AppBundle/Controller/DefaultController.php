@@ -20,7 +20,7 @@ class DefaultController extends Controller
     {
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $roles = new ArrayCollection($user->getRoles());
+        $roles = $user->getRoles();
         $questionnaires=array();
 
         // Test si l'utilisateur est un responsable ou un admin
