@@ -107,7 +107,12 @@ class UserManager extends BaseManager
             if($user->getId())
             {
                 // update existing user through FOSUser manager method
-                $user->setPassword($oldPass);
+                if ($user->getPassword() == "") {
+                    $user->setPlainPassword($oldPass);
+                } else {
+                    $user->setPlainPassword($user->getPassword());
+                }
+
                 $this->editRole($request, $user);
 
             }else {
