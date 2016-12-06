@@ -2179,8 +2179,8 @@ function editerDocument(idDoc) {
 			var modal = $('#modalEditDoc');
 			modal.find('.modal-content').html(code_html);
 
-			var btn = $("#btnSubmitUpdateDoc");
-			btn.click(function(e){
+			var form = $("#formDocumentUpdated");
+			form.submit(function(e){
 
 				e.preventDefault();
 				var $this = $(this);
