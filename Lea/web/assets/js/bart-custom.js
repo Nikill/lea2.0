@@ -2191,7 +2191,7 @@ function editerDocument(idDoc) {
 					processData: false,
 					contentType: false,
 					success: function (code_html, statut) {
-
+						$('body').html(code_html);
 					},
 
 					error: function (resultat, statut, erreur) {

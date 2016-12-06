@@ -131,6 +131,7 @@ class DocumentManager extends BaseManager
             }else {
                 $entity->setNomFichier($entity->getNomFichier());
             }
+
             $entity->setDate(new \DateTime());
             $entity->setProprietaire($this->container->get('security.token_storage')->getToken()->getUser());
             $this->persistAndFlush($entity);

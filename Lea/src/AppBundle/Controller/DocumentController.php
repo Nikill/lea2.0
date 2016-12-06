@@ -7,6 +7,7 @@ use AppBundle\Form\DocumentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -70,16 +71,17 @@ class DocumentController extends Controller
     }
 
     /**
-     * @Template()
-     * @Route("/save", name="document_save")
+     * @Template("AppBundle:Document:index.html.twig")
+     * @Route("/save/{id}", name="document_save")
      * @param Request $request
      * @return array
      */
-    public function saveAction(Request $request)
+    public function saveAction(Request $request, $id)
     {
+        $arrayform = $this->get('app.Document.manager')->edit($request, $id);
+        $documents = $this->getDoctrine()->getRepository('AppBundle:Document')->findAll();
+        $arrayform['documents'] = $documents;
 
-        
-        $id = $request->request->get('document')['id'];
-        return $this->get('app.Document.manager')->edit($request, $id);
+        return $arrayform ;
     }
 }
