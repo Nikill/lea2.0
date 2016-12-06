@@ -38,7 +38,7 @@ class TypeDocumentController extends Controller
     }
 
     /**
-     * @Template()
+     * @Template("AppBundle:TypeDocument:index.html.twig")
      * @Route("/{id}/edit", name="typeDocument_edit")
      * @param Request $request
      * @param $id
@@ -46,7 +46,11 @@ class TypeDocumentController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        return $this->get('app.TypeDocument.manager')->edit($request, $id);
+        $arrayform = $this->get('app.TypeDocument.manager')->edit($request, $id);
+        $typesDocument = $this->getDoctrine()->getRepository('AppBundle:TypeDocument')->findAll();
+        $arrayform['typesDocument'] = $typesDocument;
+
+        return $arrayform;
     }
 
     /**

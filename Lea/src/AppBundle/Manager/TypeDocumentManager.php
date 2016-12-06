@@ -68,6 +68,13 @@ class TypeDocumentManager extends BaseManager
     {
         $typeDocument = $this->em->getRepository('AppBundle:TypeDocument')->find($id);
         return $this->handleForm($request, $typeDocument);
+        $form = $this->formFactory->create(TypeDocumentType::class, $typeDocument);
+        $form->handleRequest($request);
+
+        $this->persistAndFlush($entity);
+        $form = $this->formFactory->create(TypeDocumentType::class, new TypeDocument());
+
+        return array('form' => $form->createView());
     }
 
     /**

@@ -35,10 +35,22 @@
 
         <tbody>
             {% for typeDocument in typesDocument %}
-                <tr>
-                    <td class="text-center">{{ typeDocument.libelle }}</td>
+                <tr id="trTypeDocHide{{ typeDocument.id }}" class="hide">
+                    <td class="text-center">
+                        <input id='inputUpdateTypeDoc{{ typeDocument.id }}' type='text' value="{{ typeDocument.libelle }}"/>
+                    </td>
                     <td>
-                        <a onclick="editerTypeDocument({{ typeDocument.id }})" data-toggle="modal" data-target="#modalEditTypeDoc" class="btn btn-default btn-sm btn-icon icon-left">
+                        <a onclick="updateTypeDocument({{ typeDocument.id }})" class="btn btn-primary btn-sm btn-icon icon-left">
+                            <i class="entypo-check"></i> Valider
+                        </a>
+                    </td>
+                </tr>
+                <tr id="trTypeDoc{{ typeDocument.id }}">
+                    <td class="text-center">
+                        {{ typeDocument.libelle }}
+                    </td>
+                    <td>
+                        <a onclick="editerTypeDocument({{ typeDocument.id }})" class="btn btn-default btn-sm btn-icon icon-left">
                             <i class="entypo-pencil"></i> Éditer
                         </a>
 
@@ -69,46 +81,12 @@
 
                             </div>
                         </div>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="modalSupprimerTypeDoc{{ typeDocument.id }}" role="dialog">
-                            <div class="modal-dialog">
-
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Supprimer document</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Confirmez-vous la supression du type  document "{{typeDocument.libelle}}" ?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="{{ path('typeDocument_delete', {'id': typeDocument.id}) }}" class="btn btn-default">
-                                            Supprimer
-                                        </a>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <!-- Modal -->
-    <div class="modal fade" id="modalEditTypeDoc" role="dialog">
-        <div class="modal-dialog modal-lg">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-
-            </div>
-
-        </div>
-    </div>
 {% endblock %}
 
 {% block javascript %}

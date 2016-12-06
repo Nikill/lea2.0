@@ -2178,6 +2178,7 @@ function editerDocument(idDoc) {
 		success: function (code_html, statut) {
 			var modal = $('#modalEditDoc');
 			modal.find('.modal-content').html(code_html);
+			modal.find('#document_save').hide();
 
 			var btn = $("#btnUpdateDoc");
 			btn.on('click', function(e){
@@ -2218,12 +2219,23 @@ function editerDocument(idDoc) {
 
 function editerTypeDocument(idTypeDoc) {
 
+	$('#trTypeDoc' + idTypeDoc).hide();
+	$('#trTypeDocHide' + idTypeDoc).removeClass('hide');
+}
+
+function updateTypeDocument(idTypeDoc){
+	var newValue = $('#inputUpdateTypeDoc'+idTypeDoc).val();
+	var typeDocument=  new Object();
+	typeDocument['libelle']=newValue;
 	$.ajax({
 		url: idTypeDoc+'/edit',
-		type: 'GET',
-		dataType: 'html',
+		type: 'POST',
+		data:{
+			'type_document':typeDocument
+		},
 		success: function (code_html, statut) {
-			$("#modalEditTypeDoc .modal-content").html(code_html);
+			$("body").html(code_html);
+			$('#type_document_libelle').val('');
 		},
 
 		error: function (resultat, statut, erreur) {
@@ -2419,6 +2431,7 @@ function editerRow(indexTr, rang, description){
 
 
 }
+
 
 function saveQuestionnaire(idQuestionnaire, index){
 	var form = $('#panel'+index+' form');
