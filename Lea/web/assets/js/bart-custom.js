@@ -2179,19 +2179,19 @@ function editerDocument(idDoc) {
 			var modal = $('#modalEditDoc');
 			modal.find('.modal-content').html(code_html);
 
-			var form = $("#formDocumentUpdated");
-			form.submit(function(e){
+			var btn = $("#btnUpdateDoc");
+			btn.on('click', function(e){
 
-				e.preventDefault();
+                e.preventDefault();
 				var $this = $(this);
 				$.ajax({
-					url: $this.attr('action'),
-					type: $this.attr('method'),
-					data: new FormData( $this[0] ),
+					url: $this.parents('form').attr('action'),
+					type: $this.parents('form').attr('method'),
+					data: new FormData( $this.parents('form')[0] ),
 					processData: false,
 					contentType: false,
 					success: function (code_html, statut) {
-						$("#modalEditDoc .modal-content").html(code_html);
+
 					},
 
 					error: function (resultat, statut, erreur) {
@@ -2203,7 +2203,7 @@ function editerDocument(idDoc) {
 					}
 				});
 
-				},'JSON');
+				});
 		},
 
 		error: function (resultat, statut, erreur) {
