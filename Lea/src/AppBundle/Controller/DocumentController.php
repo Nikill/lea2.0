@@ -22,7 +22,7 @@ class DocumentController extends Controller
      */
     public function indexAction(Request $request)
     {
-        
+
         $arrayform = $this->newAction($request);
 
         $documents = $this->getDoctrine()->getRepository('AppBundle:Document')->findAll();
@@ -67,5 +67,19 @@ class DocumentController extends Controller
     public function deleteAction(Request $request, $id)
     {
         return $this->get('app.Document.manager')->delete($request, $id);
+    }
+
+    /**
+     * @Template()
+     * @Route("/save", name="document_save")
+     * @param Request $request
+     * @return array
+     */
+    public function saveAction(Request $request)
+    {
+
+        
+        $id = $request->request->get('document')['id'];
+        return $this->get('app.Document.manager')->edit($request, $id);
     }
 }
