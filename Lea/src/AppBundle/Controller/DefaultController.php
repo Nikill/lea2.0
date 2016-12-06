@@ -18,6 +18,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $roles = new ArrayCollection($user->getRoles());
         $questionnaires=array();

@@ -5507,7 +5507,7 @@ body {
   position: relative;
   margin: 0;
   font-size: 12px;
-  border-bottom: 1px solid rgba(188, 189, 206, 0.13);
+  border-bottom: 1px solid rgba(188, 189, 206, 0.40);
 }
 .page-container .sidebar-menu #main-menu li#search {
   background: #262b34;

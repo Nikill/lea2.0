@@ -1,21 +1,91 @@
 {% block body %}
-
-    <div class="modal-header">
-
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">
-            Modifier document
-        </h4>
-    </div>
-    <div class="modal-body">
-        <div>
-            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
-            {{ form_start(form)}}
-            {{ form_rest(form)}}
+    <form id="formDocumentUpdated" name="formDocumentUpdated" method="post" class="form-horizontal" enctype="multipart/form-data">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">
+                Modifier document
+            </h4>
         </div>
-    </div>
-    <div class="modal-footer">
-        {{ form_widget(form.save, { 'attr': { 'class': 'btn btn-sm btn-primary'} }) }}
-        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-    </div>
+        <div class="modal-body">
+            <div>
+                    <input type="hidden" name="document[id]" value="{{ entity.id }}">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label required" for="document_titre">Titre</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="document[titre]" required="required" class="form-control" value="{{ entity.titre }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="document_file">Fichier</label>
+                        <div class="col-sm-10">
+                            <input type="file" name="document[file]">
+                        </div>
+                    </div><div class="form-group">
+                        <label class="col-sm-2 control-label" for="document_typeDocument">Type document</label>
+                        <div class="col-sm-10">
+                            <select name="document[typeDocument]" class="form-control">
+                                {% for typeDoc in typesDocument %}
+                                    {% if typeDoc.id == entity.typeDocument.id %}
+                                        <option selected  value="{{ typeDoc.id }}">{{ typeDoc.libelle }}</option>
+                                    {% else %}
+                                        <option value="{{ typeDoc.id }}">{{ typeDoc.libelle }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    {% if entity.visibleMAP == true %}
+                                        <input checked="checked" type="checkbox" name="document[visibleMAP]" value="1"> Maître d'apprentissage
+                                    {% else %}
+                                        <input type="checkbox" name="document[visibleMAP]" value="1"> Maître d'apprentissage
+                                    {% endif %}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2">
+
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    {% if entity.visibleTuteur == true %}
+                                        <input checked="checked" type="checkbox" name="document[visibleTuteur]" value="1"> Tuteur
+                                    {% else %}
+                                        <input type="checkbox" name="document[visibleTuteur]" value="1"> Tuteur
+                                    {% endif %}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2">
+
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    {% if entity.visibleResponsable == true %}
+                                        <input checked="checked" type="checkbox" name="document[visibleResponsable]" value="1"> Responsable
+                                    {% else %}
+                                        <input type="checkbox" name="document[visibleResponsable]" value="1"> Responsable
+                                    {% endif %}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div id="btnSubmitUpdateDoc" >Enregistrer</div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        </div>
+    </form>
 {% endblock %}

@@ -20,8 +20,8 @@ class DisplayQuestionnaireType extends AbstractType
                 'em' => $options['em'],
                 'display' => 2,
             )))
-            ->add('save', SubmitType::class, array('label' => 'Enregistrer'))
-            ->add('validate', SubmitType::class, array('label' => 'Valider'))
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer brouillon'))
+            ->add('validate', SubmitType::class, array('label' => 'Signer'))
         ;
     }
 

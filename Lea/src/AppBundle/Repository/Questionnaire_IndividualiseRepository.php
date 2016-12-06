@@ -28,22 +28,26 @@ class Questionnaire_IndividualiseRepository extends \Doctrine\ORM\EntityReposito
                 break;
         }
 
-        $i=0;
+        $i=1;
         $nbContrats = sizeof($user->getContrats());
+        $reqContrat="(";
         foreach ($user->getContrats() as $contrat) {
-            if($i==0){
-                $qb ->andWhere("q.contrat = :idContrat");
-            }elseif ($i<$nbContrats && $i>0){
-                $qb ->orWhere("q.contrat = :idContrat");
+            if($i==1){
+                $reqContrat.= 'q.contrat ='.$contrat->getId().'';
+            }elseif($i>1){
+                $reqContrat.= 'OR q.contrat ='.$contrat->getId().'';
             }
-
-            $qb->setParameter("idContrat", $contrat->getId());
             $i++;
         }
+        $qb ->andWhere($reqContrat.')');
 
+        $date = new \DateTime();
 
-        $qb->setParameter("date", new \DateTime());
+        $qb->setParameter("date", $date->format("Y-m-d"));
+        $qb->addGroupBy("q2.id");
         $qb->addOrderBy("q2.dateFermeture");
+        $qb->distinct();
+
 
         return $qb
             ->getQuery()

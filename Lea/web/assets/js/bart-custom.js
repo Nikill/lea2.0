@@ -2114,11 +2114,17 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 		type : 'GET',
 		dataType : 'html',
 		success : function(code_html, statut){
-			$("#panel"+collapseId).html(code_html);
+			var panel = $("#panel"+collapseId);
+			panel.html(code_html);
 			$('.disabledRadio').each(function(i, el) // Temporary for demo purpose only
 			{
 				$(el).find("input[type=radio]").attr('disabled','disabled');
 			});
+			var test = panel.find('button.save');
+            panel.find('button.save').click(function () {
+				saveQuestionnaire(idQuestionnaire, collapseId);
+			})
+
 		},
 
 		error : function(resultat, statut, erreur){
@@ -2133,7 +2139,6 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 
 function afficherQuestionnaire(idQuestionnaire, visu){
 
-	;
 	$.ajax({
 		url : '/lea/lea/web/app_dev.php/questionnaire/id='+idQuestionnaire+'/displayModal',
 		type : 'GET',
@@ -2171,7 +2176,34 @@ function editerDocument(idDoc) {
 		data: { id: idDoc},
 		dataType: 'html',
 		success: function (code_html, statut) {
-			$("#modalEditDoc .modal-content").html(code_html);
+			var modal = $('#modalEditDoc');
+			modal.find('.modal-content').html(code_html);
+
+			var btn = $("#btnSubmitUpdateDoc");
+			btn.click(function(e){
+
+				e.preventDefault();
+				var $this = $(this);
+				$.ajax({
+					url: $this.attr('action'),
+					type: $this.attr('method'),
+					data: new FormData( $this[0] ),
+					processData: false,
+					contentType: false,
+					success: function (code_html, statut) {
+						$("#modalEditDoc .modal-content").html(code_html);
+					},
+
+					error: function (resultat, statut, erreur) {
+
+					},
+
+					complete: function (resultat, statut) {
+
+					}
+				});
+
+				},'JSON');
 		},
 
 		error: function (resultat, statut, erreur) {
@@ -2386,5 +2418,29 @@ function editerRow(indexTr, rang, description){
 	$('#btnEditer'+indexTr).attr("onclick", "editerChoix(\'"+indexTr+"\')");
 
 
+}
+
+function saveQuestionnaire(idQuestionnaire, index){
+	var form = $('#panel'+index+' form');
+
+	$.ajax({
+		url : '/lea/lea/web/app_dev.php/questionnaire/id='+idQuestionnaire+'/display',
+		type : 'GET',
+		data:{
+			'request':form,
+		},
+		dataType : 'html',
+		success : function(code_html, statut){
+			var test="couocou";
+		},
+
+		error : function(resultat, statut, erreur){
+
+		},
+
+		complete : function(resultat, statut){
+
+		}
+	});
 }
 
