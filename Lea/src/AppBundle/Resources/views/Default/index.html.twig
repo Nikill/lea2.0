@@ -13,11 +13,11 @@
                             {% if (q.questionnaire.dateFermeture < date()) %}
                                 <span class="glyphicon glyphicon glyphicon-lock glyphiconLarge informUrgent"></span>
                                 <a id="debloquerQuestionnaire" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon glyphicon glyphicon-envelope glyphiconLarge"></span></a>
-                            {% elseif (q.questionnaire.dateFermeture < date("+7 day")) %}
+                            {% elseif (q.questionnaire.dateFermeture <= date("+7 day")) %}
                             <span class="glyphicon glyphicon-exclamation-sign glyphiconLarge informUrgent"></span>
-                            {% elseif (q.questionnaire.dateFermeture < date("+14 day") and q.questionnaire.dateFermeture > date("+7 day")) %}
+                            {% elseif (q.questionnaire.dateFermeture <= date("+14 day") and q.questionnaire.dateFermeture > date("+7 day")) %}
                             <span class="glyphicon glyphicon-exclamation-sign glyphiconLarge informMoyenUrgent"></span>
-                            {% elseif (q.questionnaire.dateFermeture < date("+30 day") and q.questionnaire.dateFermeture > date("+14 day"))%}
+                            {% elseif ( q.questionnaire.dateFermeture > date("+14 day"))%}
                             <span class="glyphicon glyphicon-bell glyphiconLarge informNonUrgent"></span>
                             {% endif %}
                             {{ q.questionnaire.description }} du {{  q.questionnaire.dateOuverture|date('d M Y') }} au {{  q.questionnaire.dateFermeture|date('d M Y') }}

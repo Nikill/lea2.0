@@ -22,6 +22,7 @@ class DocumentController extends Controller
      */
     public function indexAction(Request $request)
     {
+        
         $arrayform = $this->newAction($request);
 
         $documents = $this->getDoctrine()->getRepository('AppBundle:Document')->findAll();
@@ -50,7 +51,10 @@ class DocumentController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        return $this->get('app.Document.manager')->edit($request, $id);
+        $arrayform = $this->get('app.Document.manager')->edit($request, $id);
+        $typesDocument = $this->getDoctrine()->getRepository('AppBundle:TypeDocument')->findAll();
+        $arrayform['typesDocument'] = $typesDocument;
+        return $arrayform;
     }
 
     /**
