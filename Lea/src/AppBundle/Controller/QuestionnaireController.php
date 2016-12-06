@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,7 +22,7 @@ class QuestionnaireController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $arrayForm = $this->get('app.questionnaire.manager')->save($request);
 
-        $roles = new ArrayCollection($user->getRoles());
+        $roles = $user->getRoles();
 
         // Test si l'utilisateur est un responsable ou un admin
         $isResponsable = false;
