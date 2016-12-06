@@ -23,9 +23,7 @@ class DocumentController extends Controller
      */
     public function indexAction(Request $request)
     {
-
         $arrayform = $this->newAction($request);
-
         $documents = $this->getDoctrine()->getRepository('AppBundle:Document')->findAll();
         $arrayform['documents'] = $documents;
 
