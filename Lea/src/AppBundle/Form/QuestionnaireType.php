@@ -17,6 +17,7 @@ class QuestionnaireType extends AbstractType
         $builder
             ->add('description', TextType::class)
             ->add('type')
+            ->add('promotions')
             ->add('dateOuverture', DateType::class, array(
                 'widget' => 'choice',
                 'format' => 'dd-MM-yyyy',

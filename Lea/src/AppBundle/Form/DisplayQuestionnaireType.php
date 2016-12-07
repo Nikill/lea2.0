@@ -17,6 +17,7 @@ class DisplayQuestionnaireType extends AbstractType
             'entry_type' => DisplayQuestionType::class,
             'entry_options' => array(
                 'question' => $options['questions'],
+                'reponses' => $options['reponses'],
                 'em' => $options['em'],
                 'display' => 2,
             )))
@@ -31,6 +32,7 @@ class DisplayQuestionnaireType extends AbstractType
             'data_class' => 'AppBundle\Entity\Questionnaire',
             'questionnaire' => null,
             'questions' => null,
+            'reponses' => null,
             'em' => null
         ));
     }

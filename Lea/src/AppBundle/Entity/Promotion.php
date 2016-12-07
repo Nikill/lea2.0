@@ -71,6 +71,11 @@ class Promotion
         $this->questionnaires = new ArrayCollection();
     }
 
+    function __toString()
+    {
+        return $this->nom;
+    }
+
 
     /**
      * Get id

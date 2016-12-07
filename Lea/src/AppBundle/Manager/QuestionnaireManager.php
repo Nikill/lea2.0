@@ -109,10 +109,20 @@ class QuestionnaireManager extends BaseManager
 
     /**
      * @param User $userActuel
+     * @param $role
      * @return mixed
      */
     public function findQuestionnairesNotCompletedByUser(User $userActuel, $role) {
         return $this->em->getRepository('AppBundle:Questionnaire_Individualise')->findQuestionnairesAcompleter($userActuel, $role);
+    }
+
+    /**
+     * @param Questionnaire $questionnaire
+     * @param User $user
+     * @return mixed
+     */
+    public function findReponsesOfQuestionnaire(Questionnaire $questionnaire, User $user) {
+        return $this->em->getRepository('AppBundle:Reponse')->findReponses($questionnaire, $user);
     }
 
     /**
@@ -207,7 +217,7 @@ class QuestionnaireManager extends BaseManager
             }
             return $this->redirect('questionnaire_index');
         } else {
-            return $this->handleForm($request, $questionnaire, "display");
+            return $this->handleForm($request, $questionnaire, $user, "display");
         }
     }
 
@@ -325,15 +335,17 @@ class QuestionnaireManager extends BaseManager
     /**
      * @param Request $request
      * @param Questionnaire $questionnaire
+     * @param User $user
      * @param String $option
      * @return array|RedirectResponse
      */
-    public function handleForm(Request $request, Questionnaire $questionnaire, $option = null)
+    public function handleForm(Request $request, Questionnaire $questionnaire, User $user = null, $option = null)
     {
         if (!is_null($option) && $option == 'display') {
             $questions = $questionnaire->getQuestions();
+            $reponses = $this->findReponsesOfQuestionnaire($questionnaire, $user);
             $form = $this->formFactory->create(DisplayQuestionnaireType::class, $questionnaire, array('questionnaire' => $questionnaire,
-                'questions' => $questions, 'em' => $this->em));
+                'questions' => $questions, 'reponses' => $reponses, 'em' => $this->em));
         } else {
             $form = $this->formFactory->create(QuestionnaireType::class, $questionnaire);
         }
