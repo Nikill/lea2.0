@@ -2132,8 +2132,7 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 					processData: false,
 					contentType: false,
 					success: function (code_html, statut) {
-						var panel = $("#panel"+collapseId);
-						panel.html(code_html)
+						$('body').html(code_html)
 						var msgSuccess = 'Le questionnaire a bien été enregistré. <br>';
 						var divMsg = $('#msgDashboard');
 						divMsg.html(msgSuccess);
@@ -2166,8 +2165,7 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 					processData: false,
 					contentType: false,
 					success: function (code_html, statut) {
-						var panel = $("#panel"+collapseId);
-						panel.html(code_html)
+						$('body').html(code_html)
 						var msgSuccess = 'Le questionnaire a bien été signé. <br>';
 						var divMsg = $('#msgDashboard');
 						divMsg.html(msgSuccess);
