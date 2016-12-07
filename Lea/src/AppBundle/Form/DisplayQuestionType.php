@@ -55,7 +55,7 @@ class DisplayQuestionType extends AbstractType
                         'choices' => $this->fillChoix($question, $em),
                         'multiple' => false,
                         'expanded' => true,
-                        'placeholder' => $reponse->getId()
+                        'data' => $reponse->getId()
                     ));
                     break;
             }
