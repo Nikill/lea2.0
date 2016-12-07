@@ -2398,7 +2398,35 @@ function editerQuestion(idQuestion, typeQuestion) {
 		success: function (code_html, statut) {
 			var modal = $("#modalEditerQuestion");
 			modal.find(".modal-content").html(code_html);
-				if(typeQuestion ==2) {
+			modal.find('#question_save').hide();
+
+			var btn = $("#btnUpdateQuestion");
+			btn.on('click', function(e){
+
+				e.preventDefault();
+				var $this = $(this);
+				$.ajax({
+					url: $this.parents('form').attr('action'),
+					type: $this.parents('form').attr('method'),
+					data: new FormData( $this.parents('form')[0] ),
+					processData: false,
+					contentType: false,
+					success: function (code_html, statut) {
+						reload();
+					},
+
+					error: function (resultat, statut, erreur) {
+
+					},
+
+					complete: function (resultat, statut) {
+
+					}
+				});
+
+			});
+
+								if(typeQuestion ==2) {
 					var $table1 = jQuery('#table-choix');
 
 					// Initialize DataTable
@@ -2420,6 +2448,10 @@ function editerQuestion(idQuestion, typeQuestion) {
 
 		}
 	});
+}
+
+function changeTypeQuestion(typeQuestion){
+	var test = typeQuestion;
 }
 
 function ajouterChoixQuestion(idQuestion, idChoix) {
