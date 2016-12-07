@@ -120,4 +120,18 @@ class QuestionController extends Controller
 
         return array_merge($arrayForm,  $this->get('app.question.manager')->edit($request, $id));
     }
+
+    /**
+     * @Template("AppBundle:Question:edit.html.twig")
+     * @Route("/save/{id}", name="question_save")
+     * @return array
+     */
+    public function saveAction(Request $request, $id)
+    {
+        $arrayform = $this->get('app.question.manager')->edit($request, $id);
+        $questions = $this->get('app.question.manager')->findAll();
+        $arrayform['questions'] = $questions;
+
+        return $arrayform ;
+    }
 }
