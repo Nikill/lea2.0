@@ -48,7 +48,6 @@ class Questionnaire_IndividualiseRepository extends \Doctrine\ORM\EntityReposito
         $qb->addOrderBy("q2.dateFermeture");
         $qb->distinct();
 
-
         return $qb
             ->getQuery()
             ->getResult();
