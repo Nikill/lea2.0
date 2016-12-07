@@ -2120,10 +2120,72 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 			{
 				$(el).find("input[type=radio]").attr('disabled','disabled');
 			});
-			var test = panel.find('button.save');
-            panel.find('button.save').click(function () {
-				saveQuestionnaire(idQuestionnaire, collapseId);
-			})
+			var btn = panel.find('button.save');
+			var url = '/lea/lea/web/app_dev.php/questionnaire/id=' + idQuestionnaire + '/display';
+			btn.on('click', function (e) {
+				e.preventDefault();
+				var $this = $(this);
+				$.ajax({
+					url: url,
+					type: 'POST',
+					data: new FormData($this.parents('form')[0]),
+					processData: false,
+					contentType: false,
+					success: function (code_html, statut) {
+						var panel = $("#panel"+collapseId);
+						panel.html(code_html)
+						var msgSuccess = 'Le questionnaire a bien été enregistré. <br>';
+						var divMsg = $('#msgDashboard');
+						divMsg.html(msgSuccess);
+						divMsg.addClass('msgSuccess');
+					},
+
+					error: function (resultat, statut, erreur) {
+						var msgError = "L'enregistrement du questionnaire a rencontré un problème. Veuillez actualiser la page et réessayer. <br>";
+						var divMsg = $('#msgDashboard');
+						divMsg.html(msgError);
+						divMsg.addClass('msgError');
+					},
+
+					complete: function (resultat, statut) {
+
+					}
+				});
+			});
+
+			var btn = panel.find('button.sign');
+			btn.on('click', function (e) {
+				e.preventDefault();
+				var $this = $(this);
+				var form = new FormData($this.parents('form')[0]);
+				form.append('display_questionnaire[validate]', true);
+				$.ajax({
+					url: url,
+					type: 'POST',
+					data: form,
+					processData: false,
+					contentType: false,
+					success: function (code_html, statut) {
+						var panel = $("#panel"+collapseId);
+						panel.html(code_html)
+						var msgSuccess = 'Le questionnaire a bien été signé. <br>';
+						var divMsg = $('#msgDashboard');
+						divMsg.html(msgSuccess);
+						divMsg.addClass('msgSuccess');
+					},
+
+					error: function (resultat, statut, erreur) {
+						var msgError = "La signature du questionnaire a rencontré un problème. Veuillez actualiser la page et réessayer. <br>";
+						var divMsg = $('#msgDashboard');
+						divMsg.html(msgError);
+						divMsg.addClass('msgError');
+					},
+
+					complete: function (resultat, statut) {
+
+					}
+				});
+			});
 
 		},
 
@@ -2137,7 +2199,7 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 	});
 }
 
-function afficherQuestionnaire(idQuestionnaire, visu){
+function afficherQuestionnaire(idQuestionnaire, visu, numeroOnglet){
 
 	$.ajax({
 		url : '/lea/lea/web/app_dev.php/questionnaire/id='+idQuestionnaire+'/displayModal',
@@ -2153,8 +2215,67 @@ function afficherQuestionnaire(idQuestionnaire, visu){
 
 			if(visu){
 				modal.find(".modal-footer").html('<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>')
-			}else{
-				$("#questionnaire"+idQuestionnaire).attr('onclick','')
+			}else {
+				$("#questionnaire" + idQuestionnaire).attr('onclick', '')
+				var btn = modal.find("#btnSaveQuestionnaire");
+				var url = '/lea/lea/web/app_dev.php/questionnaire/id=' + idQuestionnaire + '/displayModal';
+				btn.on('click', function (e) {
+					e.preventDefault();
+					var $this = $(this);
+					$.ajax({
+						url: url,
+						type: 'POST',
+						data: new FormData($this.parents('form')[0]),
+						processData: false,
+						contentType: false,
+						success: function (code_html, statut) {
+							var msgSuccess = 'Le questionnaire a bien été enregistré. <br>';
+							$('#msg'+numeroOnglet).html(msgSuccess);
+							$('#msg'+numeroOnglet).addClass('msgSuccess');
+						},
+
+						error: function (resultat, statut, erreur) {
+							var msgError = "L'enregistrement du questionnaire a rencontré un problème. Veuillez actualiser la page et réessayer. <br>";
+							$('#msg'+numeroOnglet).html(msgError);
+							$('#msg'+numeroOnglet).addClass('msgError');
+						},
+
+						complete: function (resultat, statut) {
+
+						}
+					});
+				});
+
+				var btn = modal.find("#btnSignerQuestionnaire");
+				btn.on('click', function (e) {
+					e.preventDefault();
+					var $this = $(this);
+					var form = new FormData($this.parents('form')[0]);
+					form.append('display_questionnaire[validate]', true);
+					$.ajax({
+						url: url,
+						type: 'POST',
+						data: form,
+						processData: false,
+						contentType: false,
+						success: function (code_html, statut) {
+							var msgSuccess = 'Le questionnaire a été signé. <br>';
+							$('#msg'+numeroOnglet).html(msgSuccess);
+							$('#msg'+numeroOnglet).addClass('msgSuccess');
+						},
+
+						error: function (resultat, statut, erreur) {
+							var msgError = "La signature du questionnaire a rencontré un problème. Veuillez actualiser la page et réessayer. <br>";
+							$('#msg'+numeroOnglet).html(msgError);
+							$('#msg'+numeroOnglet).addClass('msgError');
+						},
+
+						complete: function (resultat, statut) {
+
+						}
+					});
+				});
+
 			}
 		},
 
@@ -2167,6 +2288,7 @@ function afficherQuestionnaire(idQuestionnaire, visu){
 		}
 	});
 }
+
 
 function editerDocument(idDoc) {
 
@@ -2204,7 +2326,7 @@ function editerDocument(idDoc) {
 					}
 				});
 
-				});
+			});
 		},
 
 		error: function (resultat, statut, erreur) {

@@ -80,9 +80,9 @@
         <ul class="nav nav-tabs">
             {% for key in questionnaires.keys %}
                 {% if loop.index0==0 %}
-                     <li class="active"><a data-toggle="tab" href="#{{ key }}">{{ key }}</a></li>
+                     <li class="active" id="li{{ key }}"><a data-toggle="tab" href="#{{ key }}">{{ key }}</a></li>
                 {% else %}
-                    <li><a data-toggle="tab" href="#{{ key }}">{{ key }}</a></li>
+                    <li id="li{{ key }}"><a data-toggle="tab" href="#{{ key }}">{{ key }}</a></li>
                 {% endif %}
             {% endfor %}
         </ul>
@@ -98,6 +98,7 @@
                     <div id="{{ keys[i] }}" class="tab-pane fade">
                 {% endif %}
                     <h3>{{ keys[i] }}</h3>
+                    <div id="msg{{ keys[i] }}"></div>
                     {% set quests = questionnaire %}
                     <div class="panel-group" id="accordionQuestionnaires">
                     {% for type in types %}
@@ -111,7 +112,7 @@
                                         {% for quest in quests %}
                                             {% if quest.type.id==type.id %}
                                             <li class="list-group-item">
-                                                <a id="questionnaire{{ quest.id }}" onclick="afficherQuestionnaire({{ quest.id }}, false)" data-toggle="modal" data-target="#modalQuestionnaire">
+                                                <a id="questionnaire{{ quest.id }}" onclick="afficherQuestionnaire({{ quest.id }}, false, '{{ keys[i] }}')" data-toggle="modal" data-target="#modalQuestionnaire">
                                                     <h5>Du {{ quest.dateOuverture|date('d M Y') }} au {{ quest.dateFermeture|date('d M Y') }}</h5>
                                                 </a>
                                             </li>

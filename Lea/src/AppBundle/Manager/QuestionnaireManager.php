@@ -222,8 +222,6 @@ class QuestionnaireManager extends BaseManager
      */
     public function saveAnswers(Request $request, ArrayCollection $contratsUser, Questionnaire $questionnaire)
     {
-        var_dump("coucou");
-        die();
         $questionnaireIndividualise = $this->em->getRepository('AppBundle:Questionnaire_Individualise')->findOneBy(array('questionnaire' => $questionnaire, 'contrat' => $contratsUser->get(0)));
 
         if ($questionnaireIndividualise == null) {

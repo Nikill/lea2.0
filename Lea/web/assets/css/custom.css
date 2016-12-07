@@ -94,4 +94,9 @@
     color: #00B0F0;
 }
 
-.hide
+.msgError{
+    color:red;
+}
+.msgSuccess{
+    color:green;
+}

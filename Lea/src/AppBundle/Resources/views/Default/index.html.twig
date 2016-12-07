@@ -1,7 +1,9 @@
 {% extends 'AppBundle::base.html.twig' %}
 
 {% block body %}
+
 {% if is_granted('ROLE_SUPER_ADMIN') == 0%}
+<div id="msgDashboard"></div>
 <div class="row">
     <div class="col-sm-8 col-lg-8">
         <h2>Questionnaires à compléter</h2>
@@ -9,6 +11,7 @@
             {% for q in questionnairesAcompleter %}
                 <div class="panel panel-default">
                     <div id="divCollapse{{ loop.index }}" onclick="afficherQuestionnaireDashBord({{ q.questionnaire.id }}, {{ loop.index }})" class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{ loop.index }}">
+
                         <h4 class="panel-title">
                             {% if (q.questionnaire.dateFermeture < date()) %}
                                 <span class="glyphicon glyphicon glyphicon-lock glyphiconLarge informUrgent"></span>
