@@ -112,6 +112,19 @@ class QuestionnaireController extends Controller
     }
 
     /**
+     * @Template("AppBundle:Default:index.html.twig")
+     * @Route("/id={id}/displayDashboard", name="questionnaire_displayDashboard")
+     * @param Request $request
+     * @param $id
+     * @return array
+     */
+    public function displayDashboardAction(Request $request, $id)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        return $this->get('app.questionnaire.manager')->display($request, $id, $user);
+    }
+
+    /**
      * @Template("AppBundle:Questionnaire:display.html.twig")
      * @Route("/id={id}/display", name="questionnaire_display")
      * @param Request $request

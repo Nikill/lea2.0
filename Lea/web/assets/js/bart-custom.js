@@ -2121,7 +2121,7 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 				$(el).find("input[type=radio]").attr('disabled','disabled');
 			});
 			var btn = panel.find('button.save');
-			var url = '/lea/lea/web/app_dev.php/questionnaire/id=' + idQuestionnaire + '/display';
+			var url = '/lea/lea/web/app_dev.php/questionnaire/id=' + idQuestionnaire + '/displayDashboard';
 			btn.on('click', function (e) {
 				e.preventDefault();
 				var $this = $(this);
