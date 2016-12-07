@@ -73,11 +73,13 @@ class DisplayQuestionType extends AbstractType
                     ));
                     break;
                 case 2:
+                    $choix = $em->getRepository('AppBundle:Choix')->findOneByDescription($reponse->getDescription());
+                    dump($this->fillChoix($question, $em));
                     $builder->add('choix', ChoiceType::class, array(
                         'choices' => $this->fillChoix($question, $em),
                         'multiple' => false,
                         'expanded' => true,
-                        'data' => $reponse->getId()
+                        'data' => $choix->getDescription()
                     ));
                     break;
             }
