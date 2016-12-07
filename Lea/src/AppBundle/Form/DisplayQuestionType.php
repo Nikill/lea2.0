@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Question;
+use AppBundle\Entity\Reponse;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,7 +18,14 @@ class DisplayQuestionType extends AbstractType
             $this->createBuilder($builder, $options['question'], $options['em']);
         } else {
             foreach ($options['question'] as $question) {
-                $this->createBuilder($builder, $question, $options['em']);
+                $reponse = new Reponse();
+                foreach ($options['reponses'] as $reponseL) {
+                    if ($question == $reponseL->getQuestion()) {
+                        $reponse = $reponseL;
+                        break;
+                    }
+                }
+                $this->createBuilder($builder, $question, $reponse, $options['em']);
             }
         }
     }
@@ -27,24 +35,27 @@ class DisplayQuestionType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Question',
             'question' => null,
+            'reponses' => null,
             'em' => null,
             'display' => null
         ));
     }
 
-    private function createBuilder(FormBuilderInterface $builder, Question $question, $em) {
+    private function createBuilder(FormBuilderInterface $builder, Question $question, Reponse $reponse = null, $em) {
+        dump($reponse);
         if (!is_null($question)) {
             switch($question->getTypeQuestion()) {
                 case 1:
                     $builder->add('description', TextareaType::class, array(
-
+                        'data' => $reponse->getDescription()
                     ));
                     break;
                 case 2:
                     $builder->add('choix', ChoiceType::class, array(
                         'choices' => $this->fillChoix($question, $em),
                         'multiple' => false,
-                        'expanded' => true
+                        'expanded' => true,
+                        'placeholder' => $reponse->getId()
                     ));
                     break;
             }

@@ -1,7 +1,9 @@
 <?php
 
 namespace AppBundle\Repository;
+
 use AppBundle\Entity\Questionnaire;
+use AppBundle\Entity\User;
 
 /**
  * ReponseRepository
@@ -13,8 +15,8 @@ class ReponseRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findReponses(Questionnaire $questionnaire, User $user) {
         $qb= $this->createQueryBuilder('r');
-        $qb->innerJoin('AppBundle:Questionnaire_Individualise', 'q', 'WITH', 'q.id=r.questionnaire_individualise');
-        $qb->where("q.id = :questionnaire");
+        $qb->leftJoin('AppBundle:Questionnaire_Individualise', 'q', 'WITH', 'q=r.questionnaire_individualise');
+        $qb->where("q.questionnaire = :questionnaire");
 
         $i=1;
         $reqContrat = "(";
@@ -29,8 +31,8 @@ class ReponseRepository extends \Doctrine\ORM\EntityRepository
         $qb->andWhere($reqContrat.')');
         $qb->setParameter("questionnaire", $questionnaire->getId());
 
-        $qb->getQuery();
-
-        return $qb->getResult();
+        return $qb
+            ->getQuery()
+            ->getResult();
     }
 }
