@@ -343,7 +343,15 @@ class QuestionnaireManager extends BaseManager
     {
         if (!is_null($option) && $option == 'display') {
             $questions = $questionnaire->getQuestions();
-            $reponses = $this->findReponsesOfQuestionnaire($questionnaire, $user);
+            $questionnaireIndividualise = $this->em->getRepository('AppBundle:Questionnaire_Individualise')->findOneBy(array('questionnaire' => $questionnaire, 'contrat' => $user->getContrats()->get(0)));
+            if ($questionnaireIndividualise != null) {
+                $reponses = $this->findReponsesOfQuestionnaire($questionnaire, $user);
+            } else {
+                $reponses = array();
+                for ($i=0; $i<sizeof($questions); $i++) {
+                    $reponses[$i] = new Reponse();
+                }
+            }
             $form = $this->formFactory->create(DisplayQuestionnaireType::class, $questionnaire, array('questionnaire' => $questionnaire,
                 'questions' => $questions, 'reponses' => $reponses, 'em' => $this->em));
         } else {
