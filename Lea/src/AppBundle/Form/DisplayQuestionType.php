@@ -22,13 +22,13 @@ class DisplayQuestionType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $reponse = new Reponse();
         if ($options['display'] == 1) {
-            $this->createBuilder($builder, $options['question'], $options['em']);
+            $this->createBuilder($builder, $options['question'], $reponse, $options['em']);
         } else {
             $this->nbQuestion = $options['nbQuestion'];
             $question = $options['question'][$this->i];
 
-            $reponse = new Reponse();
             foreach ($options['reponses'] as $reponseL) {
                 if ($question == $reponseL->getQuestion()) {
                     $reponse = $reponseL;
@@ -74,13 +74,21 @@ class DisplayQuestionType extends AbstractType
                     break;
                 case 2:
                     $choix = $em->getRepository('AppBundle:Choix')->findOneByDescription($reponse->getDescription());
-                    dump($this->fillChoix($question, $em));
-                    $builder->add('choix', ChoiceType::class, array(
-                        'choices' => $this->fillChoix($question, $em),
-                        'multiple' => false,
-                        'expanded' => true,
-                        'data' => $choix->getDescription()
-                    ));
+                    if ($choix != null) {
+                        $builder->add('choix', ChoiceType::class, array(
+                            'choices' => $this->fillChoix($question, $em),
+                            'multiple' => false,
+                            'expanded' => true,
+                            'data' => $choix->getDescription()
+                        ));
+                    } else {
+                        $builder->add('choix', ChoiceType::class, array(
+                            'choices' => $this->fillChoix($question, $em),
+                            'multiple' => false,
+                            'expanded' => true
+                        ));
+                    }
+
                     break;
             }
         }
