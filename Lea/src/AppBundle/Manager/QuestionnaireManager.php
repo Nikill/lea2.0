@@ -3,6 +3,7 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Entity\Contrat;
+use AppBundle\Entity\Question;
 use AppBundle\Entity\Questionnaire;
 use AppBundle\Entity\Questionnaire_Individualise;
 use AppBundle\Entity\Reponse;
@@ -211,7 +212,7 @@ class QuestionnaireManager extends BaseManager
                 }
             }
 
-            $this->saveAnswers($request, $contratsUser, $questionnaire);
+            $this->saveAnswers($request, $user, $contratsUser, $questionnaire);
             if (isset($request->request->get('display_questionnaire')['validate'])) {
                 $this->validateAnswers($request, $user, $contratsUser, $questionnaire);
             }
@@ -224,11 +225,12 @@ class QuestionnaireManager extends BaseManager
     /**
      * Sauvegarde les réponses
      * @param Request $request
+     * @param User $user
      * @param ArrayCollection $contratsUser
      * @param Questionnaire $questionnaire
      * @return array|RedirectResponse
      */
-    public function saveAnswers(Request $request, ArrayCollection $contratsUser, Questionnaire $questionnaire)
+    public function saveAnswers(Request $request, User $user, ArrayCollection $contratsUser, Questionnaire $questionnaire)
     {
         $questionnaireIndividualise = $this->em->getRepository('AppBundle:Questionnaire_Individualise')->findOneBy(array('questionnaire' => $questionnaire, 'contrat' => $contratsUser->get(0)));
 
@@ -243,8 +245,22 @@ class QuestionnaireManager extends BaseManager
             $this->persistAndFlush($questionnaireIndividualise);
         }
 
-        $i = 0;
+        $role=0;
+        foreach ($user->getRoles() as $roleL) {
+            switch ($roleL) {
+                case "ROLE_ETUDIANT":
+                    $role=1;
+                    break;
+                case "ROLE_TUTEUR":
+                    $role=2;
+                    break;
+                case "ROLE_MAP":
+                    $role=3;
+                    break;
+            }
+        }
 
+        $i=0;
         $reponses = new ArrayCollection($request->request->get('display_questionnaire')['questions']);
         foreach ($questionnaire->getQuestions() as $question) {
             $reponse = $this->em->getRepository('AppBundle:Reponse')->findOneBy(array('questionnaire_individualise' => $questionnaireIndividualise, 'question' => $question));
@@ -256,45 +272,40 @@ class QuestionnaireManager extends BaseManager
                 $this->persistAndFlush($reponse);
             }
 
-            $j = 0;
-            foreach ($reponses as $reponseQ) {
-                if ($i == $j) {
-                    foreach ($reponseQ as $descriptionRQ) {
-                        if ($question->getTypeQuestion() == 2) {
-                            switch ($descriptionRQ) {
-                                case 0:
-                                    $val = "Défavorable";
-                                    break;
-                                case 1:
-                                    $val = "Neutre";
-                                    break;
-                                case 2:
-                                    $val = "Bon";
-                                    break;
-                                case 3:
-                                    $val = "Favorable";
-                                    break;
-                                case 4:
-                                    $val = "Très favorable";
-                                    break;
-                            }
-                            $reponse->setDescription($val);
-                            /*$k = 0;
-                            foreach ($question->getChoix() as $choix) {
-                                if ($descriptionRQ == $k) {
-                                    $reponse->setDescription($choix->getDescription());
-                                    break;
-                                }
-                                $k++;
-                            }*/
-                        } else {
-                            $reponse->setDescription($descriptionRQ);
+            if ($question->getCible() == $role) {
+                foreach ($reponses[$i] as $reponseL) {
+                    if ($question->getTypeQuestion() == 2) {
+                        switch ($reponseL) {
+                            case 0:
+                                $value = "Défavorable";
+                                break;
+                            case 1:
+                                $value = "Neutre";
+                                break;
+                            case 2:
+                                $value = "Bon";
+                                break;
+                            case 3:
+                                $value = "Favorable";
+                                break;
+                            case 4:
+                                $value = "Très favorable";
+                                break;
                         }
-                        $this->persistAndFlush($reponse);
+                        $reponse->setDescription($value);
+                        /*$k = 0;
+                        foreach ($question->getChoix() as $choix) {
+                            if ($descriptionRQ == $k) {
+                                $reponse->setDescription($choix->getDescription());
+                                break;
+                            }
+                            $k++;
+                        }*/
+                    } else {
+                        $reponse->setDescription($reponseL);
                     }
-                    break;
+                    $this->persistAndFlush($reponse);
                 }
-                $j++;
             }
             $i++;
         }
