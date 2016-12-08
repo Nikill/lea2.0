@@ -95,7 +95,7 @@ class QuestionnaireManager extends BaseManager
         $results -> setParameter('fyear', $fyearDD);
         $results -> setParameter('lyear', $lyearDD);
         $results -> setParameter('promotion', $contrat->getPromotion()->getId());
-        $results -> orderby('q.type', 'ASC');
+        $results -> orderBy('q.type, q.dateOuverture', 'ASC');
 
         $results = $results->getQuery();
         $results = $results->getResult();
