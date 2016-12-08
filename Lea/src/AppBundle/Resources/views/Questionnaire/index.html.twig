@@ -111,7 +111,7 @@
                                     <ul class="list-group">
                                         {% for quest in quests %}
                                             {% if quest.type.id==type.id %}
-                                            <li class="list-group-item">
+                                            <li class="list-group-item cursor">
                                                 <a id="questionnaire{{ quest.id }}" onclick="afficherQuestionnaire({{ quest.id }}, false, '{{ keys[i] }}')" data-toggle="modal" data-target="#modalQuestionnaire">
                                                     <h5>Du {{ quest.dateOuverture|date('d M Y') }} au {{ quest.dateFermeture|date('d M Y') }}</h5>
                                                 </a>

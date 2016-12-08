@@ -2342,14 +2342,30 @@ function editerTypeDocument(idTypeDoc) {
 	$('#trTypeDoc' + idTypeDoc).hide();
 	$('#trTypeDocHide' + idTypeDoc).removeClass('hide');
 }
+function getCookie(c_name) {
+	if(document.cookie.length > 0) {
+		c_start = document.cookie.indexOf(c_name + "=");
+		if(c_start != -1) {
+			c_start = c_start + c_name.length + 1;
+			c_end = document.cookie.indexOf(";", c_start);
+			if(c_end == -1) c_end = document.cookie.length;
+			return unescape(document.cookie.substring(c_start,c_end));
+		}
+	}
+	return "";
+}
 
 function updateTypeDocument(idTypeDoc){
+
 	var newValue = $('#inputUpdateTypeDoc'+idTypeDoc).val();
 	var typeDocument=  new Object();
 	typeDocument['libelle']=newValue;
 	$.ajax({
 		url: idTypeDoc+'/edit',
 		type: 'POST',
+		headers: {
+			"X-CSRFToken": getCookie("csrftoken")
+		},
 		data:{
 			'type_document':typeDocument
 		},
@@ -2426,16 +2442,28 @@ function editerQuestion(idQuestion, typeQuestion) {
 
 			});
 
-								if(typeQuestion ==2) {
-					var $table1 = jQuery('#table-choix');
-
-					// Initialize DataTable
-					$table1.DataTable({
-						"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-						"bStateSave": true
-					});
+			$("#modalEditerQuestion").find('#question_typeQuestion').change(function () {
+				var valTypeQuestion = this.value;
+				if(valTypeQuestion==2){
+					$("#modalEditerQuestion #choixQuestion").show();
+				}else{
+					$("#modalEditerQuestion #choixQuestion").hide();
 				}
+			});
+
+			var $table1 = jQuery('#modalEditerQuestion #table-choix');
+
+			// Initialize DataTable
+			$table1.DataTable({
+				"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"bStateSave": true
+			});
+
+			if(typeQuestion ==1) {
+				$("#modalEditerQuestion #choixQuestion").hide();
+			}
 			test();
+
 
 
 		},
@@ -2448,10 +2476,6 @@ function editerQuestion(idQuestion, typeQuestion) {
 
 		}
 	});
-}
-
-function changeTypeQuestion(typeQuestion){
-	var test = typeQuestion;
 }
 
 function ajouterChoixQuestion(idQuestion, idChoix) {
