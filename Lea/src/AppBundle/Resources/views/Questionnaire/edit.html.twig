@@ -24,7 +24,12 @@
 
                 {{ form_start( formQuestion ) }}
                 {{ form_end( formQuestion ) }}
+                <br><br>
+                <a onclick="afficherQuestionnaire({{ questionnaire.id }}, true)" data-toggle="modal" data-target="#modalQuestionnaire" class="btn-info btn">
+                    Prévisualiser questionnaire
+                </a>
             </div>
+
         </div>
     </div>
     <h3>Liste des questions</h3>
@@ -158,6 +163,15 @@
 
             </div>
 
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalQuestionnaire" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+
+            </div>
         </div>
     </div>
 {% endblock %}
