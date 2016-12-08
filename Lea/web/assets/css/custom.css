@@ -95,10 +95,12 @@
 }
 
 .msgError{
-    color:red;
+    color:#a94442;
+    background-color:#f2dede;
 }
 .msgSuccess{
-    color:green;
+    background-color:#dff0d8;
+    color:#3c763d;
 }
 
 .cursor{

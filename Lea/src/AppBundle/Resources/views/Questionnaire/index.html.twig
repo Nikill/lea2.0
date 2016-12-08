@@ -3,7 +3,7 @@
 {% block body %}
 
     {% if is_granted('ROLE_RESPONSABLE') %}
-    <h3>Créer un questionnaire</h3>
+    <h2>Créer un questionnaire</h2>
         <div class="row">
             <div class="col-md-8">
             {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
@@ -112,8 +112,18 @@
                                         {% for quest in quests %}
                                             {% if quest.type.id==type.id %}
                                             <li class="list-group-item cursor">
+                                                    {% if (quest.dateFermeture < date()) %}
+                                                        <span class="glyphicon glyphicon glyphicon-lock glyphiconLarge informUrgent"></span>
+                                                        <a id="debloquerQuestionnaire" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon glyphicon glyphicon-envelope glyphiconLarge"></span></a>
+                                                    {% elseif (quest.dateFermeture <= date("+7 day")) %}
+                                                        <span class="glyphicon glyphicon-exclamation-sign glyphiconLarge informUrgent"></span>
+                                                    {% elseif (quest.dateFermeture <= date("+14 day") and quest.dateFermeture > date("+7 day")) %}
+                                                        <span class="glyphicon glyphicon-exclamation-sign glyphiconLarge informMoyenUrgent"></span>
+                                                    {% elseif ( quest.dateFermeture > date("+14 day"))%}
+                                                        <span class="glyphicon glyphicon-bell glyphiconLarge informNonUrgent"></span>
+                                                    {% endif %}
                                                 <a id="questionnaire{{ quest.id }}" onclick="afficherQuestionnaire({{ quest.id }}, false, '{{ keys[i] }}')" data-toggle="modal" data-target="#modalQuestionnaire">
-                                                    <h5>Du {{ quest.dateOuverture|date('d M Y') }} au {{ quest.dateFermeture|date('d M Y') }}</h5>
+                                                    Du {{ quest.dateOuverture|date('d M Y') }} au {{ quest.dateFermeture|date('d M Y') }}
                                                 </a>
                                             </li>
                                             {% endif %}
@@ -136,6 +146,27 @@
             <div class="modal-content">
 
             </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Envoyer mail débloquage questionnaire</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Souhaitez-vous demander le débloquage de ce questionnaire ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Confirmer</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
         </div>
     </div>
 {% endblock %}

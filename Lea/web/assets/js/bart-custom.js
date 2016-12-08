@@ -2133,14 +2133,14 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 					contentType: false,
 					success: function (code_html, statut) {
 						$('body').html(code_html)
-						var msgSuccess = 'Le questionnaire a bien été enregistré. <br>';
+						var msgSuccess = '<h4>Le questionnaire a bien été enregistré. </h4>';
 						var divMsg = $('#msgDashboard');
 						divMsg.html(msgSuccess);
 						divMsg.addClass('msgSuccess');
 					},
 
 					error: function (resultat, statut, erreur) {
-						var msgError = "L'enregistrement du questionnaire a rencontré un problème. Veuillez actualiser la page et réessayer. <br>";
+						var msgError = "<h4>L'enregistrement du questionnaire a rencontré un problème. Veuillez actualiser la page et réessayer.</h4>";
 						var divMsg = $('#msgDashboard');
 						divMsg.html(msgError);
 						divMsg.addClass('msgError');
@@ -2166,14 +2166,14 @@ function afficherQuestionnaireDashBord(idQuestionnaire, collapseId){
 					contentType: false,
 					success: function (code_html, statut) {
 						$('body').html(code_html)
-						var msgSuccess = 'Le questionnaire a bien été signé. <br>';
+						var msgSuccess = '<h4>Le questionnaire a bien été signé. </h4>';
 						var divMsg = $('#msgDashboard');
 						divMsg.html(msgSuccess);
 						divMsg.addClass('msgSuccess');
 					},
 
 					error: function (resultat, statut, erreur) {
-						var msgError = "La signature du questionnaire a rencontré un problème. Veuillez actualiser la page et réessayer. <br>";
+						var msgError = "<h4>La signature du questionnaire a rencontré un problème. Veuillez actualiser la page et réessayer. </h4>";
 						var divMsg = $('#msgDashboard');
 						divMsg.html(msgError);
 						divMsg.addClass('msgError');
@@ -2227,7 +2227,7 @@ function afficherQuestionnaire(idQuestionnaire, visu, numeroOnglet){
 						processData: false,
 						contentType: false,
 						success: function (code_html, statut) {
-							var msgSuccess = 'Le questionnaire a bien été enregistré. <br>';
+							var msgSuccess = '<h2>Le questionnaire a bien été enregistré.</h2>';
 							$('#msg'+numeroOnglet).html(msgSuccess);
 							$('#msg'+numeroOnglet).addClass('msgSuccess');
 						},
@@ -2257,13 +2257,13 @@ function afficherQuestionnaire(idQuestionnaire, visu, numeroOnglet){
 						processData: false,
 						contentType: false,
 						success: function (code_html, statut) {
-							var msgSuccess = 'Le questionnaire a été signé. <br>';
+							var msgSuccess = '<h4>Le questionnaire a été signé. </h4>';
 							$('#msg'+numeroOnglet).html(msgSuccess);
 							$('#msg'+numeroOnglet).addClass('msgSuccess');
 						},
 
 						error: function (resultat, statut, erreur) {
-							var msgError = "La signature du questionnaire a rencontré un problème. Veuillez actualiser la page et réessayer. <br>";
+							var msgError = "<h4>La signature du questionnaire a rencontré un problème. Veuillez actualiser la page et réessayer. </h4>";
 							$('#msg'+numeroOnglet).html(msgError);
 							$('#msg'+numeroOnglet).addClass('msgError');
 						},
