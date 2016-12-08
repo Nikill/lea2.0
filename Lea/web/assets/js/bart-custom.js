@@ -2403,20 +2403,30 @@ function afficherQuestion(idQuestion){
 	});
 }
 
-function editerQuestion(idQuestion, typeQuestion) {
-	$("#modalEditerQuestion").on("shown.bs.modal", function () {
-		alert('Hi');
+function configModalEditerQuestion(code_html){
+	var modal = $("#modalEditerQuestion");
+	modal.find(".modal-content").html(code_html);
+	modal.find('#question_save').hide();
+	modal.find('#choix_save').hide();
+
+	var $table1 = jQuery('#table-choix');
+
+	// Initialize DataTable
+	$table1.DataTable({
+		"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"bStateSave": true
 	});
+}
+
+function editerQuestion(idQuestion, typeQuestion) {
 	$.ajax({
 		url: '/lea/lea/web/app_dev.php/question/id='+idQuestion+'/edit',
 		type: 'GET',
 		dataType: 'html',
 		success: function (code_html, statut) {
-			var modal = $("#modalEditerQuestion");
-			modal.find(".modal-content").html(code_html);
-			modal.find('#question_save').hide();
+			configModalEditerQuestion(code_html);
 
-			var btn = $("#btnUpdateQuestion");
+			var btn = $("#modalEditerQuestion #btnUpdateQuestion");
 			btn.on('click', function(e){
 
 				e.preventDefault();
@@ -2451,19 +2461,36 @@ function editerQuestion(idQuestion, typeQuestion) {
 				}
 			});
 
-			var $table1 = jQuery('#modalEditerQuestion #table-choix');
-
-			// Initialize DataTable
-			$table1.DataTable({
-				"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-				"bStateSave": true
-			});
 
 			if(typeQuestion ==1) {
 				$("#modalEditerQuestion #choixQuestion").hide();
 			}
-			test();
 
+			var btnAddChoix = $("#modalEditerQuestion #btnCreerChoix");
+			btnAddChoix.on('click', function(e){
+
+				e.preventDefault();
+				var $this = $(this);
+				$.ajax({
+					url: $this.parents('form').attr('action'),
+					type: $this.parents('form').attr('method'),
+					data: new FormData( $this.parents('form')[0] ),
+					processData: false,
+					contentType: false,
+					success: function (code_html, statut) {
+						configModalEditerQuestion(code_html);
+					},
+
+					error: function (resultat, statut, erreur) {
+
+					},
+
+					complete: function (resultat, statut) {
+
+					}
+				});
+
+			});
 
 
 		},
@@ -2487,15 +2514,7 @@ function ajouterChoixQuestion(idQuestion, idChoix) {
 		dataType: 'html',
 		success: function (code_html, statut) {
 			$("#modalEditerQuestion .modal-content").html(code_html)
-				var $table1 = jQuery('#table-choix');
-
-				// Initialize DataTable
-				$table1.DataTable({
-					"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-					"bStateSave": true
-				});
-
-			test();
+				configModalEditerQuestion(code_html);
 		},
 
 		error: function (resultat, statut, erreur) {
@@ -2516,16 +2535,7 @@ function supprimerChoixQuestion(idQuestion, idChoix) {
 		type: 'POST',
 		dataType: 'html',
 		success: function (code_html, statut) {
-			var modal= $('#modalEditerQuestion');
-			modal.find(".modal-content").html(code_html)
-			var $table1 = jQuery('#table-choix');
-
-			// Initialize DataTable
-			$table1.DataTable({
-				"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-				"bStateSave": true
-			});
-			test();
+			configModalEditerQuestion(code_html);
 
 		},
 
@@ -2549,54 +2559,11 @@ function reload(){
    location.reload(true);
 }
 
-function creerChoix() {
-
-	var rang = $('#choix_rang').val();
-	var description = $('#choix_description').val();
-	creerChoixAjax(rang, description, 0);
-}
-
-function creerChoixAjax(rang, description, id) {
-
-	$.ajax({
-
-		url: window.location.origin + '/lea/lea/web/app_dev.php/question/newChoix',
-		type: 'POST',
-		dataType: 'html',
-		data : {
-			'rang': rang,
-			'description':description,
-			'id':id
-		},
-		success: function (code_html, statut) {
-			$("#modalEditerQuestion .modal-content").html(code_html)
-			var $table1 = jQuery('#table-choix');
-
-			// Initialize DataTable
-			$table1.DataTable({
-				"aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-				"bStateSave": true
-			});
-
-			test();
-
-		},
-
-		error: function (resultat, statut, erreur) {
-
-		},
-
-		complete: function (resultat, statut) {
-
-		}
-	});
-}
-
 function editerChoix(indexTr) {
 
 	var rang = $('#rang'+indexTr).val();
 	var description = $('#description'+indexTr).val();
-	creerChoixAjax(rang, description);
+	//creerChoixAjax(rang, description);
 }
 
 function editerRow(indexTr, rang, description){

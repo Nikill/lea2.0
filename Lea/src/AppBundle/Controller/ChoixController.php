@@ -32,13 +32,7 @@ class ChoixController extends Controller
      */
     public function newAction(Request $request)
     {
-        $rang = $request->get('rang');
-        $description = $request->get('description');
-
-        $choix = new Choix();
-        $choix->setRang($rang);
-        $choix->setDescription($description);
-        return $this->get('app.choix.manager')->saveAjax($choix);
+        return $this->get('app.choix.manager')->save($request);
     }
 
     /**

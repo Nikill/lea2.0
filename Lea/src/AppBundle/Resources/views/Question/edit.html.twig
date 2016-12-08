@@ -12,33 +12,33 @@
             <form name="question" action="{{ path('question_save', {'id':question.id}) }}" method="post" class="form-horizontal">
 
                 {{ form_rest(formQuestion) }}
-                <button id="btnUpdateQuestion" name="question[save]" class="btn btn-default" data-dismiss="modal">Enregistrer</button>
+                <button id="btnUpdateQuestion" name="question[save]" class="btn btn-default pull-right" data-dismiss="modal">Modifier question</button>
             </form>
         </div>
-
+        <br>
         <div id="choixQuestion">
                 <h3>Choix</h3>
-                <div class="form-group row">
+                <div>
                     {% form_theme formChoix 'bootstrap_3_horizontal_layout.html.twig' %}
-                    {{ form_start(formChoix)}}
-                    <div class="col-md-1">
-                        {{ form_label(formChoix.rang) }}
-                    </div>
-                    <div class="col-md-2">
-                        {{ form_widget(formChoix.rang) }}
-                    </div>
-                    <div class="col-md-2">
-                        {{ form_label(formChoix.description) }}
-                    </div>
-                    <div class="col-md-5">
-                        {{ form_widget(formChoix.description) }}
-                    </div>
+                    <form id="formAddChoix" action="{{ path('choix_create', {'id':question.id})}}" name="formAddChoix" method="post" class="form-horizontal">
+                        <div class="col-md-1">
+                            {{ form_label(formChoix.rang) }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ form_widget(formChoix.rang) }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ form_label(formChoix.description) }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_widget(formChoix.description) }}
+                        </div>
+                        <div class="col-md-offset-1  col-md-1">
+                            <button id="btnCreerChoix" class="btn btn-default pull-right">Créer choix</button>
+                        </div>
+                        {{ form_rest(formChoix) }}
 
-
-                    <div class="col-md-1">
-                        <a onclick="creerChoix()" class="btn-default btn">Enregistrer</a>
-                    </div>
-
+                    </form>
                 </div>
                 <table class="table table-bordered table-striped datatable" id="table-choix">
                     <thead>

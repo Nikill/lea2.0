@@ -49,17 +49,6 @@ class ChoixManager extends BaseManager
         $choix = new Choix();
         return $this->handleForm($request, $choix);
     }
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public function saveAjax($choix)
-    {
-        $this->persistAndFlush($choix);
-        $form = $this->formFactory->create(ChoixType::class, new Choix());
-
-        return array('formChoix' => $form->createView());
-    }
 
     /**
      * @param Request $request
@@ -107,8 +96,9 @@ class ChoixManager extends BaseManager
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($entity);
             $this->persistAndFlush($entity);
-            $form = $this->formFactory->create(ChoixType::class, $form);
+            $form = $this->formFactory->create(ChoixType::class, $entity);
         }
         return array('formChoix' => $form->createView());
     }

@@ -102,22 +102,15 @@ class QuestionController extends Controller
 
     /**
      * @Template("AppBundle:Question:edit.html.twig")
-     * @Route("/newChoix", name="choix_create")
+     * @Route("/{id}/newChoix", name="choix_create")
      * @param Request $request
      * @return array
      */
-    public function saveChoix(Request $request)
+    public function saveChoix(Request $request, $id)
     {
-        $rang = $request->get('rang');
-        $description = $request->get('description');
-        $id= 12;
+        $arrayForm =$this->get('app.choix.manager')->save($request);
 
-        $choix = new Choix();
-        $choix->setRang($rang);
-        $choix->setDescription($description);
-
-        $arrayForm =$this->get('app.choix.manager')->saveAjax($choix);
-
+        dump($request);
         return array_merge($arrayForm,  $this->get('app.question.manager')->edit($request, $id));
     }
 

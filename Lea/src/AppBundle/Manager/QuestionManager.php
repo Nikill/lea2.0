@@ -146,7 +146,7 @@ class QuestionManager extends BaseManager
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->persistAndFlush($entity);
-            $form = $this->formFactory->create(QuestionType::class, new Question());
+            $form = $this->formFactory->create(QuestionType::class, $entity);
         }
 
         //Suppression des choix déjà présents pour la question
