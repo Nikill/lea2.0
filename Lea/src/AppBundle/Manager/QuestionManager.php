@@ -145,6 +145,10 @@ class QuestionManager extends BaseManager
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($entity->getTypeQuestion());
+            if ($entity->getTypeQuestion() == 1) {
+                $entity->setChoix(new ArrayCollection());
+            }
             $this->persistAndFlush($entity);
             $form = $this->formFactory->create(QuestionType::class, $entity);
         }
