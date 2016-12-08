@@ -12,12 +12,32 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DisplayQuestionType extends AbstractType
 {
+    private $nbQuestion;
+    private $i;
+
+    public function __construct($nbQuestion = null) {
+        $this->nbQuestion = $nbQuestion;
+        $this->i = 0;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $reponse = new Reponse();
         if ($options['display'] == 1) {
-            $this->createBuilder($builder, $options['question'], $options['em']);
+            $this->createBuilder($builder, $options['question'], $reponse, $options['em']);
         } else {
-            foreach ($options['question'] as $question) {
+            $this->nbQuestion = $options['nbQuestion'];
+            $question = $options['question'][$this->i];
+
+            foreach ($options['reponses'] as $reponseL) {
+                if ($question == $reponseL->getQuestion()) {
+                    $reponse = $reponseL;
+                    break;
+                }
+            }
+            $this->createBuilder($builder, $question, $reponse, $options['em']);
+
+            /*foreach ($options['question'] as $question) {
                 $reponse = new Reponse();
                 foreach ($options['reponses'] as $reponseL) {
                     if ($question == $reponseL->getQuestion()) {
@@ -26,7 +46,9 @@ class DisplayQuestionType extends AbstractType
                     }
                 }
                 $this->createBuilder($builder, $question, $reponse, $options['em']);
-            }
+            }*/
+
+            $this->i++;
         }
     }
 
@@ -36,13 +58,13 @@ class DisplayQuestionType extends AbstractType
             'data_class' => 'AppBundle\Entity\Question',
             'question' => null,
             'reponses' => null,
+            'nbQuestion' => null,
             'em' => null,
             'display' => null
         ));
     }
 
     private function createBuilder(FormBuilderInterface $builder, Question $question, Reponse $reponse = null, $em) {
-        dump($reponse);
         if (!is_null($question)) {
             switch($question->getTypeQuestion()) {
                 case 1:
@@ -51,12 +73,22 @@ class DisplayQuestionType extends AbstractType
                     ));
                     break;
                 case 2:
-                    $builder->add('choix', ChoiceType::class, array(
-                        'choices' => $this->fillChoix($question, $em),
-                        'multiple' => false,
-                        'expanded' => true,
-                        'data' => $reponse->getId()
-                    ));
+                    $choix = $em->getRepository('AppBundle:Choix')->findOneByDescription($reponse->getDescription());
+                    if ($choix != null) {
+                        $builder->add('choix', ChoiceType::class, array(
+                            'choices' => $this->fillChoix($question, $em),
+                            'multiple' => false,
+                            'expanded' => true,
+                            'data' => $choix->getDescription()
+                        ));
+                    } else {
+                        $builder->add('choix', ChoiceType::class, array(
+                            'choices' => $this->fillChoix($question, $em),
+                            'multiple' => false,
+                            'expanded' => true
+                        ));
+                    }
+
                     break;
             }
         }

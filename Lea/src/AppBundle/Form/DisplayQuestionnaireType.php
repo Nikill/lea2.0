@@ -10,14 +10,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DisplayQuestionnaireType extends AbstractType
 {
+    private $nbQuestion;
+
+    public function __construct($nbQuestion = null) {
+        $this->nbQuestion = $nbQuestion;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->nbQuestion = sizeof($options['questions']);
+
         $builder
             ->add('questions', CollectionType::class, array(
             'entry_type' => DisplayQuestionType::class,
             'entry_options' => array(
                 'question' => $options['questions'],
                 'reponses' => $options['reponses'],
+                'nbQuestion' => $this->nbQuestion,
                 'em' => $options['em'],
                 'display' => 2,
             )))

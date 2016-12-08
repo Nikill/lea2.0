@@ -215,7 +215,7 @@ class QuestionnaireManager extends BaseManager
             if (isset($request->request->get('display_questionnaire')['validate'])) {
                 $this->validateAnswers($request, $user, $contratsUser, $questionnaire);
             }
-            return $this->redirect('questionnaire_index');
+            return $this->redirect('homepage');
         } else {
             return $this->handleForm($request, $questionnaire, $user, "display");
         }
