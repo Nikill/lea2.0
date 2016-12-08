@@ -121,10 +121,9 @@ class QuestionController extends Controller
      */
     public function saveAction(Request $request, $id)
     {
-        $arrayform = $this->get('app.question.manager')->edit($request, $id);
+        $arrayForm = $this->get('app.choix.manager')->save($request);
         $questions = $this->get('app.question.manager')->findAll();
         $arrayform['questions'] = $questions;
-
-        return $arrayform ;
+        return array_merge($arrayForm,  $this->get('app.question.manager')->edit($request, $id));
     }
 }
