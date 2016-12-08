@@ -29,12 +29,17 @@ class DisplayQuestionType extends AbstractType
             $this->nbQuestion = $options['nbQuestion'];
             $question = $options['question'][$this->i];
 
+            dump($question);
+
             foreach ($options['reponses'] as $reponseL) {
                 if ($question == $reponseL->getQuestion()) {
                     $reponse = $reponseL;
                     break;
                 }
             }
+
+            dump($reponse);
+
             $this->createBuilder($builder, $question, $reponse, $options['em']);
 
             /*foreach ($options['question'] as $question) {
